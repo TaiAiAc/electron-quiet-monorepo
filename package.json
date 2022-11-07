@@ -1,0 +1,37 @@
+{
+  "name": "electron-quiet-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "安静的工作空间",
+  "author": "quiteer",
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "vue3",
+    "vite",
+    "rollup",
+    "typescript"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --fix",
+    "build": "pnpm -r build"
+  },
+  "devDependencies": {
+    "@quiteer/eslint-config": "^0.0.3",
+    "@quiteer/ts-config": "^0.0.3",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.9",
+    "bumpp": "^8.2.1",
+    "electron": "^21.2.2",
+    "eslint": "^8.26.0",
+    "esno": "^0.16.3",
+    "fs-extra": "^10.1.0",
+    "rollup": "^3.2.5",
+    "rollup-plugin-esbuild": "^4.10.1",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.8.4",
+    "zx": "^7.1.1"
+  }
+}

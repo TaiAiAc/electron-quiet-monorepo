@@ -1,0 +1,9 @@
+{
+  "extends": "@quiteer/ts-config/tsconfig.node.json",
+  "include": ["packages/**/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "typeRoots": ["node_modules/@types"]
+  }
+}

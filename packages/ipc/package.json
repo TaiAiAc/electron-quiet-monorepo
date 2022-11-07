@@ -1,0 +1,21 @@
+{
+  "name": "@quiteer/electron-ipc",
+  "version": "0.0.3",
+  "description": "基于electron ，提供了一些ipc事件相关操作",
+  "author": "quiteer",
+  "keywords": ["electron"],
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "esno scripts/build.ts",
+    "release": "bumpp package.json --no-push"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

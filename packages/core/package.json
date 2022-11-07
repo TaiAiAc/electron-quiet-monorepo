@@ -1,0 +1,29 @@
+{
+  "name": "@quiteer/electron-core",
+  "version": "0.0.1",
+  "description": "electron modules",
+  "author": "quiteer",
+  "keywords": [
+    "electron"
+  ],
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs"
+    }
+  },
+  "engines": {
+    "electron": ">=15",
+    "node": ">=17"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "peerDependencies": {
+    "electron": ">=15"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
