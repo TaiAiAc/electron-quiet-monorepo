@@ -1,4 +1,4 @@
-const esbuild = require('rollup-plugin-esbuild')
+import esbuild from 'rollup-plugin-esbuild'
 
 export default {
   input: 'index.ts',

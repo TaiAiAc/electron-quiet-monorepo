@@ -1,5 +1,6 @@
 {
   "name": "@quiteer/electron-ipc",
+  "type": "module",
   "version": "0.0.3",
   "description": "基于electron ，提供了一些ipc事件相关操作",
   "author": "quiteer",
