@@ -4,6 +4,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
+    "declaration": true,
     "typeRoots": ["node_modules/@types"]
   }
 }
