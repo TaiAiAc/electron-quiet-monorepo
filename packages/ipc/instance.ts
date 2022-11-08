@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
-import type { IpcWindowOptions } from './enums/options'
-import { ipcBus } from './modules/window'
-import { WindowOptionsKey } from './eventKeys'
+import type { IpcWindowOptions } from './enums'
+import { EventKeys } from './enums'
+import { windowBus } from './ipcBus'
 
 class IpcOpt {
   static #instance: IpcOpt | null = null
@@ -19,12 +19,12 @@ class IpcOpt {
   }
 
   destroy() {
-    ipcMain.removeAllListeners(WindowOptionsKey)
+    ipcMain.removeAllListeners(EventKeys.WindowOptionsKey)
   }
 
   #window() {
-    ipcMain.on(WindowOptionsKey, (event: Electron.IpcMainEvent, type: IpcWindowOptions, args) => {
-      const performFunc = ipcBus.get(type)
+    ipcMain.on(EventKeys.WindowOptionsKey, (event: Electron.IpcMainEvent, type: IpcWindowOptions, args) => {
+      const performFunc = windowBus.get(type)
       if (performFunc instanceof Function)
         return performFunc(event, args)
     })

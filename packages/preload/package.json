@@ -1,0 +1,11 @@
+{
+  "name": "@quiteer/electron-preload",
+  "version": "0.0.1",
+  "description": "基于electron , 提供了预加载文件",
+  "author": "quiteer",
+  "keywords": ["electron"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

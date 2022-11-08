@@ -1,6 +1,6 @@
 {
   "extends": "@quiteer/ts-config/tsconfig.node.json",
-  "include": ["packages/**/*"],
+  "include": ["packages/**/*", "scripts"],
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
