@@ -44,16 +44,8 @@ importers:
   packages/ipc:
     specifiers:
       electron: ^21.2.2
-      fs-extra: ^10.1.0
-      rollup: ^3.2.5
-      rollup-plugin-esbuild: ^4.10.1
-      zx: ^7.1.1
     devDependencies:
       electron: 21.2.2
-      fs-extra: 10.1.0
-      rollup: 3.2.5
-      rollup-plugin-esbuild: 4.10.1_rollup@3.2.5
-      zx: 7.1.1
 
 packages:
 
