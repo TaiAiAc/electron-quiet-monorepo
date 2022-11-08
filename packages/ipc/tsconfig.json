@@ -1,0 +1,9 @@
+{
+  "extends": "@quiteer/ts-config/tsconfig.node.json",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": true
+  }
+}

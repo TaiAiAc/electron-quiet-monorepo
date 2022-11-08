@@ -12,13 +12,12 @@ export default {
     format: 'esm'
   }],
   plugins: [
-    typescript(),
+    typescript({ useTsconfigDeclarationDir: true }),
     esbuild({
       include: /\.[jt]sx?$/,
       exclude: /node_modules/,
-      sourceMap: false, // default
-      // minify: true,
-      minify: false,
+      minify: true,
+      // minify: false,
       target: 'es2017' // 语法风格
     })
   ]
