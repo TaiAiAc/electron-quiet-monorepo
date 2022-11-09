@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "electronmon .",
+    "dev": "electron .",
     "start": "tsup && pnpm run dev"
   },
   "dependencies": {
     "@quiteer/electron-preload": "workspace:*"
-  },
-  "devDependencies": {
-    "electronmon": "^2.0.2"
   }
 }
