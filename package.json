@@ -34,6 +34,7 @@
     "rollup-plugin-esbuild": "^4.10.1",
     "rollup-plugin-typescript2": "^0.34.1",
     "tslib": "^2.4.1",
+    "tsup": "^6.4.0",
     "typescript": "^4.8.4",
     "zx": "^7.1.1"
   }

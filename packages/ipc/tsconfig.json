@@ -1,9 +1,0 @@
-{
-  "extends": "@quiteer/ts-config/tsconfig.node.json",
-  "include": ["index.ts", "instance.ts", "enums/**/*", "ipcBus/**/*"],
-  "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "emitDeclarationOnly": true
-  }
-}

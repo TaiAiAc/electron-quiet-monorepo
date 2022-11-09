@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electron-ipc",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "基于electron , 提供了一些 ipc 事件相关操作",
   "author": "quiteer",
   "keywords": [
@@ -8,12 +8,22 @@
   ],
   "exports": {
     ".": {
-      "require": "./index.cjs",
-      "import": "./index.mjs"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
     }
   },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsup"
+  },
+  "devDependencies": {
+    "tsup": "^6.4.0"
   }
 }

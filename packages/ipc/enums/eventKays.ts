@@ -1,3 +1,3 @@
-export class EventKeys {
-  static WindowOptionsKey = '__window_options__'
+export enum EventKeys {
+  WindowOptionsKey = '__window_options__'
 }

@@ -1,15 +1,15 @@
-export class IpcWindowOptions {
-  static DESTROY = 'destroy'
-  static SHOW = 'show'
-  static HIDE = 'hide'
-  static FOCUS = 'focus'
-  static BLUR = 'blur'
-  static MAXIMIZE = 'maximize'
-  static UNMAXIMIZE = 'unmaximize'
-  static MINIMIZE = 'minimize'
-  static RESTORE = 'restore'
-  static RELOAD = 'reload'
-  static SET_FULL_SCREEN = 'setFullScreen'
-  static SET_TITLE = 'setTitle'
-  static FLASH_FRAME = 'flashFrame'
+export enum IpcWindowOptions {
+  DESTROY = 'destroy',
+  SHOW = 'show',
+  HIDE = 'hide',
+  FOCUS = 'focus',
+  BLUR = 'blur',
+  MAXIMIZE = 'maximize',
+  UNMAXIMIZE = 'unmaximize',
+  MINIMIZE = 'minimize',
+  RESTORE = 'restore',
+  RELOAD = 'reload',
+  SET_FULL_SCREEN = 'setFullScreen',
+  SET_TITLE = 'setTitle',
+  FLASH_FRAME = 'flashFrame'
 }
