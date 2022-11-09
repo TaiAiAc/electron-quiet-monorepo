@@ -3,6 +3,7 @@
   "version": "0.0.7",
   "description": "基于electron , 提供了一些 ipc 事件相关操作",
   "author": "quiteer",
+  "license": "MIT",
   "keywords": [
     "electron"
   ],
@@ -21,6 +22,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "rimraf dist && tsup"
+    "build": "tsup"
   }
 }

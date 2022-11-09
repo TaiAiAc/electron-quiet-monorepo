@@ -1,24 +1,28 @@
 {
   "name": "@quiteer/electron-core",
-  "type": "module",
   "version": "0.0.1",
   "description": "基于electron ，提供了一些 electron api 相关操作",
   "author": "quiteer",
+  "license": "MIT",
   "keywords": [
     "electron"
   ],
   "exports": {
     ".": {
-      "require": "./index.cjs",
-      "import": "./index.mjs"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "engines": {
     "electron": ">=15",
-    "node": ">=17"
+    "node": ">=16"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js"
+    "build": "tsup"
   },
   "peerDependencies": {
     "electron": ">=15"

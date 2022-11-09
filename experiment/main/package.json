@@ -1,11 +1,12 @@
 {
-  "name": "test",
+  "name": "main",
   "version": "1.0.0",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "electronmon ."
+    "dev": "electronmon .",
+    "start": "tsup && pnpm run dev"
   },
   "dependencies": {
-    "@quiteer/electron-ipc": "workspace:*",
     "@quiteer/electron-preload": "workspace:*"
   },
   "devDependencies": {

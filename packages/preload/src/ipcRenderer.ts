@@ -1,7 +1,8 @@
+import type { IpcRenderer } from 'electron'
 import { ipcRenderer } from 'electron'
 
-type IpcParameters<K extends keyof typeof Electron.ipcRenderer> = Parameters<typeof Electron.ipcRenderer[K]>
-type IpcReturnType<K extends keyof typeof Electron.ipcRenderer> = ReturnType<typeof Electron.ipcRenderer[K]>
+type IpcParameters<K extends keyof IpcRenderer> = Parameters<IpcRenderer[K]>
+type IpcReturnType<K extends keyof IpcRenderer> = ReturnType<IpcRenderer[K]>
 
 export interface PreloadIpc {
   send(...args: IpcParameters<'send'>): IpcReturnType<'send'>
