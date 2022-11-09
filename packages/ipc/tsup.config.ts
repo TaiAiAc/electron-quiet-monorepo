@@ -16,7 +16,7 @@ export default defineConfig({
   dts: true,
   splitting: false,
   clean: true,
-  // watch: true,
+  watch: true,
   env,
   define,
   external: ['electron'],
