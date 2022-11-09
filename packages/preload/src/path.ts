@@ -1,4 +1,4 @@
-import path, { basename, dirname, extname, join, parse, relative, resolve } from 'path'
+import { basename, dirname, extname, join, parse, relative, resolve } from 'path'
 
 export interface PreLoadPath {
   basename (...args: Parameters<typeof basename>): ReturnType<typeof basename>
@@ -20,9 +20,3 @@ export const $path: PreLoadPath = {
   resolve: (...args) => resolve(...args)
 }
 
-const getPath = () => {
-  return path.join(__dirname, 'index.js')
-}
-
-console.log(' getPath(): ', getPath())
-export default getPath()

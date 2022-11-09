@@ -36,6 +36,9 @@ importers:
   packages/ipc:
     specifiers: {}
 
+  packages/preload:
+    specifiers: {}
+
 packages:
 
   /@antfu/eslint-config-basic/0.29.3_6xw5wg2354iw4zujk2f3vyfrzu:
