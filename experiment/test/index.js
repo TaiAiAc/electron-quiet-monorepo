@@ -1,8 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const { Ipc } = require('@quiteer/electron-ipc')
 const preload = require('@quiteer/electron-preload')
-
-console.log('preload: ', preload)
+global.console.log('preload: ', preload)
 
 app.whenReady().then(() => {
   createWindow()
@@ -13,7 +12,9 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    preload
+    webPreferences: {
+      preload
+    }
   })
 
   win.loadFile('./index.html')

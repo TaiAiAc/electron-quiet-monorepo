@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "electronmon ."
+  },
+  "dependencies": {
+    "@quiteer/electron-ipc": "workspace:*",
+    "@quiteer/electron-preload": "workspace:*"
+  },
+  "devDependencies": {
+    "electronmon": "^2.0.2"
+  }
+}
