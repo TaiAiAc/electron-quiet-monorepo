@@ -11,7 +11,7 @@ const env = {
 }
 
 export default defineConfig({
-  name: '@quiteer/electron-ipc',
+  name: 'electron-ipc',
   entry: { enums: 'enums/index.ts', index: 'index.ts' },
   dts: true,
   splitting: false,
