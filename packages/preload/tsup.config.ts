@@ -6,6 +6,5 @@ export default defineConfig({
   dts: true,
   splitting: false,
   clean: true,
-  watch: true,
   external: ['electron']
 })

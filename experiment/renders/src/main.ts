@@ -7,3 +7,5 @@ console.log('window.$ipc :>> ', window.$ipc)
 console.log('window.$path :>> ', window.$path)
 console.log('window.$clipboard :>> ', window.$clipboard)
 console.log('window.$webFrame :>> ', window.$webFrame)
+
+console.log('window.$webFrame :>> ', window.$webFrame.setZoomLevel(1))

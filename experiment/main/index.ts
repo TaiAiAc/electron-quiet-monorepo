@@ -16,6 +16,6 @@ function createWindow() {
     }
   })
 
-  win.loadURL('http://127.0.0.1:5174/')
-  win.webContents.openDevTools()
+  win.loadURL('http://127.0.0.1:5173/')
+  win.webContents.openDevTools({ mode: 'undocked' })
 }
