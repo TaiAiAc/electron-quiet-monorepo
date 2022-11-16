@@ -5,7 +5,8 @@
   "description": "安静的工作空间",
   "author": "quiteer",
   "scripts": {
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "build": "pnpm -r build"
   },
   "devDependencies": {
     "@quiteer/eslint-config": "^0.0.3",

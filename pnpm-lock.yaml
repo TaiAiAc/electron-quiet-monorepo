@@ -22,12 +22,15 @@ importers:
 
   experiment/main:
     specifiers:
+      '@quiteer/electron-ipc': workspace:^0.0.7
       '@quiteer/electron-preload': workspace:*
     dependencies:
+      '@quiteer/electron-ipc': link:../../packages/ipc
       '@quiteer/electron-preload': link:../../packages/preload
 
   experiment/renders:
     specifiers:
+      '@quiteer/electron-ipc': workspace:^0.0.7
       '@quiteer/electron-preload': workspace:*
       '@vitejs/plugin-vue': ^3.2.0
       typescript: ^4.6.4
@@ -35,6 +38,7 @@ importers:
       vue: ^3.2.41
       vue-tsc: ^1.0.9
     dependencies:
+      '@quiteer/electron-ipc': link:../../packages/ipc
       '@quiteer/electron-preload': link:../../packages/preload
       vue: 3.2.43
     devDependencies:

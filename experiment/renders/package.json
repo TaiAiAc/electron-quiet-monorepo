@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@quiteer/electron-ipc": "workspace:*",
     "@quiteer/electron-preload": "workspace:*",
     "vue": "^3.2.41"
   },

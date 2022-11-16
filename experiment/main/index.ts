@@ -1,9 +1,12 @@
 import preload from '@quiteer/electron-preload'
 import { BrowserWindow, app } from 'electron'
-console.log('preload: ', preload)
+import { Ipc } from '@quiteer/electron-ipc'
+
+global.console.log('preload: ', preload)
 
 app.whenReady().then(() => {
   createWindow()
+  Ipc.init()
 })
 
 function createWindow() {

@@ -5,20 +5,26 @@ type IpcParameters<K extends keyof IpcRenderer> = Parameters<IpcRenderer[K]>
 type IpcReturnType<K extends keyof IpcRenderer> = ReturnType<IpcRenderer[K]>
 
 export interface PreloadIpc {
-  send(...args: IpcParameters<'send'>): IpcReturnType<'send'>
-  sendSync(...args: IpcParameters<'sendSync'>): IpcReturnType<'sendSync'>
-  invoke(...args: IpcParameters<'invoke'>): IpcReturnType<'invoke'>
+  send<T extends Array<any>>(channel: string, ...args: T): void
+  /**
+   * 描述  可以用,但是用invoke要好的多
+   * @date 2022-11-14
+   * @param {any}
+   * @returns {any}
+   */
+  sendSync<T extends Array<any>>(channel: string, ...args: T): any
+  invoke<T extends Array<any>, R = never>(channel: string, ...args: T): Promise<R>
   on(...args: IpcParameters<'on'>): IpcReturnType<'on'>
   once(...args: IpcParameters<'once'>): IpcReturnType<'once'>
-  removeAllListeners(...args: IpcParameters<'removeAllListeners'>): IpcReturnType<'removeAllListeners'>
+  removeAllListeners(channel: string): IpcReturnType<'removeAllListeners'>
 }
 
 export const $ipc: PreloadIpc = {
   send: (...args) => ipcRenderer.send(...args),
   sendSync: (...args) => ipcRenderer.sendSync(...args),
   invoke: (...args) => ipcRenderer.invoke(...args),
-  on: (...args) => ipcRenderer.on(...args),
+  on: (channel, listener) => ipcRenderer.on(channel, listener),
   once: (...args) => ipcRenderer.once(...args),
-  removeAllListeners: (...args) => ipcRenderer.removeAllListeners(...args)
+  removeAllListeners: channel => ipcRenderer.removeAllListeners(channel)
 }
 

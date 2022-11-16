@@ -1,7 +1,7 @@
 {
-  "name": "@quiteer/electron-ipc",
-  "version": "0.0.7",
-  "description": "基于electron , 提供了一些 独立无副作用的 ipc 事件相关操作",
+  "name": "@quiteer/electron-window",
+  "version": "0.0.1",
+  "description": "基于electron , 提供便捷创建窗口的能力",
   "author": "quiteer",
   "license": "MIT",
   "keywords": [
@@ -10,12 +10,11 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
-    },
-    "./enums": "./dist/enums.mjs"
+      "require": "./index.js"
+    }
   },
-  "files": ["dist"],
+  "main": "./index.js",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
