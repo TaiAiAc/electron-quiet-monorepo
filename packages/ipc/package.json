@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electron-ipc",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "基于electron , 提供了一些 独立无副作用的 ipc 事件相关操作",
   "author": "quiteer",
   "license": "MIT",
@@ -13,7 +13,7 @@
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     },
-    "./enums": "./dist/enums.mjs"
+    "./event-enum": "./dist/event-enum.mjs"
   },
   "files": ["dist"],
   "publishConfig": {

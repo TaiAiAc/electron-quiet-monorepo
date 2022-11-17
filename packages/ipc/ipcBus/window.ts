@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron'
-import { IpcWindowOptions } from '../enums/options'
+import { IpcWindowOptions } from '../event-enum'
 
 export const ipcBus = new Map<IpcWindowOptions, (event: Electron.IpcMainEvent, state?: any) => void>()
 
