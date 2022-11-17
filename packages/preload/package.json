@@ -1,20 +1,13 @@
 {
   "name": "@quiteer/electron-preload",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "基于electron , 提供预加载功能脚本",
   "author": "quiteer",
   "license": "MIT",
-  "keywords": [
-    "electron"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./index.js"
-    }
-  },
-  "main": "./index.js",
-  "types": "./dist/index.d.ts",
+  "keywords": ["electron"],
+  "main": "index.js",
+  "types": "./dist/preload.d.ts",
+  "files": ["dist", "index.js"],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

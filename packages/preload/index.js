@@ -1,6 +1,6 @@
 const path = require('path')
 
-const pathFile = path.join(__dirname, 'dist', 'index.js')
+const pathFile = path.join(__dirname, 'dist', 'prealod.js')
 
 function getElectronPath() {
   return pathFile
