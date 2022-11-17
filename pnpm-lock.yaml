@@ -50,6 +50,14 @@ importers:
   packages/app:
     specifiers: {}
 
+  packages/core:
+    specifiers:
+      '@quiteer/electron-ipc': workspace:^0.0.9
+      '@quiteer/electron-preload': workspace:^0.0.7
+    dependencies:
+      '@quiteer/electron-ipc': link:../ipc
+      '@quiteer/electron-preload': link:../preload
+
   packages/ipc:
     specifiers: {}
 
@@ -63,7 +71,10 @@ importers:
     specifiers: {}
 
   packages/window:
-    specifiers: {}
+    specifiers:
+      '@vue/reactivity': ^3.2.45
+    devDependencies:
+      '@vue/reactivity': 3.2.45
 
 packages:
 
@@ -596,6 +607,12 @@ packages:
     dependencies:
       '@vue/shared': 3.2.43
 
+  /@vue/reactivity/3.2.45:
+    resolution: {integrity: sha512-PRvhCcQcyEVohW0P8iQ7HDcIOXRjZfAsOds3N99X/Dzewy8TVhTCT4uXpAHfoKjVTJRA0O0K+6QNkDIZAxNi3A==}
+    dependencies:
+      '@vue/shared': 3.2.45
+    dev: true
+
   /@vue/runtime-core/3.2.43:
     resolution: {integrity: sha512-rLm4b0+mVENn7D42pXL3tNqb7vtQ3Hjy2WThMd9WGlPSJr/BxxbomzUf6V5MBf40Qx698FSJeORZ00hH+jvixw==}
     dependencies:
@@ -620,6 +637,10 @@ packages:
 
   /@vue/shared/3.2.43:
     resolution: {integrity: sha512-zPhXJ0evblbcI3qOwUxliOoH90ecp2J1171RFrHXNC58EzzxXGPJ/X0FyIvuC9SvZNe8wpX4OcWhblPDSwT8Rw==}
+
+  /@vue/shared/3.2.45:
+    resolution: {integrity: sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==}
+    dev: true
 
   /acorn-jsx/5.3.2_acorn@8.8.1:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}

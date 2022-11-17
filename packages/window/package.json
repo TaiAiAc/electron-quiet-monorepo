@@ -1,7 +1,7 @@
 {
   "name": "@quiteer/electron-window",
   "version": "0.0.1",
-  "description": "基于electron , 提供便捷创建窗口的能力",
+  "description": "基于electron , 提供便捷创建和集中管理窗口的能力",
   "author": "quiteer",
   "license": "MIT",
   "keywords": [
@@ -22,5 +22,8 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup"
+  },
+  "devDependencies": {
+    "@vue/reactivity": "^3.2.45"
   }
 }
