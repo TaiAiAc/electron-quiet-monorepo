@@ -6,5 +6,6 @@ export default defineConfig({
   dts: true,
   splitting: false,
   clean: true,
-  external: ['electron']
+  external: ['electron'],
+  format: ['esm', 'cjs']
 })

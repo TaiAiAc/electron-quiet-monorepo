@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@quiteer/electron-ipc": "workspace:*",
+    "@quiteer/electron-loading": "workspace:*",
     "@quiteer/electron-preload": "workspace:*"
   }
 }
