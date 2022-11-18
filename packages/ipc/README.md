@@ -34,7 +34,7 @@ app.whenReady().then(() => {
 > 引用包内预定义的事件枚举  按需取用
 
 ```js
-import { EventKeys, IpcWindowOptions } from '@quiteer/electron-ipc/event-enum'
+import { EventKeys, IpcWindowOptions } from '@quiteer/electron-ipc/web'
 
 const test = () => {
   // 窗口最大化

@@ -1,4 +1,4 @@
-import { EventKeys, IpcWindowOptions } from '@quiteer/electron-ipc/event-enum'
+import { EventKeys, IpcWindowOptions } from '@quiteer/electron-ipc/web'
 
 export default async () => {
   window.$ipc.send(EventKeys.WindowOptionsKey, IpcWindowOptions.MAXIMIZE)
