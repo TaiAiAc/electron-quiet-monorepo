@@ -4,15 +4,25 @@
   "description": "基于electron , ",
   "author": "quiteer",
   "license": "MIT",
-  "keywords": ["electron"],
+  "keywords": [
+    "electron"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "bin": { "electronup": "bin/index.js" },
-  "files": ["bin"],
+  "bin": {
+    "electronup": "bin/index.js"
+  },
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "test": "electronup -x 3 -y 4 -n5 -abc --beep=boop foo bar baz"
+  },
+  "devDependencies": {
+    "minimist": "^1.2.7"
   }
 }

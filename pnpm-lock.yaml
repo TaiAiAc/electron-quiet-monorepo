@@ -52,6 +52,12 @@ importers:
   packages/app:
     specifiers: {}
 
+  packages/cli:
+    specifiers:
+      minimist: ^1.2.7
+    devDependencies:
+      minimist: 1.2.7
+
   packages/ipc:
     specifiers: {}
 
