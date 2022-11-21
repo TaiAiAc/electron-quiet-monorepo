@@ -1,11 +1,16 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  name: 'electron-preload',
+  name: 'electronup',
   entry: ['index.ts'],
   outDir: 'bin',
-  dts: false,
   splitting: false,
   clean: true,
+  onSuccess() {
+    return new Promise((resolve) => {
+      console.log('本次结束')
+      resolve()
+    })
+  },
   external: ['electron']
 })

@@ -1,235 +1,639 @@
 #!/usr/bin/env node
 "use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 
-// ../../node_modules/.pnpm/minimist@1.2.7/node_modules/minimist/index.js
-var require_minimist = __commonJS({
-  "../../node_modules/.pnpm/minimist@1.2.7/node_modules/minimist/index.js"(exports, module2) {
-    module2.exports = function(args2, opts) {
-      if (!opts)
-        opts = {};
-      var flags = { bools: {}, strings: {}, unknownFn: null };
-      if (typeof opts["unknown"] === "function") {
-        flags.unknownFn = opts["unknown"];
+// ../../node_modules/.pnpm/cac@6.7.14/node_modules/cac/dist/index.mjs
+var import_events = require("events");
+function toArr(any) {
+  return any == null ? [] : Array.isArray(any) ? any : [any];
+}
+function toVal(out, key, val, opts) {
+  var x, old = out[key], nxt = !!~opts.string.indexOf(key) ? val == null || val === true ? "" : String(val) : typeof val === "boolean" ? val : !!~opts.boolean.indexOf(key) ? val === "false" ? false : val === "true" || (out._.push((x = +val, x * 0 === 0) ? x : val), !!val) : (x = +val, x * 0 === 0) ? x : val;
+  out[key] = old == null ? nxt : Array.isArray(old) ? old.concat(nxt) : [old, nxt];
+}
+function mri2(args, opts) {
+  args = args || [];
+  opts = opts || {};
+  var k, arr, arg, name, val, out = { _: [] };
+  var i = 0, j = 0, idx = 0, len = args.length;
+  const alibi = opts.alias !== void 0;
+  const strict = opts.unknown !== void 0;
+  const defaults = opts.default !== void 0;
+  opts.alias = opts.alias || {};
+  opts.string = toArr(opts.string);
+  opts.boolean = toArr(opts.boolean);
+  if (alibi) {
+    for (k in opts.alias) {
+      arr = opts.alias[k] = toArr(opts.alias[k]);
+      for (i = 0; i < arr.length; i++) {
+        (opts.alias[arr[i]] = arr.concat(k)).splice(i, 1);
       }
-      if (typeof opts["boolean"] === "boolean" && opts["boolean"]) {
-        flags.allBools = true;
-      } else {
-        [].concat(opts["boolean"]).filter(Boolean).forEach(function(key2) {
-          flags.bools[key2] = true;
-        });
-      }
-      var aliases = {};
-      Object.keys(opts.alias || {}).forEach(function(key2) {
-        aliases[key2] = [].concat(opts.alias[key2]);
-        aliases[key2].forEach(function(x) {
-          aliases[x] = [key2].concat(aliases[key2].filter(function(y) {
-            return x !== y;
-          }));
-        });
-      });
-      [].concat(opts.string).filter(Boolean).forEach(function(key2) {
-        flags.strings[key2] = true;
-        if (aliases[key2]) {
-          flags.strings[aliases[key2]] = true;
-        }
-      });
-      var defaults = opts["default"] || {};
-      var argv = { _: [] };
-      Object.keys(flags.bools).forEach(function(key2) {
-        setArg(key2, defaults[key2] === void 0 ? false : defaults[key2]);
-      });
-      var notFlags = [];
-      if (args2.indexOf("--") !== -1) {
-        notFlags = args2.slice(args2.indexOf("--") + 1);
-        args2 = args2.slice(0, args2.indexOf("--"));
-      }
-      function argDefined(key2, arg2) {
-        return flags.allBools && /^--[^=]+$/.test(arg2) || flags.strings[key2] || flags.bools[key2] || aliases[key2];
-      }
-      function setArg(key2, val, arg2) {
-        if (arg2 && flags.unknownFn && !argDefined(key2, arg2)) {
-          if (flags.unknownFn(arg2) === false)
-            return;
-        }
-        var value2 = !flags.strings[key2] && isNumber(val) ? Number(val) : val;
-        setKey(argv, key2.split("."), value2);
-        (aliases[key2] || []).forEach(function(x) {
-          setKey(argv, x.split("."), value2);
-        });
-      }
-      function setKey(obj, keys, value2) {
-        var o = obj;
-        for (var i2 = 0; i2 < keys.length - 1; i2++) {
-          var key2 = keys[i2];
-          if (isConstructorOrProto(o, key2))
-            return;
-          if (o[key2] === void 0)
-            o[key2] = {};
-          if (o[key2] === Object.prototype || o[key2] === Number.prototype || o[key2] === String.prototype)
-            o[key2] = {};
-          if (o[key2] === Array.prototype)
-            o[key2] = [];
-          o = o[key2];
-        }
-        var key2 = keys[keys.length - 1];
-        if (isConstructorOrProto(o, key2))
-          return;
-        if (o === Object.prototype || o === Number.prototype || o === String.prototype)
-          o = {};
-        if (o === Array.prototype)
-          o = [];
-        if (o[key2] === void 0 || flags.bools[key2] || typeof o[key2] === "boolean") {
-          o[key2] = value2;
-        } else if (Array.isArray(o[key2])) {
-          o[key2].push(value2);
-        } else {
-          o[key2] = [o[key2], value2];
-        }
-      }
-      function aliasIsBoolean(key2) {
-        return aliases[key2].some(function(x) {
-          return flags.bools[x];
-        });
-      }
-      for (var i = 0; i < args2.length; i++) {
-        var arg = args2[i];
-        if (/^--.+=/.test(arg)) {
-          var m = arg.match(/^--([^=]+)=([\s\S]*)$/);
-          var key = m[1];
-          var value = m[2];
-          if (flags.bools[key]) {
-            value = value !== "false";
-          }
-          setArg(key, value, arg);
-        } else if (/^--no-.+/.test(arg)) {
-          var key = arg.match(/^--no-(.+)/)[1];
-          setArg(key, false, arg);
-        } else if (/^--.+/.test(arg)) {
-          var key = arg.match(/^--(.+)/)[1];
-          var next = args2[i + 1];
-          if (next !== void 0 && !/^-/.test(next) && !flags.bools[key] && !flags.allBools && (aliases[key] ? !aliasIsBoolean(key) : true)) {
-            setArg(key, next, arg);
-            i++;
-          } else if (/^(true|false)$/.test(next)) {
-            setArg(key, next === "true", arg);
-            i++;
-          } else {
-            setArg(key, flags.strings[key] ? "" : true, arg);
-          }
-        } else if (/^-[^-]+/.test(arg)) {
-          var letters = arg.slice(1, -1).split("");
-          var broken = false;
-          for (var j = 0; j < letters.length; j++) {
-            var next = arg.slice(j + 2);
-            if (next === "-") {
-              setArg(letters[j], next, arg);
-              continue;
-            }
-            if (/[A-Za-z]/.test(letters[j]) && /=/.test(next)) {
-              setArg(letters[j], next.split("=")[1], arg);
-              broken = true;
-              break;
-            }
-            if (/[A-Za-z]/.test(letters[j]) && /-?\d+(\.\d*)?(e-?\d+)?$/.test(next)) {
-              setArg(letters[j], next, arg);
-              broken = true;
-              break;
-            }
-            if (letters[j + 1] && letters[j + 1].match(/\W/)) {
-              setArg(letters[j], arg.slice(j + 2), arg);
-              broken = true;
-              break;
-            } else {
-              setArg(letters[j], flags.strings[letters[j]] ? "" : true, arg);
-            }
-          }
-          var key = arg.slice(-1)[0];
-          if (!broken && key !== "-") {
-            if (args2[i + 1] && !/^(-|--)[^-]/.test(args2[i + 1]) && !flags.bools[key] && (aliases[key] ? !aliasIsBoolean(key) : true)) {
-              setArg(key, args2[i + 1], arg);
-              i++;
-            } else if (args2[i + 1] && /^(true|false)$/.test(args2[i + 1])) {
-              setArg(key, args2[i + 1] === "true", arg);
-              i++;
-            } else {
-              setArg(key, flags.strings[key] ? "" : true, arg);
-            }
-          }
-        } else {
-          if (!flags.unknownFn || flags.unknownFn(arg) !== false) {
-            argv._.push(
-              flags.strings["_"] || !isNumber(arg) ? arg : Number(arg)
-            );
-          }
-          if (opts.stopEarly) {
-            argv._.push.apply(argv._, args2.slice(i + 1));
-            break;
-          }
-        }
-      }
-      Object.keys(defaults).forEach(function(key2) {
-        if (!hasKey(argv, key2.split("."))) {
-          setKey(argv, key2.split("."), defaults[key2]);
-          (aliases[key2] || []).forEach(function(x) {
-            setKey(argv, x.split("."), defaults[key2]);
-          });
-        }
-      });
-      if (opts["--"]) {
-        argv["--"] = new Array();
-        notFlags.forEach(function(key2) {
-          argv["--"].push(key2);
-        });
-      } else {
-        notFlags.forEach(function(key2) {
-          argv._.push(key2);
-        });
-      }
-      return argv;
-    };
-    function hasKey(obj, keys) {
-      var o = obj;
-      keys.slice(0, -1).forEach(function(key2) {
-        o = o[key2] || {};
-      });
-      var key = keys[keys.length - 1];
-      return key in o;
-    }
-    function isNumber(x) {
-      if (typeof x === "number")
-        return true;
-      if (/^0x[0-9a-f]+$/i.test(x))
-        return true;
-      return /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(x);
-    }
-    function isConstructorOrProto(obj, key) {
-      return key === "constructor" && typeof obj[key] === "function" || key === "__proto__";
     }
   }
-});
+  for (i = opts.boolean.length; i-- > 0; ) {
+    arr = opts.alias[opts.boolean[i]] || [];
+    for (j = arr.length; j-- > 0; )
+      opts.boolean.push(arr[j]);
+  }
+  for (i = opts.string.length; i-- > 0; ) {
+    arr = opts.alias[opts.string[i]] || [];
+    for (j = arr.length; j-- > 0; )
+      opts.string.push(arr[j]);
+  }
+  if (defaults) {
+    for (k in opts.default) {
+      name = typeof opts.default[k];
+      arr = opts.alias[k] = opts.alias[k] || [];
+      if (opts[name] !== void 0) {
+        opts[name].push(k);
+        for (i = 0; i < arr.length; i++) {
+          opts[name].push(arr[i]);
+        }
+      }
+    }
+  }
+  const keys = strict ? Object.keys(opts.alias) : [];
+  for (i = 0; i < len; i++) {
+    arg = args[i];
+    if (arg === "--") {
+      out._ = out._.concat(args.slice(++i));
+      break;
+    }
+    for (j = 0; j < arg.length; j++) {
+      if (arg.charCodeAt(j) !== 45)
+        break;
+    }
+    if (j === 0) {
+      out._.push(arg);
+    } else if (arg.substring(j, j + 3) === "no-") {
+      name = arg.substring(j + 3);
+      if (strict && !~keys.indexOf(name)) {
+        return opts.unknown(arg);
+      }
+      out[name] = false;
+    } else {
+      for (idx = j + 1; idx < arg.length; idx++) {
+        if (arg.charCodeAt(idx) === 61)
+          break;
+      }
+      name = arg.substring(j, idx);
+      val = arg.substring(++idx) || (i + 1 === len || ("" + args[i + 1]).charCodeAt(0) === 45 || args[++i]);
+      arr = j === 2 ? [name] : name;
+      for (idx = 0; idx < arr.length; idx++) {
+        name = arr[idx];
+        if (strict && !~keys.indexOf(name))
+          return opts.unknown("-".repeat(j) + name);
+        toVal(out, name, idx + 1 < arr.length || val, opts);
+      }
+    }
+  }
+  if (defaults) {
+    for (k in opts.default) {
+      if (out[k] === void 0) {
+        out[k] = opts.default[k];
+      }
+    }
+  }
+  if (alibi) {
+    for (k in out) {
+      arr = opts.alias[k] || [];
+      while (arr.length > 0) {
+        out[arr.shift()] = out[k];
+      }
+    }
+  }
+  return out;
+}
+var removeBrackets = (v) => v.replace(/[<[].+/, "").trim();
+var findAllBrackets = (v) => {
+  const ANGLED_BRACKET_RE_GLOBAL = /<([^>]+)>/g;
+  const SQUARE_BRACKET_RE_GLOBAL = /\[([^\]]+)\]/g;
+  const res = [];
+  const parse = (match) => {
+    let variadic = false;
+    let value = match[1];
+    if (value.startsWith("...")) {
+      value = value.slice(3);
+      variadic = true;
+    }
+    return {
+      required: match[0].startsWith("<"),
+      value,
+      variadic
+    };
+  };
+  let angledMatch;
+  while (angledMatch = ANGLED_BRACKET_RE_GLOBAL.exec(v)) {
+    res.push(parse(angledMatch));
+  }
+  let squareMatch;
+  while (squareMatch = SQUARE_BRACKET_RE_GLOBAL.exec(v)) {
+    res.push(parse(squareMatch));
+  }
+  return res;
+};
+var getMriOptions = (options) => {
+  const result = { alias: {}, boolean: [] };
+  for (const [index, option] of options.entries()) {
+    if (option.names.length > 1) {
+      result.alias[option.names[0]] = option.names.slice(1);
+    }
+    if (option.isBoolean) {
+      if (option.negated) {
+        const hasStringTypeOption = options.some((o, i) => {
+          return i !== index && o.names.some((name) => option.names.includes(name)) && typeof o.required === "boolean";
+        });
+        if (!hasStringTypeOption) {
+          result.boolean.push(option.names[0]);
+        }
+      } else {
+        result.boolean.push(option.names[0]);
+      }
+    }
+  }
+  return result;
+};
+var findLongest = (arr) => {
+  return arr.sort((a, b) => {
+    return a.length > b.length ? -1 : 1;
+  })[0];
+};
+var padRight = (str, length) => {
+  return str.length >= length ? str : `${str}${" ".repeat(length - str.length)}`;
+};
+var camelcase = (input) => {
+  return input.replace(/([a-z])-([a-z])/g, (_, p1, p2) => {
+    return p1 + p2.toUpperCase();
+  });
+};
+var setDotProp = (obj, keys, val) => {
+  let i = 0;
+  let length = keys.length;
+  let t = obj;
+  let x;
+  for (; i < length; ++i) {
+    x = t[keys[i]];
+    t = t[keys[i]] = i === length - 1 ? val : x != null ? x : !!~keys[i + 1].indexOf(".") || !(+keys[i + 1] > -1) ? {} : [];
+  }
+};
+var setByType = (obj, transforms) => {
+  for (const key of Object.keys(transforms)) {
+    const transform = transforms[key];
+    if (transform.shouldTransform) {
+      obj[key] = Array.prototype.concat.call([], obj[key]);
+      if (typeof transform.transformFunction === "function") {
+        obj[key] = obj[key].map(transform.transformFunction);
+      }
+    }
+  }
+};
+var getFileName = (input) => {
+  const m = /([^\\\/]+)$/.exec(input);
+  return m ? m[1] : "";
+};
+var camelcaseOptionName = (name) => {
+  return name.split(".").map((v, i) => {
+    return i === 0 ? camelcase(v) : v;
+  }).join(".");
+};
+var CACError = class extends Error {
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name;
+    if (typeof Error.captureStackTrace === "function") {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(message).stack;
+    }
+  }
+};
+var Option = class {
+  constructor(rawName, description, config) {
+    this.rawName = rawName;
+    this.description = description;
+    this.config = Object.assign({}, config);
+    rawName = rawName.replace(/\.\*/g, "");
+    this.negated = false;
+    this.names = removeBrackets(rawName).split(",").map((v) => {
+      let name = v.trim().replace(/^-{1,2}/, "");
+      if (name.startsWith("no-")) {
+        this.negated = true;
+        name = name.replace(/^no-/, "");
+      }
+      return camelcaseOptionName(name);
+    }).sort((a, b) => a.length > b.length ? 1 : -1);
+    this.name = this.names[this.names.length - 1];
+    if (this.negated && this.config.default == null) {
+      this.config.default = true;
+    }
+    if (rawName.includes("<")) {
+      this.required = true;
+    } else if (rawName.includes("[")) {
+      this.required = false;
+    } else {
+      this.isBoolean = true;
+    }
+  }
+};
+var processArgs = process.argv;
+var platformInfo = `${process.platform}-${process.arch} node-${process.version}`;
+var Command = class {
+  constructor(rawName, description, config = {}, cli2) {
+    this.rawName = rawName;
+    this.description = description;
+    this.config = config;
+    this.cli = cli2;
+    this.options = [];
+    this.aliasNames = [];
+    this.name = removeBrackets(rawName);
+    this.args = findAllBrackets(rawName);
+    this.examples = [];
+  }
+  usage(text) {
+    this.usageText = text;
+    return this;
+  }
+  allowUnknownOptions() {
+    this.config.allowUnknownOptions = true;
+    return this;
+  }
+  ignoreOptionDefaultValue() {
+    this.config.ignoreOptionDefaultValue = true;
+    return this;
+  }
+  version(version2, customFlags = "-v, --version") {
+    this.versionNumber = version2;
+    this.option(customFlags, "Display version number");
+    return this;
+  }
+  example(example) {
+    this.examples.push(example);
+    return this;
+  }
+  option(rawName, description, config) {
+    const option = new Option(rawName, description, config);
+    this.options.push(option);
+    return this;
+  }
+  alias(name) {
+    this.aliasNames.push(name);
+    return this;
+  }
+  action(callback) {
+    this.commandAction = callback;
+    return this;
+  }
+  isMatched(name) {
+    return this.name === name || this.aliasNames.includes(name);
+  }
+  get isDefaultCommand() {
+    return this.name === "" || this.aliasNames.includes("!");
+  }
+  get isGlobalCommand() {
+    return this instanceof GlobalCommand;
+  }
+  hasOption(name) {
+    name = name.split(".")[0];
+    return this.options.find((option) => {
+      return option.names.includes(name);
+    });
+  }
+  outputHelp() {
+    const { name, commands } = this.cli;
+    const {
+      versionNumber,
+      options: globalOptions,
+      helpCallback
+    } = this.cli.globalCommand;
+    let sections = [
+      {
+        body: `${name}${versionNumber ? `/${versionNumber}` : ""}`
+      }
+    ];
+    sections.push({
+      title: "Usage",
+      body: `  $ ${name} ${this.usageText || this.rawName}`
+    });
+    const showCommands = (this.isGlobalCommand || this.isDefaultCommand) && commands.length > 0;
+    if (showCommands) {
+      const longestCommandName = findLongest(commands.map((command) => command.rawName));
+      sections.push({
+        title: "Commands",
+        body: commands.map((command) => {
+          return `  ${padRight(command.rawName, longestCommandName.length)}  ${command.description}`;
+        }).join("\n")
+      });
+      sections.push({
+        title: `For more info, run any command with the \`--help\` flag`,
+        body: commands.map((command) => `  $ ${name}${command.name === "" ? "" : ` ${command.name}`} --help`).join("\n")
+      });
+    }
+    let options = this.isGlobalCommand ? globalOptions : [...this.options, ...globalOptions || []];
+    if (!this.isGlobalCommand && !this.isDefaultCommand) {
+      options = options.filter((option) => option.name !== "version");
+    }
+    if (options.length > 0) {
+      const longestOptionName = findLongest(options.map((option) => option.rawName));
+      sections.push({
+        title: "Options",
+        body: options.map((option) => {
+          return `  ${padRight(option.rawName, longestOptionName.length)}  ${option.description} ${option.config.default === void 0 ? "" : `(default: ${option.config.default})`}`;
+        }).join("\n")
+      });
+    }
+    if (this.examples.length > 0) {
+      sections.push({
+        title: "Examples",
+        body: this.examples.map((example) => {
+          if (typeof example === "function") {
+            return example(name);
+          }
+          return example;
+        }).join("\n")
+      });
+    }
+    if (helpCallback) {
+      sections = helpCallback(sections) || sections;
+    }
+    console.log(sections.map((section) => {
+      return section.title ? `${section.title}:
+${section.body}` : section.body;
+    }).join("\n\n"));
+  }
+  outputVersion() {
+    const { name } = this.cli;
+    const { versionNumber } = this.cli.globalCommand;
+    if (versionNumber) {
+      console.log(`${name}/${versionNumber} ${platformInfo}`);
+    }
+  }
+  checkRequiredArgs() {
+    const minimalArgsCount = this.args.filter((arg) => arg.required).length;
+    if (this.cli.args.length < minimalArgsCount) {
+      throw new CACError(`missing required args for command \`${this.rawName}\``);
+    }
+  }
+  checkUnknownOptions() {
+    const { options, globalCommand } = this.cli;
+    if (!this.config.allowUnknownOptions) {
+      for (const name of Object.keys(options)) {
+        if (name !== "--" && !this.hasOption(name) && !globalCommand.hasOption(name)) {
+          throw new CACError(`Unknown option \`${name.length > 1 ? `--${name}` : `-${name}`}\``);
+        }
+      }
+    }
+  }
+  checkOptionValue() {
+    const { options: parsedOptions, globalCommand } = this.cli;
+    const options = [...globalCommand.options, ...this.options];
+    for (const option of options) {
+      const value = parsedOptions[option.name.split(".")[0]];
+      if (option.required) {
+        const hasNegated = options.some((o) => o.negated && o.names.includes(option.name));
+        if (value === true || value === false && !hasNegated) {
+          throw new CACError(`option \`${option.rawName}\` value is missing`);
+        }
+      }
+    }
+  }
+};
+var GlobalCommand = class extends Command {
+  constructor(cli2) {
+    super("@@global@@", "", {}, cli2);
+  }
+};
+var __assign = Object.assign;
+var CAC = class extends import_events.EventEmitter {
+  constructor(name = "") {
+    super();
+    this.name = name;
+    this.commands = [];
+    this.rawArgs = [];
+    this.args = [];
+    this.options = {};
+    this.globalCommand = new GlobalCommand(this);
+    this.globalCommand.usage("<command> [options]");
+  }
+  usage(text) {
+    this.globalCommand.usage(text);
+    return this;
+  }
+  command(rawName, description, config) {
+    const command = new Command(rawName, description || "", config, this);
+    command.globalCommand = this.globalCommand;
+    this.commands.push(command);
+    return command;
+  }
+  option(rawName, description, config) {
+    this.globalCommand.option(rawName, description, config);
+    return this;
+  }
+  help(callback) {
+    this.globalCommand.option("-h, --help", "Display this message");
+    this.globalCommand.helpCallback = callback;
+    this.showHelpOnExit = true;
+    return this;
+  }
+  version(version2, customFlags = "-v, --version") {
+    this.globalCommand.version(version2, customFlags);
+    this.showVersionOnExit = true;
+    return this;
+  }
+  example(example) {
+    this.globalCommand.example(example);
+    return this;
+  }
+  outputHelp() {
+    if (this.matchedCommand) {
+      this.matchedCommand.outputHelp();
+    } else {
+      this.globalCommand.outputHelp();
+    }
+  }
+  outputVersion() {
+    this.globalCommand.outputVersion();
+  }
+  setParsedInfo({ args, options }, matchedCommand, matchedCommandName) {
+    this.args = args;
+    this.options = options;
+    if (matchedCommand) {
+      this.matchedCommand = matchedCommand;
+    }
+    if (matchedCommandName) {
+      this.matchedCommandName = matchedCommandName;
+    }
+    return this;
+  }
+  unsetMatchedCommand() {
+    this.matchedCommand = void 0;
+    this.matchedCommandName = void 0;
+  }
+  parse(argv = processArgs, {
+    run = true
+  } = {}) {
+    this.rawArgs = argv;
+    if (!this.name) {
+      this.name = argv[1] ? getFileName(argv[1]) : "cli";
+    }
+    let shouldParse = true;
+    for (const command of this.commands) {
+      const parsed = this.mri(argv.slice(2), command);
+      const commandName = parsed.args[0];
+      if (command.isMatched(commandName)) {
+        shouldParse = false;
+        const parsedInfo = __assign(__assign({}, parsed), {
+          args: parsed.args.slice(1)
+        });
+        this.setParsedInfo(parsedInfo, command, commandName);
+        this.emit(`command:${commandName}`, command);
+      }
+    }
+    if (shouldParse) {
+      for (const command of this.commands) {
+        if (command.name === "") {
+          shouldParse = false;
+          const parsed = this.mri(argv.slice(2), command);
+          this.setParsedInfo(parsed, command);
+          this.emit(`command:!`, command);
+        }
+      }
+    }
+    if (shouldParse) {
+      const parsed = this.mri(argv.slice(2));
+      this.setParsedInfo(parsed);
+    }
+    if (this.options.help && this.showHelpOnExit) {
+      this.outputHelp();
+      run = false;
+      this.unsetMatchedCommand();
+    }
+    if (this.options.version && this.showVersionOnExit && this.matchedCommandName == null) {
+      this.outputVersion();
+      run = false;
+      this.unsetMatchedCommand();
+    }
+    const parsedArgv = { args: this.args, options: this.options };
+    if (run) {
+      this.runMatchedCommand();
+    }
+    if (!this.matchedCommand && this.args[0]) {
+      this.emit("command:*");
+    }
+    return parsedArgv;
+  }
+  mri(argv, command) {
+    const cliOptions = [
+      ...this.globalCommand.options,
+      ...command ? command.options : []
+    ];
+    const mriOptions = getMriOptions(cliOptions);
+    let argsAfterDoubleDashes = [];
+    const doubleDashesIndex = argv.indexOf("--");
+    if (doubleDashesIndex > -1) {
+      argsAfterDoubleDashes = argv.slice(doubleDashesIndex + 1);
+      argv = argv.slice(0, doubleDashesIndex);
+    }
+    let parsed = mri2(argv, mriOptions);
+    parsed = Object.keys(parsed).reduce((res, name) => {
+      return __assign(__assign({}, res), {
+        [camelcaseOptionName(name)]: parsed[name]
+      });
+    }, { _: [] });
+    const args = parsed._;
+    const options = {
+      "--": argsAfterDoubleDashes
+    };
+    const ignoreDefault = command && command.config.ignoreOptionDefaultValue ? command.config.ignoreOptionDefaultValue : this.globalCommand.config.ignoreOptionDefaultValue;
+    let transforms = /* @__PURE__ */ Object.create(null);
+    for (const cliOption of cliOptions) {
+      if (!ignoreDefault && cliOption.config.default !== void 0) {
+        for (const name of cliOption.names) {
+          options[name] = cliOption.config.default;
+        }
+      }
+      if (Array.isArray(cliOption.config.type)) {
+        if (transforms[cliOption.name] === void 0) {
+          transforms[cliOption.name] = /* @__PURE__ */ Object.create(null);
+          transforms[cliOption.name]["shouldTransform"] = true;
+          transforms[cliOption.name]["transformFunction"] = cliOption.config.type[0];
+        }
+      }
+    }
+    for (const key of Object.keys(parsed)) {
+      if (key !== "_") {
+        const keys = key.split(".");
+        setDotProp(options, keys, parsed[key]);
+        setByType(options, transforms);
+      }
+    }
+    return {
+      args,
+      options
+    };
+  }
+  runMatchedCommand() {
+    const { args, options, matchedCommand: command } = this;
+    if (!command || !command.commandAction)
+      return;
+    command.checkUnknownOptions();
+    command.checkOptionValue();
+    command.checkRequiredArgs();
+    const actionArgs = [];
+    command.args.forEach((arg, index) => {
+      if (arg.variadic) {
+        actionArgs.push(args.slice(index));
+      } else {
+        actionArgs.push(args[index]);
+      }
+    });
+    actionArgs.push(options);
+    return command.commandAction.apply(this, actionArgs);
+  }
+};
+var cac = (name = "") => new CAC(name);
+
+// package.json
+var version = "0.0.1";
+
+// utils/watch.ts
+var import_portfinder = require("portfinder");
+async function watch(configPath, port) {
+  console.log("configPath: ", configPath);
+  const p = await (0, import_portfinder.getPortPromise)({
+    port: Number(port)
+  });
+  console.log("p :>> ", p);
+}
+
+// utils/build.ts
+function build(options) {
+  console.log("options: ", options);
+}
 
 // index.ts
-var import_minimist = __toESM(require_minimist());
-var args = (0, import_minimist.default)(process.argv.slice(2));
-console.log("args: ", args);
+var cli = cac("electronup");
+cli.option("--vite <file>", "[string] \u6784\u5EFA\u6E32\u67D3\u8FDB\u7A0B\u7684\u914D\u7F6E\u6587\u4EF6 ").option("--tsup <file>", "[string] \u6784\u5EFA\u4E3B\u8FDB\u7A0B\u7684\u914D\u7F6E\u6587\u4EF6 ");
+cli.command("[root]", "start dev server , \u5B8C\u6210\u6784\u5EFA\u987B\u4F20\u5165 --vite [file] --tsup [file]").alias("dev").option("--port <port>", "[number] \u6E32\u67D3\u8FDB\u7A0B\u7684\u7AEF\u53E3\u53F7 \uFF0C\u5982\u679C\u5360\u7528\u4F1A\u5207\u6362\u975E\u5360\u7528\u7684\u7AEF\u53E3 ").action((root, options) => {
+  console.log("root: ", root);
+  console.log("options: ", options);
+  const { port = 8090, vite, tsup } = options;
+  if (!vite)
+    throw new Error("\u7F3A\u5C11 vite \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --vite \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
+  if (!tsup)
+    throw new Error("\u7F3A\u5C11 tsup \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --tsup \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
+  watch({ vite, tsup }, port);
+});
+cli.command("build [root]", "build for production , \u5B8C\u6210\u6784\u5EFA\u987B\u4F20\u5165 --vite [file] --tsup [file] --builder [file]").option("--builder <file>", "[string] \u6784\u5EFA\u684C\u9762\u7AEF\u5E94\u7528\u7684\u914D\u7F6E\u6587\u4EF6 ").action((root, options) => {
+  console.log("root: ", root);
+  console.log("options: ", options);
+  const { vite, tsup, builder } = options;
+  if (!vite)
+    throw new Error("\u7F3A\u5C11 vite \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --vite \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
+  if (!tsup)
+    throw new Error("\u7F3A\u5C11 tsup \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --tsup \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
+  if (!builder)
+    throw new Error("\u7F3A\u5C11 electron-builder \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --builder \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
+  build({ vite, tsup, builder });
+});
+cli.help();
+cli.version(version);
+cli.parse();
