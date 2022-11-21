@@ -614,7 +614,6 @@ var cli = cac("electronup");
 cli.option("--vite <file>", "[string] \u6784\u5EFA\u6E32\u67D3\u8FDB\u7A0B\u7684\u914D\u7F6E\u6587\u4EF6 ").option("--tsup <file>", "[string] \u6784\u5EFA\u4E3B\u8FDB\u7A0B\u7684\u914D\u7F6E\u6587\u4EF6 ");
 cli.command("[root]", "start dev server , \u5B8C\u6210\u6784\u5EFA\u987B\u4F20\u5165 --vite [file] --tsup [file]").alias("dev").option("--port <port>", "[number] \u6E32\u67D3\u8FDB\u7A0B\u7684\u7AEF\u53E3\u53F7 \uFF0C\u5982\u679C\u5360\u7528\u4F1A\u5207\u6362\u975E\u5360\u7528\u7684\u7AEF\u53E3 ").action((root, options) => {
   console.log("root: ", root);
-  console.log("options: ", options);
   const { port = 8090, vite, tsup } = options;
   if (!vite)
     throw new Error("\u7F3A\u5C11 vite \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --vite \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
@@ -624,7 +623,6 @@ cli.command("[root]", "start dev server , \u5B8C\u6210\u6784\u5EFA\u987B\u4F20\u
 });
 cli.command("build [root]", "build for production , \u5B8C\u6210\u6784\u5EFA\u987B\u4F20\u5165 --vite [file] --tsup [file] --builder [file]").option("--builder <file>", "[string] \u6784\u5EFA\u684C\u9762\u7AEF\u5E94\u7528\u7684\u914D\u7F6E\u6587\u4EF6 ").action((root, options) => {
   console.log("root: ", root);
-  console.log("options: ", options);
   const { vite, tsup, builder } = options;
   if (!vite)
     throw new Error("\u7F3A\u5C11 vite \u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84\u53C2\u6570,\u8BF7\u5B8C\u5584 --vite \u4F20\u5165\u914D\u7F6E\u53C2\u6570\uFF01");
