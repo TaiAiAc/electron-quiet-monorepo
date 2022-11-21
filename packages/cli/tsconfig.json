@@ -1,0 +1,7 @@
+{
+  "extends": "@quiteer/ts-config/tsconfig.node.json",
+  "include": ["index.ts"],
+  "compilerOptions": {
+    "importsNotUsedAsValues": "error"
+  }
+}
