@@ -7,7 +7,11 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "test": "electronup build --config electronup.config.ts"
+    "dev": "electronup",
+    "dev:instructions": "electronup dev",
+    "dev:custom": "electronup dev -c build/electronup.config.ts",
+    "build": "electronup build",
+    "build:custom": "electronup build -c build/electronup.config.ts"
   },
   "devDependencies": {
     "@quiteer/electronup": "workspace:*"

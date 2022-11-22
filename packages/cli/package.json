@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electronup",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "基于electron , ",
   "author": "quiteer",
   "license": "MIT",
@@ -14,12 +14,13 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "types": "electronup.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "electronup": "dist/cli.js"
   },
   "files": [
-    "dist", "electronup.d.ts"
+    "dist"
   ],
   "scripts": {
     "dev": "tsup --watch",
@@ -34,9 +35,12 @@
     "@swc/core": "^1.3.19"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "cac": "^6.7.14",
     "electron-builder": "^23.6.0",
+    "fs-extra": "^10.1.0",
     "portfinder": "^1.0.32",
+    "rimraf": "^3.0.2",
     "ts-swc-register": "github:gityoog/ts-swc-register",
     "vite": "^3.2.3"
   }

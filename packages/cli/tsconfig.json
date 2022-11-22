@@ -1,6 +1,6 @@
 {
   "extends": "@quiteer/ts-config/tsconfig.node.json",
-  "include": ["index.ts", "electronup.d.ts"],
+  "include": ["src/*", "package.json"],
   "compilerOptions": {
     "isolatedModules": false
   }

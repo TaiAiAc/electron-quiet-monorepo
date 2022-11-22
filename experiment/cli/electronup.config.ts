@@ -1,7 +1,3 @@
-import builderConfig from './builder.config'
-import viteConfig from './vite.config'
-import tsupConfig from './tsup.config'
+import { ElectronupConfig } from '@quiteer/electronup'
 
-export default {
-  builderConfig, viteConfig, tsupConfig
-}
+export default '这是根目录得配置，也是默认配置'
