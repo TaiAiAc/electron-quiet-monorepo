@@ -2,15 +2,8 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig({
   name: 'electronup',
-  entry: ['index.ts'],
-  outDir: 'bin',
+  entry: { cli: 'index.ts' },
   splitting: false,
   clean: true,
-  onSuccess() {
-    return new Promise((resolve) => {
-      console.log('本次结束')
-      resolve()
-    })
-  },
-  external: ['electron']
+  external: ['electron', 'electron-builder', 'vite', '@swc/core']
 })

@@ -4,10 +4,11 @@ import { cac } from 'cac'
 import { version } from './package.json'
 import { watch } from './utils/watch'
 import { build } from './utils/build'
+import 'ts-swc-register'
 
 interface Options {
-  vite: string
-  tsup: string
+  c?: string
+  config?: string
 }
 
 interface DevOptions extends Options {
@@ -15,43 +16,43 @@ interface DevOptions extends Options {
 }
 
 interface BuildOptions extends Options {
-  builder: string
+  o?: boolean
+  option?: boolean
 }
 
 const cli = cac('electronup')
 
-cli.option('--vite <file>', '[string] 构建渲染进程的配置文件 ')
-  .option('--tsup <file>', '[string] 构建主进程的配置文件 ')
+cli.option('-c --config <file>', '[string] 构建配置 ')
 
 cli
-  .command('[root]', 'start dev server , 完成构建须传入 --vite [file] --tsup [file]') // default command
+  .command('[root]', 'start dev server , 完成构建须传入 -c | --config [file]') // default command
   .alias('dev')
   .option('--port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
-  .action((root, options: DevOptions) => {
+  .action(async (root: undefined | string, options: DevOptions) => {
     console.log('root: ', root)
-    const { port = 8090, vite, tsup } = options
-    if (!vite)
-      throw new Error('缺少 vite 配置文件路径参数,请完善 --vite 传入配置参数！')
-    if (!tsup)
-      throw new Error('缺少 tsup 配置文件路径参数,请完善 --tsup 传入配置参数！')
+    const { port = 8090, c, config } = options
 
-    watch({ vite, tsup }, port)
+    const filePath = c || config
+    if (filePath) {
+      const option = await import(filePath)
+      watch(option, port)
+    }
   })
 
 cli
-  .command('build [root]', 'build for production , 完成构建须传入 --vite [file] --tsup [file] --builder [file]')
-  .option('--builder <file>', '[string] 构建桌面端应用的配置文件 ')
-  .action((root, options: BuildOptions) => {
+  .command('build [root]', '构建 , 完成构建须传入 -c | --config [file]')
+  .option('-o , --option', '自定义 , 自定义构建选项 ')
+  .option('-rm , --rimraf', '清理 , 是否清理构建目录 ')
+  .action(async (root: undefined | string, options: BuildOptions) => {
     console.log('root: ', root)
-    const { vite, tsup, builder } = options
-    if (!vite)
-      throw new Error('缺少 vite 配置文件路径参数,请完善 --vite 传入配置参数！')
-    if (!tsup)
-      throw new Error('缺少 tsup 配置文件路径参数,请完善 --tsup 传入配置参数！')
-    if (!builder)
-      throw new Error('缺少 electron-builder 配置文件路径参数,请完善 --builder 传入配置参数！')
+    const { c, config, o, option } = options
+    console.log('o, option: ', o, option)
 
-    build({ vite, tsup, builder })
+    const filePath = c || config
+    if (filePath) {
+      const option = await import(filePath)
+      build(option)
+    }
   })
 
 cli.help()
