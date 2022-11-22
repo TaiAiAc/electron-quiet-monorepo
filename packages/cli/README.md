@@ -1,116 +1,66 @@
-# @quiteer/electron-preload
+# @quiteer/electronup
 
 
-> 基于electron , 提供预加载功能脚本
+> 融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 
+> vite tsup electorn-builder 已内置 无需重复安装
 
 ## 安装
 
 ```bash
-npm i @quiteer/electron-preload
+npm i @quiteer/electronup
 ```
 ```bash
-yarn add @quiteer/electron-preload
+yarn add @quiteer/electronup
 ```
 ```bash
-pnpm add @quiteer/electron-preload
+pnpm add @quiteer/electronup
 ```
 
 
 ## 使用
 
-> 在主进程中引入预加载脚本
-
-```js
-import preload from '@quiteer/electron-preload'
-
-const win = new BrowserWindow({
-  width: 800,
-  height: 600,
-  webPreferences: {
-    sandbox: false,
-    preload
-  }
-})
-```
+- 查看命令行指令
+  - `electornup -h`
+- 查看命令行版本
+  - `electornup -v`
+- 开发环境
+  - `electornup`
+  - `electornup dev`
+  - `electornup -c [file]`
+  - `electornup --config [file]`
+- 构建打包
+  - `electornup build`
 
 ### 暴露的api
 
-分别暴露了以下api , 具体使用方法可参照官方 api 文档使用
+```ts
+import type { CliOptions } from 'electron-builder'
+import type { InlineConfig, UserConfigExport } from 'vite'
+import type { Options } from 'tsup'
 
-- ipcRenderer
-  - send
-  - sendSync
-  - invoke
-  - on
-  - once
-  - removeAllListeners
+interface ElectronupConfig {
+  builderConfig: CliOptions
+  viteConfig: InlineConfig
+  tsupConfig: Options
+  /** 渲染进程输出目录 */
+  renderDir: string
+  /** 主进程输出目录 */
+  mainDir: string
+  /** electron-builder 输出目录 */
+  outDir: string
+}
 
-- clipboard
-  - readText
-  - writeText
-  - readHTML
-  - writeHTML
-  - readImage
-  - writeImage
-  - readRTF
-  - writeRTF
-  - readBookmark
-  - writeBookmark
-  - readFindText
-  - writeFindText
-  - clear
-  - availableFormats
-  - has
-  - read
-  - readBuffer
-  - writeBuffer
-  - write
+declare const viteConfig: (config: UserConfigExport) => UserConfigExport
 
-- webFrame
-  -  setZoomFactor
-  -  getZoomFactor
-  -  setZoomLevel
-  -  getZoomLevel
-  -  insertText
-  -  executeJavaScript
-  -  executeJavaScriptInIsolatedWorld
-  -  setIsolatedWorldInfo
-  -  getResourceUsage
-  -  clearCache
-  -  getFrameForSelector
-  -  firstChild
-  -  nextSibling
-  -  opener
-  -  parent
-  -  routingId
-  -  top
+declare const tsupConfig: (config: Options) => Options | Options[] | ((overrideOptions: Options) => Options | Options[] | Promise<Options | Options[]>)
 
-- nodejs 的 path 模块部分 api
-  -  basename
-  -  dirname
-  -  extname
-  -  join
-  -  parse
-  -  relative
-  -  resolve
+declare const buildConfig: (config: CliOptions) => CliOptions
 
-### 渲染进程中使用
+declare const defineConfig: (options: ElectronupConfig) => ElectronupConfig
 
-```js
-console.log('window.$ipc :>> ', window.$ipc)
-console.log('window.$path :>> ', window.$path)
-console.log('window.$clipboard :>> ', window.$clipboard)
-console.log('window.$webFrame :>> ', window.$webFrame)
+export { ElectronupConfig, buildConfig, defineConfig, tsupConfig, viteConfig }
 ```
 
 #### 获取类型提示
 
-全局类型声明
-```ts
-interface Window {
-  $ipc: import('@quiteer/electron-preload').PreloadIpc
-  $clipboard: import('@quiteer/electron-preload').PreLoadPath
-  $webFrame: import('@quiteer/electron-preload').PreloadWebFrame
-  $path: import('@quiteer/electron-preload').PreLoadPath
-}
-```
+引入导出的 api 即可获取类型提示

@@ -3,6 +3,7 @@ import { cac } from 'cac'
 import { watch } from '../watch'
 import { build } from '../build'
 import { transformOptions } from '../utils'
+import { version } from '../../package.json'
 
 interface Options {
   c?: string
@@ -45,5 +46,5 @@ cli
   })
 
 cli.help()
-cli.version('0.0.3')
+cli.version(version)
 cli.parse()

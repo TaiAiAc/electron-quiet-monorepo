@@ -1,9 +1,11 @@
 import { defineConfig } from 'tsup'
+import { devDependencies } from './package.json'
+console.log('devDependencies: ')
 
 const config = {
   splitting: false,
   clean: true,
-  external: ['electron', 'electron-builder', 'vite', '@swc/core']
+  external: ['electron', ...Object.keys(devDependencies)]
 }
 
 export default defineConfig([
@@ -16,6 +18,7 @@ export default defineConfig([
   {
     ...config,
     name: 'electronup-cli',
-    entry: { cli: 'src/cli/index.ts' }
+    outDir: 'bin',
+    entry: ['src/cli/index.ts']
   }
 ])
