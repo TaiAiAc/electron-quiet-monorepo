@@ -7,10 +7,9 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "help": "electronup -h",
-    "version": "electronup -v",
-    "dev": "electronup",
-    "dev:instructions": "electronup dev",
+    "all": "npm run command && npm run dev && npm run dev:custom && npm run build && npm run build:custom",
+    "command": "electronup -h && electronup -v",
+    "dev": "electronup && electronup dev",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
