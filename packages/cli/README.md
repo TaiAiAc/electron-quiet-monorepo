@@ -2,7 +2,8 @@
 
 
 > 融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 
-> vite tsup electorn-builder 已内置 无需重复安装
+> 开发中 ...
+
 
 ## 安装
 
@@ -31,34 +32,80 @@ pnpm add @quiteer/electronup
 - 构建打包
   - `electornup build`
 
+## 内置的依赖
+> 部分依赖已内置 无需重复安装 （开发此脚手架的目的也是给项目 package 瘦瘦身）
+
+```json
+{
+  "dependencies": {
+    "@swc-node/core": "^1.9.1",
+    "@swc/core": "^1.3.19",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "cac": "^6.7.14",
+    "electron": "^21.2.2",
+    "electron-builder": "^23.6.0",
+    "fs-extra": "^10.1.0",
+    "pirates": "^4.0.5",
+    "portfinder": "^1.0.32",
+    "rimraf": "^3.0.2",
+    "tsconfig-paths": "^4.1.0",
+    "tsup": "^6.4.0",
+    "typescript": "^4.9.3",
+    "vite": "^3.2.3"
+  }
+}
+```
+
 ### 暴露的api
 
 ```ts
 import type { CliOptions } from 'electron-builder'
-import type { InlineConfig, UserConfigExport } from 'vite'
+import type { UserConfig, UserConfigFn } from 'vite'
 import type { Options } from 'tsup'
 
-interface ElectronupConfig {
-  builderConfig: CliOptions
-  viteConfig: InlineConfig
-  tsupConfig: Options
-  /** 渲染进程输出目录 */
-  renderDir: string
-  /** 主进程输出目录 */
-  mainDir: string
-  /** electron-builder 输出目录 */
-  outDir: string
+/**
+ * 像配置里注入环境变量
+ */
+interface ConfigEnv {
+  command: 'build' | 'serve'
 }
 
-declare const viteConfig: (config: UserConfigExport) => UserConfigExport
+type UserViteConfig = UserConfig | UserConfigFn
 
-declare const tsupConfig: (config: Options) => Options | Options[] | ((overrideOptions: Options) => Options | Options[] | Promise<Options | Options[]>)
+type UserTsupConfigFn = (env: ConfigEnv) => Options | Options[]
+type UserTsupConfig = Options | Options[] | UserTsupConfigFn
 
-declare const buildConfig: (config: CliOptions) => CliOptions
+type UserBuildConfigFn = (env: ConfigEnv) => CliOptions
+type UserBuildConfig = CliOptions | UserBuildConfigFn
 
-declare const defineConfig: (options: ElectronupConfig) => ElectronupConfig
+interface ElectronupConfig {
+  viteConfig: UserViteConfig
+  tsupConfig: UserTsupConfig
+  builderConfig: UserBuildConfig
+  /**
+   * 渲染进程 主进程 输出目录
+   * @default 'dist'
+   */
+  buildDir?: string
+  /**
+   * electron-builder 输出目录
+   * @default 'out'
+   */
+  outDir?: string
+}
 
-export { ElectronupConfig, buildConfig, defineConfig, tsupConfig, viteConfig }
+type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
+type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
+
+declare const viteConfig: (userConfigExport: UserViteConfig) => UserViteConfig
+
+declare const tsupConfig: (userTsupConfig: UserTsupConfig) => UserTsupConfig
+
+declare const buildConfig: (configFn: UserBuildConfig) => UserBuildConfig
+
+declare const defineConfig: (electronupConfig: UserElectronupConfig) => UserElectronupConfig
+
+export { ConfigEnv, ElectronupConfig, ElectronupConfigFn, UserBuildConfig, UserBuildConfigFn, UserElectronupConfig, UserTsupConfig, UserTsupConfigFn, UserViteConfig, buildConfig, defineConfig, tsupConfig, viteConfig }
 ```
 
 #### 获取类型提示

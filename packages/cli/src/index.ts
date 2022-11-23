@@ -1,6 +1,13 @@
-export type { ElectronupConfig } from './typings/electronup'
+export { buildConfig, defineConfig, tsupConfig, viteConfig } from './config-utils'
 
-export { viteConfig } from './utils/viteConfig'
-export { tsupConfig } from './utils/tsupConfig'
-export { buildConfig } from './utils/buildConfig'
-export { defineConfig } from './utils/defineConfig'
+export type{
+  ConfigEnv,
+  ElectronupConfig,
+  ElectronupConfigFn,
+  UserBuildConfig,
+  UserBuildConfigFn,
+  UserElectronupConfig,
+  UserTsupConfig,
+  UserTsupConfigFn,
+  UserViteConfig
+} from './typings/electronup'
