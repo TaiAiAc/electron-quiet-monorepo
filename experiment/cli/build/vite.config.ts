@@ -1,6 +1,7 @@
 import { viteConfig } from '@quiteer/electronup'
 
 export default viteConfig((env) => {
+  console.info('client vite: ', env)
   return {
     base: './',
     server: {

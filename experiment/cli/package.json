@@ -9,12 +9,15 @@
   "scripts": {
     "all": "npm run command && npm run dev && npm run dev:custom && npm run build && npm run build:custom",
     "command": "electronup -h && electronup -v",
-    "dev": "electronup && electronup dev",
+    "dev1": "electronup",
+    "dev2": "electronup dev",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
   },
   "devDependencies": {
-    "@quiteer/electronup": "workspace:*"
+    "@quiteer/electronup": "workspace:*",
+    "@quiteer/eslint-config": "^0.0.3",
+    "@quiteer/ts-config": "^0.0.3"
   }
 }

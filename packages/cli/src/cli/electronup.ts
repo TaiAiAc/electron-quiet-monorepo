@@ -2,7 +2,7 @@
 import { cac } from 'cac'
 import { watch } from '../watch'
 import { build } from '../build'
-import { transformOptions } from '../utils'
+import { transform } from '../transform'
 import { version } from '../../package.json'
 
 interface Options {
@@ -29,7 +29,7 @@ cli
   .option('--port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
   .action(async (dir: undefined | string, options: DevOptions) => {
     const { port = 8090, c, config } = options
-    const option = await transformOptions(c || config)
+    const option = await transform(c || config, 'serve')
     watch(option, port)
   })
 
@@ -41,7 +41,7 @@ cli
     const { c, config, o = false, option = false } = options
     console.log('o, option: ', o, option)
 
-    const configOption = await transformOptions(c || config)
+    const configOption = await transform(c || config, 'build')
     build(configOption, o || option)
   })
 

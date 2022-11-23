@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "isolatedModules": false
+  },
+  "include": ["typings"],
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.web.json" }
+  ]
+}
