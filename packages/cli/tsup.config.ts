@@ -3,8 +3,7 @@ import { defineConfig } from 'tsup'
 
 const config: Options = {
   splitting: false,
-  clean: true,
-  external: ['electron']
+  clean: true
 }
 
 export default defineConfig([

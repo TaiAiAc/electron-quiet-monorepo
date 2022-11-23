@@ -1,7 +1,8 @@
 import { join } from 'path'
 import { pathExists } from 'fs-extra'
 import type { ElectronupConfig } from '../typings/electronup'
-import 'ts-swc-register'
+import { register } from '../ts-swc-register'
+register()
 
 const NOT_FOUND = '找不到 electronup.config.ts | electronup.config.js | electronup.config.json , 请在根目录下添加配置文件 , 或显式的指定配置文件路径（相对于根目录）'
 const PARSING_FAILED = '找到了配置文件,但解析配置文件失败！'
