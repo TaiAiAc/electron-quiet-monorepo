@@ -1,4 +1,4 @@
-import type { ConfigEnv } from './electronup';
+import type { ConfigEnv } from './env';
 
 
 export interface TsupConfig {

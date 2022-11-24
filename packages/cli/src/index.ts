@@ -11,4 +11,5 @@ export const builderConfig = (config: UserBuilderConfig): UserBuilderConfig => c
 
 export const defineConfig = (config: UserElectronupConfig): UserElectronupConfig => config
 
-export type { ConfigEnv, ElectronupConfig } from './typings/electronup'
+export type { ElectronupConfig } from './typings/electronup'
+export type { ConfigEnv } from './typings/env'

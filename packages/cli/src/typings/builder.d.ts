@@ -1,5 +1,5 @@
 import type { CliOptions } from 'electron-builder';
-import { ConfigEnv } from './electronup';
+import { ConfigEnv } from './env';
 
 export interface BuilderConfig extends CliOptions {}
 

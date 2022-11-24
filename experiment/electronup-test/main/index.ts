@@ -2,7 +2,7 @@ import { BrowserWindow, app } from 'electron'
 
 app.whenReady().then(() => {
   const win = new BrowserWindow({
-    height: 600, width: 800
+    height: 700, width: 500
   })
 
   console.log('pro :>> ', process.env.VITE_TEST)

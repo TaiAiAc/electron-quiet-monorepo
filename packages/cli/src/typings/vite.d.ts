@@ -1,5 +1,5 @@
 import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite';
-import type { ConfigEnv } from './electronup';
+import type { ConfigEnv } from './env';
 
 
 export interface ViteConfig {

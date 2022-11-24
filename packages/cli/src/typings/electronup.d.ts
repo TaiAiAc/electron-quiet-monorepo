@@ -1,15 +1,7 @@
 import type { UserViteConfig } from './vite';
 import type { UserTsupConfig } from './tsup';
 import type { UserBuilderConfig } from './builder';
-
-
-/**
- * 像配置里注入环境变量
- */
-export interface ConfigEnv {
-  command: 'build' | 'serve';
-}
-
+import { ConfigEnv } from './env';
 
 export interface ElectronupConfig {
   viteConfig?: UserViteConfig

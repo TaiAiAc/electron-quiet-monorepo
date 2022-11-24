@@ -1,2 +1,2 @@
 export { getConfig } from './getConfig'
-export { viteConfig, tsupConfig } from './getExportConfig'
+export { viteConfig, tsupConfig, builderConfig, electronupConfig } from './getExportConfig'
