@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import type { UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import type { ViteConfig } from '../typings/vite'
+import type { ViteConfig } from '../typings/electronup'
 
 const root = process.cwd()
 

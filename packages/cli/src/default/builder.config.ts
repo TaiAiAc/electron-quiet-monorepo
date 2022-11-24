@@ -1,4 +1,4 @@
-import type { BuilderConfig } from '../typings/builder'
+import type { BuilderConfig } from '../typings/electronup'
 
 export function getBuilderConfig(config: BuilderConfig) {
   const defaultConfig: BuilderConfig = {

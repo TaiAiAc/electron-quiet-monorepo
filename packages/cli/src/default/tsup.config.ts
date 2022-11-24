@@ -1,7 +1,8 @@
 import { resolve } from 'path'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
-import type { TsupConfig } from '../typings/tsup'
+import type { TsupConfig } from '../typings/electronup'
+import type { ConfigEnv } from '../typings/env'
 import { startElectron } from './startElectron'
 
 const defaultEnvPath = resolve(process.cwd(), '.env')
@@ -39,7 +40,9 @@ const injectEnv = (command: 'build' | 'serve') => {
   throw new Error('未匹配到 command 指令')
 }
 
-export function getTsupConfig(config: TsupConfig, command: 'build' | 'serve') {
+export function getTsupConfig(config: TsupConfig, env: ConfigEnv) {
+  const { command } = env
+
   const defaultConfig: Options = {
     minify: false,
     ...config,
