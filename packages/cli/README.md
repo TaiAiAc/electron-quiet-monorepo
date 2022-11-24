@@ -42,16 +42,20 @@ pnpm add @quiteer/electronup
     "@swc/core": "^1.3.19",
     "@vitejs/plugin-vue": "^3.2.0",
     "cac": "^6.7.14",
+    "dotenv": "^16.0.3",
     "electron": "^21.2.2",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
+    "inquirer": "^9.1.4",
+    "neofetch": "^7.1.0",
     "pirates": "^4.0.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.1.0",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "vue-tsc": "^1.0.9"
   }
 }
 ```
@@ -59,9 +63,28 @@ pnpm add @quiteer/electronup
 ### 暴露的api
 
 ```ts
+import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite'
 import type { CliOptions } from 'electron-builder'
-import type { UserConfig, UserConfigFn } from 'vite'
-import type { Options } from 'tsup'
+
+interface TsupConfig {
+  entry?: string[] | Record<string, string>
+  name?: string
+  outDir?: string
+  target?: string | string[]
+  minify?: boolean
+  external?: (string | RegExp)[]
+  noExternal?: (string | RegExp)[]
+}
+
+type TsupConfigFn = (env: ConfigEnv) => TsupConfig
+
+type UserTsupConfig = TsupConfig | TsupConfigFn
+
+interface BuilderConfig extends CliOptions {}
+
+type BuilderConfigFn = (env: ConfigEnv) => BuilderConfig
+
+type UserBuilderConfig = BuilderConfig | BuilderConfigFn
 
 /**
  * 像配置里注入环境变量
@@ -70,18 +93,10 @@ interface ConfigEnv {
   command: 'build' | 'serve'
 }
 
-type UserViteConfig = UserConfig | UserConfigFn
-
-type UserTsupConfigFn = (env: ConfigEnv) => Options | Options[]
-type UserTsupConfig = Options | Options[] | UserTsupConfigFn
-
-type UserBuildConfigFn = (env: ConfigEnv) => CliOptions
-type UserBuildConfig = CliOptions | UserBuildConfigFn
-
 interface ElectronupConfig {
-  viteConfig: UserViteConfig
-  tsupConfig: UserTsupConfig
-  builderConfig: UserBuildConfig
+  viteConfig?: UserViteConfig
+  tsupConfig?: UserTsupConfig
+  builderConfig: UserBuilderConfig
   /**
    * 渲染进程 主进程 输出目录
    * @default 'dist'
@@ -97,17 +112,33 @@ interface ElectronupConfig {
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
 type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
 
-declare const viteConfig: (userConfigExport: UserViteConfig) => UserViteConfig
+interface ViteConfig {
+  base?: string
+  root?: string
+  outDir?: string
+  publicDir?: string
+  resolve?: ResolveOptions & {
+    alias?: AliasOptions
+  }
+  plugins?: PluginOption[]
+  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir' | 'outDir' | 'build' | 'server'>
+}
 
-declare const tsupConfig: (userTsupConfig: UserTsupConfig) => UserTsupConfig
+type ViteConfigFn = (env: ConfigEnv) => ViteConfig
 
-declare const buildConfig: (configFn: UserBuildConfig) => UserBuildConfig
+type UserViteConfig = ViteConfig | ViteConfigFn
 
-declare const defineConfig: (electronupConfig: UserElectronupConfig) => UserElectronupConfig
+declare const viteConfig: (config: UserViteConfig) => UserViteConfig
+declare const tsupConfig: (config: UserTsupConfig) => UserTsupConfig
+declare const builderConfig: (config: UserBuilderConfig) => UserBuilderConfig
+declare const defineConfig: (config: UserElectronupConfig) => UserElectronupConfig
 
-export { ConfigEnv, ElectronupConfig, ElectronupConfigFn, UserBuildConfig, UserBuildConfigFn, UserElectronupConfig, UserTsupConfig, UserTsupConfigFn, UserViteConfig, buildConfig, defineConfig, tsupConfig, viteConfig }
+export { ConfigEnv, ElectronupConfig, builderConfig, defineConfig, tsupConfig, viteConfig }
+
 ```
 
 #### 获取类型提示
 
 引入导出的 api 即可获取类型提示
+
+

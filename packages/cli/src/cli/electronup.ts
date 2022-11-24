@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
-import { watch } from '../watch'
-import { build } from '../build'
-import { getConfig, transform } from '../transform'
+import { build, watch } from '../runner'
+import { getConfig } from '../transform'
 import { version } from '../../package.json'
 
 interface Options {
@@ -41,7 +40,6 @@ cli
   .option('-rm', '清理 , 是否清理构建目录 ')
   .action(async (dir: undefined | string, options: BuildOptions) => {
     const { c, config, o = false, option = false } = options
-    console.log('o, option: ', o, option)
 
     const configOption = await getConfig(c || config)
     build(configOption, o || option)

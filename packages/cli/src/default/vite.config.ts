@@ -8,7 +8,7 @@ const root = process.cwd()
 export function getViteConfig(config: ViteConfig) {
   const defaultConfig: UserConfig = {
     base: config.base || './',
-    root: resolve(root, config.root || 'render'),
+    root: config.root || 'render',
     server: {
       host: '0.0.0.0'
     },

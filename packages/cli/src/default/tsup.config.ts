@@ -43,14 +43,13 @@ export function getTsupConfig(config: TsupConfig, command: 'build' | 'serve') {
   const defaultConfig: Options = {
     minify: false,
     ...config,
+    external: ['electron', ...(config.external ? config.external : [])],
     entry: { electron: resolve(process.cwd(), 'main/index.ts') },
     watch: command === 'serve',
     dts: false,
     env: injectEnv(command),
     async onSuccess() {
-      console.info('tsup构建完毕')
-
-      // return startElectron()
+      return startElectron(resolve(process.cwd(), 'dist/electron.js'))
     }
   }
 

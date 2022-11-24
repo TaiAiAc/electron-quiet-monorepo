@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import type { ChildProcessWithoutNullStreams } from 'child_process'
 import { spawn } from 'child_process'
 import electron from 'electron'
@@ -6,7 +5,7 @@ import electron from 'electron'
 let electronProcess: ChildProcessWithoutNullStreams | null
 let manualRestart = false
 
-export function startElectron() {
+export function startElectron(mainPath: string) {
   if (electronProcess) {
     manualRestart = true
     electronProcess.pid && process.kill(electronProcess.pid)
@@ -16,8 +15,6 @@ export function startElectron() {
       manualRestart = false
     }, 5000)
   }
-
-  const mainPath = resolve(__dirname, '../dist/main.js')
 
   electronProcess = spawn(electron as any, [mainPath, '--inspect=9528'])
 
@@ -43,6 +40,5 @@ function removeJunk(chunk: string) {
   data.forEach((line) => {
     log += `  ${line}\n`
   })
-  // eslint-disable-next-line no-console
-  console.log(log)
+  console.info(log)
 }
