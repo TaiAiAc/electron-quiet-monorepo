@@ -47,9 +47,11 @@ export function getTsupConfig(config: TsupConfig, command: 'build' | 'serve') {
     entry: { electron: resolve(process.cwd(), 'main/index.ts') },
     watch: command === 'serve',
     dts: false,
+    clean: command === 'build',
     env: injectEnv(command),
     async onSuccess() {
-      return startElectron(resolve(process.cwd(), 'dist/electron.js'))
+      if (command === 'serve')
+        return startElectron(resolve(process.cwd(), 'dist/electron.js'))
     }
   }
 
