@@ -1,8 +1,8 @@
 import type { ElectronupConfig, ElectronupConfigFn, UserElectronupConfig } from '../typings/electronup'
-import type { ConfigEnv } from '../typings/env'
 import { getElectronupConfig } from '../default/index'
+import { env } from '../utils'
 
-const exportElectronupConfig = (config: UserElectronupConfig, env: ConfigEnv): ElectronupConfig => {
+const exportElectronupConfig = (config: UserElectronupConfig): ElectronupConfig => {
   const typeStr = typeof config
   if (typeStr === 'function') {
     const option = (<ElectronupConfigFn>config)(env)
@@ -15,4 +15,4 @@ const exportElectronupConfig = (config: UserElectronupConfig, env: ConfigEnv): E
   throw new Error('electronup 配置错误')
 }
 
-export const electronupConfig = (config: UserElectronupConfig, env: ConfigEnv) => getElectronupConfig(exportElectronupConfig(config, env))
+export const electronupConfig = (config: UserElectronupConfig) => getElectronupConfig(exportElectronupConfig(config))
