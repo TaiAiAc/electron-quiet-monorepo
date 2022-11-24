@@ -25,6 +25,11 @@ importers:
       '@quiteer/electronup': workspace:*
       '@quiteer/eslint-config': ^0.0.3
       '@quiteer/ts-config': ^0.0.3
+      '@vitejs/plugin-vue': ^3.2.0
+      vue: ^3.2.41
+    dependencies:
+      '@vitejs/plugin-vue': 3.2.0_vue@3.2.43
+      vue: 3.2.43
     devDependencies:
       '@quiteer/electronup': link:../../packages/cli
       '@quiteer/eslint-config': 0.0.3
@@ -74,6 +79,7 @@ importers:
       electron-builder: ^23.6.0
       fs-extra: ^10.1.0
       inquirer: ^9.1.4
+      neofetch: ^7.1.0
       pirates: ^4.0.5
       portfinder: ^1.0.32
       rimraf: ^3.0.2
@@ -92,6 +98,7 @@ importers:
       electron-builder: 23.6.0
       fs-extra: 10.1.0
       inquirer: 9.1.4
+      neofetch: 7.1.0
       pirates: 4.0.5
       portfinder: 1.0.32
       rimraf: 3.0.2
@@ -979,6 +986,16 @@ packages:
       vite: 3.2.3
       vue: 3.2.43
     dev: true
+
+  /@vitejs/plugin-vue/3.2.0_vue@3.2.43:
+    resolution: {integrity: sha512-E0tnaL4fr+qkdCNxJ+Xd0yM31UwMkQje76fsDVBBUCoGOUPexu2VDUYHL8P4CwV+zMvWw6nlRw19OnRKmYAJpw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      vite: ^3.0.0
+      vue: ^3.2.25
+    dependencies:
+      vue: 3.2.43
+    dev: false
 
   /@volar/language-core/1.0.9:
     resolution: {integrity: sha512-5Fty3slLet6svXiJw2YxhYeo6c7wFdtILrql5bZymYLM+HbiZtJbryW1YnUEKAP7MO9Mbeh+TNH4Z0HFxHgIqw==}
@@ -3804,6 +3821,11 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
+
+  /neofetch/7.1.0:
+    resolution: {integrity: sha512-oty812SRx3DG70gDmOiqmZDMrMFrJK1W8/PkV7YJtG2SE3eyKA7FGQo0ASXxqayK0zqutO/nOvQF4zRHqDJgNg==}
+    hasBin: true
+    dev: false
 
   /node-addon-api/1.7.2:
     resolution: {integrity: sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==}

@@ -43,6 +43,7 @@
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
     "inquirer": "^9.1.4",
+    "neofetch": "^7.1.0",
     "pirates": "^4.0.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",

@@ -15,6 +15,9 @@
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
   },
+  "dependencies": {
+    "vue": "^3.2.41"
+  },
   "devDependencies": {
     "@quiteer/electronup": "workspace:*",
     "@quiteer/eslint-config": "^0.0.3",
