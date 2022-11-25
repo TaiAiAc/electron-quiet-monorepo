@@ -42,21 +42,21 @@ const injectEnv = () => {
   throw new Error('未匹配到 command 指令')
 }
 
-export function getTsupConfig(config: TsupConfig, buildDir: string) {
-  const { command, root } = store
+export function getTsupConfig(config: TsupConfig) {
+  const { command, root, mainDir, resourceDir } = store
 
   const defaultConfig: Options = {
     minify: false,
     ...config,
     external: ['electron', ...(config.external ? config.external : [])],
-    entry: { electron: resolve(root, 'main/index.ts') },
+    entry: { electron: resolve(root, mainDir, 'index.ts') },
     watch: command === 'serve',
     dts: false,
     clean: command === 'build',
     env: injectEnv(),
     async onSuccess() {
       if (command === 'serve')
-        return startElectron(resolve(root, buildDir, 'electron.js'))
+        return startElectron(resolve(root, resourceDir, 'electron.js'))
     }
   }
 

@@ -4,7 +4,7 @@ import { readJSON } from 'fs-extra'
 import type { BuilderConfig, ElectronupConfig } from '../typings/electronup'
 import { store } from '../utils'
 
-export async function getBuilderConfig(config: BuilderConfig, outPlatform: ElectronupConfig['outPlatform'], outDir: string) {
+export async function getBuilderConfig(config: BuilderConfig, outPlatform: ElectronupConfig['outPlatform']) {
   const packages = await readJSON(resolve(store.root, 'package.json'))
 
   const defaultConfig: CliOptions = {
@@ -28,9 +28,9 @@ export async function getBuilderConfig(config: BuilderConfig, outPlatform: Elect
         artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
       },
       files: ['dist/**/*'],
-      extraFiles: ['lib'],
+      extraFiles: [store.libDir],
       directories: {
-        output: config.directories?.output || outDir
+        output: config.directories?.output || store.outDir
       },
       publish: [
         {

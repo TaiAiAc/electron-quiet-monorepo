@@ -4,22 +4,24 @@ import vue from '@vitejs/plugin-vue'
 import type { ViteConfig } from '../typings/electronup'
 import { store } from '../utils'
 
-export function getViteConfig(config: ViteConfig, buildDir: string) {
+export function getViteConfig(config: ViteConfig) {
+  const { renderDir, resourceDir, publicDir } = store
+
   const defaultConfig: UserConfig = {
     base: config.base || './',
-    root: config.root || 'render',
+    root: config.root || renderDir,
     server: {
       host: '0.0.0.0'
     },
     build: {
-      outDir: resolve(store.root, config.outDir || buildDir),
+      outDir: resolve(store.root, config.outDir || resourceDir),
       target: 'esnext',
       minify: 'esbuild',
       reportCompressedSize: false,
       emptyOutDir: false,
       chunkSizeWarningLimit: 2000
     },
-    publicDir: resolve(store.root, config.publicDir || 'public'),
+    publicDir: resolve(store.root, config.publicDir || publicDir),
     plugins: [vue()],
     ...config.viteOptions
   }

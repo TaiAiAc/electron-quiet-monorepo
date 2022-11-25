@@ -15,10 +15,10 @@ interface InitConfig {
 }
 
 export async function getElectronupConfig(config: ElectronupConfig) {
-  const { viteConfig, tsupConfig, preloadTsup, buildDir = 'dist' } = config
+  const { viteConfig, tsupConfig, preloadTsup } = config
 
-  const vite = getViteConfig(viteConfig || {}, buildDir)
-  const tsup = getTsupConfig(tsupConfig || {}, buildDir)
+  const vite = getViteConfig(viteConfig || {})
+  const tsup = getTsupConfig(tsupConfig || {})
 
   const initConfig: InitConfig = {
     viteConfig: vite,
@@ -26,9 +26,9 @@ export async function getElectronupConfig(config: ElectronupConfig) {
   }
 
   if (store.command === 'build') {
-    const { builderConfig, outPlatform, outDir = 'out' } = config
+    const { builderConfig, outPlatform } = config
 
-    const builder = await getBuilderConfig(builderConfig, outPlatform, outDir)
+    const builder = await getBuilderConfig(builderConfig, outPlatform)
     initConfig.builderConfig = builder
   }
 

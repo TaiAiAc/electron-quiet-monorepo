@@ -34,15 +34,42 @@ export interface ElectronupConfig {
   tsupConfig?: TsupConfig
   preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
+  
   /**
    * 输出平台
    */
   outPlatform?: Platform | Platform[]
+
   /** 
-   * 渲染进程 主进程 输出目录
-   * @default 'dist'
+   * 渲染进程入口目录
+   * @default 'render'
    */
-  buildDir?: string
+  renderDir?: string
+
+  /** 
+   * 主进程入口目录
+   * @default 'main'
+   */
+  mainDir?: string
+
+  /** 
+  * 静态资源目录
+  * @default 'public'
+  */
+  publicDir?: string
+
+  /** 
+  * 动态库目录
+  * @default 'lib'
+  */
+  libDir?: string
+
+  /** 
+  * 资源构建输出目录
+  * @default 'dist'
+  */
+  resourceDir?: string
+
   /** 
    * electron-builder 输出目录
    * @default 'out'

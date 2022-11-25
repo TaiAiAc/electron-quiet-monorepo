@@ -3,13 +3,8 @@ type Command = 'build' | 'serve'
 class Store {
   static instance: Store
 
-  #root: string
   #command: Command
   #port: number | undefined
-
-  constructor() {
-    this.#root = process.cwd()
-  }
 
   static getInstance() {
     if (this.instance)
@@ -18,7 +13,7 @@ class Store {
   }
 
   get root() {
-    return this.#root
+    return process.cwd()
   }
 
   get command() {
@@ -27,6 +22,36 @@ class Store {
 
   get port() {
     return this.#port
+  }
+
+  /* 渲染进程入口目录 */
+  get renderDir() {
+    return 'render'
+  }
+
+  /* 主进程入口目录 */
+  get mainDir() {
+    return 'main'
+  }
+
+  /* 静态资源目录 */
+  get publicDir() {
+    return 'public'
+  }
+
+  /* 动态库目录 */
+  get libDir() {
+    return 'lib'
+  }
+
+  /* 资源构建输出目录 */
+  get resourceDir() {
+    return 'dist'
+  }
+
+  /* electron-builder 输出目录 */
+  get outDir() {
+    return 'out'
   }
 
   setCommand(command: Command) {

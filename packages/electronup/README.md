@@ -63,12 +63,9 @@ pnpm add @quiteer/electronup
 ### 暴露的api
 
 ```ts
-import type { CliOptions } from 'electron-builder'
+import type { Configuration } from 'electron-builder'
 import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite'
-
-declare abstract class ConfigEnv {
-  command: 'build' | 'serve'
-}
+import type { Options } from 'tsup'
 
 interface ViteConfig {
   base?: string
@@ -92,12 +89,19 @@ interface TsupConfig {
   noExternal?: (string | RegExp)[]
 }
 
-interface BuilderConfig extends CliOptions {}
+interface BuilderConfig extends Configuration { }
+
+type Platform = 'x64' | 'ia32' | 'armv7l' | 'arm64' | 'universal' | 'dir'
 
 interface ElectronupConfig {
   viteConfig?: ViteConfig
   tsupConfig?: TsupConfig
+  preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
+  /**
+   * 输出平台
+   */
+  outPlatform?: Platform | Platform[]
   /**
    * 渲染进程 主进程 输出目录
    * @default 'dist'
@@ -108,6 +112,10 @@ interface ElectronupConfig {
    * @default 'out'
    */
   outDir?: string
+}
+
+interface ConfigEnv {
+  command: 'build' | 'serve'
 }
 
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
