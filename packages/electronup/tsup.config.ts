@@ -18,6 +18,6 @@ export default defineConfig([
     ...config,
     name: 'electronup-cli',
     outDir: 'bin',
-    entry: ['src/cli/electronup.ts']
+    entry: { electronup: 'src/cli.ts' }
   }
 ])

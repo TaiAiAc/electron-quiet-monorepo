@@ -2,10 +2,10 @@ import { resolve } from 'path'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
 import type { TsupConfig } from '../typings/electronup'
-import { env } from '../utils'
+import { store } from '../utils'
 import { startElectron } from './startElectron'
 
-const defaultEnvPath = resolve(process.cwd(), '.env')
+const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
 
 export const getDevelopment = () => {
@@ -26,7 +26,9 @@ export const getProduction = () => {
   }
 }
 
-const injectEnv = (command: 'build' | 'serve', port: number) => {
+const injectEnv = () => {
+  const { command, port } = store
+
   if (command === 'serve') {
     const env = getDevelopment()
     return { ...env.default, ...env.development, RENDER_PORT: String(port) }
@@ -40,21 +42,21 @@ const injectEnv = (command: 'build' | 'serve', port: number) => {
   throw new Error('未匹配到 command 指令')
 }
 
-export function getTsupConfig(config: TsupConfig, port: number) {
-  const { command } = env
+export function getTsupConfig(config: TsupConfig, buildDir: string) {
+  const { command, root } = store
 
   const defaultConfig: Options = {
     minify: false,
     ...config,
     external: ['electron', ...(config.external ? config.external : [])],
-    entry: { electron: resolve(process.cwd(), 'main/index.ts') },
+    entry: { electron: resolve(root, 'main/index.ts') },
     watch: command === 'serve',
     dts: false,
     clean: command === 'build',
-    env: injectEnv(command, port),
+    env: injectEnv(),
     async onSuccess() {
       if (command === 'serve')
-        return startElectron(resolve(process.cwd(), 'dist/electron.js'))
+        return startElectron(resolve(root, buildDir, 'electron.js'))
     }
   }
 

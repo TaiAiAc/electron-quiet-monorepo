@@ -1,6 +1,7 @@
 import { join } from 'path'
 import { pathExists } from 'fs-extra'
 import type { ElectronupConfig } from '../typings/electronup'
+import { store } from '../utils'
 import { register } from './ts-swc-register'
 register()
 
@@ -8,7 +9,7 @@ const NOT_FOUND = '找不到 electronup.config.ts | electronup.config.js | elect
 const PARSING_FAILED = '找到了配置文件,但解析配置文件失败！'
 
 const configPath = async (filePath: string | undefined) => {
-  const root = process.cwd()
+  const { root } = store
 
   if (filePath)
     return join(root, filePath)

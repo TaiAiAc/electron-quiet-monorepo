@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
-import { build, watch } from '../runner'
-import { getConfig } from '../transform'
-import { version } from '../../package.json'
+import { build, watch } from './runner'
+import { getConfig } from './transform'
+import { version } from './../package.json'
+import { store } from './utils'
 
 interface Options {
   c?: string
@@ -31,6 +32,7 @@ cli
 
     const option = await getConfig(c || config)
 
+    store.setCommand('serve')
     watch(option, port)
   })
 
@@ -42,6 +44,8 @@ cli
     const { c, config, o = false, option = false } = options
 
     const configOption = await getConfig(c || config)
+
+    store.setCommand('build')
     build(configOption, o || option)
   })
 

@@ -1,1 +1,1 @@
-export { env } from './env'
+export { store } from './store'

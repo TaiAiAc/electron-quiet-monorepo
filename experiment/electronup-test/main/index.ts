@@ -2,14 +2,14 @@ import { BrowserWindow, app } from 'electron'
 
 app.whenReady().then(() => {
   const win = new BrowserWindow({
-    height: 700, width: 500
+    height: 700, width: 800
   })
 
   console.log('port', process.env.RENDER_PORT)
   console.log('pro :>> ', process.env.VITE_TEST)
 
   win.loadURL(`http://localhost:${process.env.RENDER_PORT}`)
-  win.webContents.openDevTools()
+  win.webContents.openDevTools({ mode: 'right' })
 
   console.log('app.getVersion(): ', app.getVersion())
   console.log('app.getAppPath(): ', app.getAppPath())

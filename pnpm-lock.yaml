@@ -29,14 +29,14 @@ importers:
     dependencies:
       vue: 3.2.43
     devDependencies:
-      '@quiteer/electronup': link:../../packages/cli
+      '@quiteer/electronup': link:../../packages/electronup
       '@quiteer/eslint-config': 0.0.3
       '@quiteer/ts-config': 0.0.3
 
   packages/app:
     specifiers: {}
 
-  packages/cli:
+  packages/electronup:
     specifiers:
       '@swc-node/core': ^1.9.1
       '@swc/core': ^1.3.19

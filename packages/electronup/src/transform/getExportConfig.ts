@@ -1,11 +1,11 @@
 import type { ElectronupConfig, ElectronupConfigFn, UserElectronupConfig } from '../typings/electronup'
 import { getElectronupConfig } from '../default/index'
-import { env } from '../utils'
+import { store } from '../utils'
 
 const exportElectronupConfig = (config: UserElectronupConfig): ElectronupConfig => {
   const typeStr = typeof config
   if (typeStr === 'function') {
-    const option = (<ElectronupConfigFn>config)(env)
+    const option = (<ElectronupConfigFn>config)({ command: store.command })
     return option
   }
 

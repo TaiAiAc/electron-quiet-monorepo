@@ -1,7 +1,7 @@
 
-import { CliOptions } from 'electron-builder';
+import { Configuration } from 'electron-builder';
 import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite';
-import { ConfigEnv } from './env';
+import type { Options } from 'tsup'
 
 export interface ViteConfig {
   base?: string
@@ -25,12 +25,19 @@ export interface TsupConfig {
   noExternal?: (string | RegExp)[];
 }
 
-export interface BuilderConfig extends CliOptions {}
+export interface BuilderConfig extends Configuration { }
+
+type Platform = 'x64' | 'ia32' | 'armv7l' | 'arm64' | 'universal' | 'dir'
 
 export interface ElectronupConfig {
   viteConfig?: ViteConfig
   tsupConfig?: TsupConfig
+  preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
+  /**
+   * 输出平台
+   */
+  outPlatform?: Platform | Platform[]
   /** 
    * 渲染进程 主进程 输出目录
    * @default 'dist'
@@ -41,6 +48,10 @@ export interface ElectronupConfig {
    * @default 'out'
    */
   outDir?: string
+}
+
+export interface ConfigEnv {
+  command: 'build' | 'serve'
 }
 
 export type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
