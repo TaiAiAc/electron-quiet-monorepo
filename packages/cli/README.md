@@ -63,8 +63,24 @@ pnpm add @quiteer/electronup
 ### 暴露的api
 
 ```ts
-import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite'
 import type { CliOptions } from 'electron-builder'
+import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vite'
+
+declare abstract class ConfigEnv {
+  command: 'build' | 'serve'
+}
+
+interface ViteConfig {
+  base?: string
+  root?: string
+  outDir?: string
+  publicDir?: string
+  resolve?: ResolveOptions & {
+    alias?: AliasOptions
+  }
+  plugins?: PluginOption[]
+  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir' | 'outDir' | 'build' | 'server'>
+}
 
 interface TsupConfig {
   entry?: string[] | Record<string, string>
@@ -76,27 +92,12 @@ interface TsupConfig {
   noExternal?: (string | RegExp)[]
 }
 
-type TsupConfigFn = (env: ConfigEnv) => TsupConfig
-
-type UserTsupConfig = TsupConfig | TsupConfigFn
-
 interface BuilderConfig extends CliOptions {}
 
-type BuilderConfigFn = (env: ConfigEnv) => BuilderConfig
-
-type UserBuilderConfig = BuilderConfig | BuilderConfigFn
-
-/**
- * 像配置里注入环境变量
- */
-interface ConfigEnv {
-  command: 'build' | 'serve'
-}
-
 interface ElectronupConfig {
-  viteConfig?: UserViteConfig
-  tsupConfig?: UserTsupConfig
-  builderConfig: UserBuilderConfig
+  viteConfig?: ViteConfig
+  tsupConfig?: TsupConfig
+  builderConfig: BuilderConfig
   /**
    * 渲染进程 主进程 输出目录
    * @default 'dist'
@@ -112,29 +113,9 @@ interface ElectronupConfig {
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
 type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
 
-interface ViteConfig {
-  base?: string
-  root?: string
-  outDir?: string
-  publicDir?: string
-  resolve?: ResolveOptions & {
-    alias?: AliasOptions
-  }
-  plugins?: PluginOption[]
-  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir' | 'outDir' | 'build' | 'server'>
-}
-
-type ViteConfigFn = (env: ConfigEnv) => ViteConfig
-
-type UserViteConfig = ViteConfig | ViteConfigFn
-
-declare const viteConfig: (config: UserViteConfig) => UserViteConfig
-declare const tsupConfig: (config: UserTsupConfig) => UserTsupConfig
-declare const builderConfig: (config: UserBuilderConfig) => UserBuilderConfig
 declare const defineConfig: (config: UserElectronupConfig) => UserElectronupConfig
 
-export { ConfigEnv, ElectronupConfig, builderConfig, defineConfig, tsupConfig, viteConfig }
-
+export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig }
 ```
 
 #### 获取类型提示

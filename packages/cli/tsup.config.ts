@@ -11,6 +11,7 @@ export default defineConfig([
     ...config,
     name: 'electronup-api',
     entry: ['src/index.ts'],
+    format: ['esm', 'cjs'],
     dts: true
   },
   {
