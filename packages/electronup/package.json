@@ -1,10 +1,10 @@
 {
   "name": "@quiteer/electronup",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 ",
   "author": "quiteer",
   "license": "MIT",
-  "homepage": "https://github.com/TaiAiAc/electron-quiet-monorepo/tree/main/packages/cli/#readme",
+  "homepage": "https://github.com/TaiAiAc/electron-quiet-monorepo/tree/main/packages/electronup/#readme",
   "bugs": {
     "url": "https://github.com/TaiAiAc/electron-quiet-monorepo/issues"
   },
