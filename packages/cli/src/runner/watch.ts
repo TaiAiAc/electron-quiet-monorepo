@@ -20,7 +20,7 @@ export async function watch(options: UserElectronupConfig, port: number) {
 
   viteDevServer.listen(p).then(viteDevServer.printUrls)
 
-  const tsupOption = getTsupConfig(electronupOption.tsupConfig || {})
+  const tsupOption = getTsupConfig(electronupOption.tsupConfig || {}, port)
   build(tsupOption)
 }
 
