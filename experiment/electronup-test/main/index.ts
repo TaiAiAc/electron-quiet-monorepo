@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { BrowserWindow, app } from 'electron'
 
 app.whenReady().then(() => {
@@ -5,12 +6,14 @@ app.whenReady().then(() => {
     height: 700, width: 1000
   })
 
-  console.log('process.env: ', process.env)
   console.log('port', process.env.NODE_ENV)
   console.log('port', process.env.RENDER_PORT)
   console.log('pro :>> ', process.env.VITE_TEST)
 
-  win.loadURL(`http://localhost:${process.env.RENDER_PORT}`)
+  const renderUrl = process.env.NODE_ENV === 'development'
+    ? `http://localhost:${process.env.RENDER_PORT}`
+    : `file://${resolve(__dirname, 'index.html')}`
+  win.loadURL(renderUrl)
   win.webContents.openDevTools({ mode: 'right' })
 })
 

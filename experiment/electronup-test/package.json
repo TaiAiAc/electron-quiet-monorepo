@@ -5,7 +5,7 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "index.js",
+  "main": "dist/electron.js",
   "scripts": {
     "all": "npm run command && npm run dev && npm run dev:custom && npm run build && npm run build:custom",
     "command": "electronup -h && electronup -v",
@@ -15,15 +15,13 @@
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
   },
-  "dependencies": {
-    "vite": "^3.2.4",
-    "vue": "^3.2.41"
-  },
   "devDependencies": {
     "@quiteer/electronup": "workspace:*",
     "@quiteer/eslint-config": "^0.0.3",
     "@quiteer/ts-config": "^0.0.3",
     "@vitejs/plugin-vue": "^3.2.0",
-    "electron": "^21.2.2"
+    "electron": "^21.2.2",
+    "vite": "^3.2.4",
+    "vue": "^3.2.43"
   }
 }

@@ -5,7 +5,7 @@ import type { ElectronupConfig, ViteConfig } from '../typings/electronup'
 import { store } from '../utils'
 
 export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
-  const { renderDir, resourceDir, publicDir } = store
+  const { renderDir, resourceDir, publicDir, command } = store
 
   const defaultConfig: UserConfig = {
     base: config.base || './',
@@ -22,7 +22,7 @@ export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
       chunkSizeWarningLimit: 2000
     },
     publicDir: resolve(store.root, allConfig.publicDir || config.publicDir || publicDir),
-    plugins: [vue(), ...(config.plugins ? config.plugins : [])],
+    plugins: [command === 'serve' ? vue() : undefined, ...(config.plugins ? config.plugins : [])],
     ...config.viteOptions
   }
 

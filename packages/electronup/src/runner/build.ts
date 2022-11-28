@@ -17,5 +17,6 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
   await tsBuild(initConfig.tsup)
 
   sync(initConfig.outDir || store.outDir)
+  console.log('initConfig.builder: ', initConfig.builder)
   builder(initConfig.builder)
 }
