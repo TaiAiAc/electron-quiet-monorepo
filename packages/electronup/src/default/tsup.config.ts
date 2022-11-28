@@ -31,12 +31,21 @@ const injectEnv = () => {
 
   if (command === 'serve') {
     const env = getDevelopment()
-    return { ...env.default, ...env.development, RENDER_PORT: String(port) }
+    return {
+      ...env.default,
+      ...env.development,
+      NODE_ENV: 'development',
+      RENDER_PORT: String(port)
+    }
   }
 
   if (command === 'build') {
     const env = getProduction()
-    return { ...env.default, ...env.production }
+    return {
+      ...env.default,
+      ...env.production,
+      NODE_ENV: 'production'
+    }
   }
 
   throw new Error('未匹配到 command 指令')
