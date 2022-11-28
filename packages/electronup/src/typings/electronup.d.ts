@@ -5,20 +5,16 @@ import type { Options } from 'tsup'
 
 export interface ViteConfig {
   base?: string
-  root?: string
-  outDir?: string
-  publicDir?: string
   resolve?: ResolveOptions & {
     alias?: AliasOptions;
   }
   plugins?: PluginOption[]
-  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir' | 'outDir' | 'build' | 'server'>
+  viteOptions?: Omit<UserConfig, 'root' | 'plugins' | 'resolve' | 'publicDir'>
 }
 
 export interface TsupConfig {
   entry?: string[] | Record<string, string>
   name?: string
-  outDir?: string
   target?: string | string[];
   minify?: boolean;
   external?: (string | RegExp)[];
@@ -34,7 +30,7 @@ export interface ElectronupConfig {
   tsupConfig?: TsupConfig
   preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
-  
+
   /**
    * 输出平台
    */

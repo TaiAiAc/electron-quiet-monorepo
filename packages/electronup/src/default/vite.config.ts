@@ -9,21 +9,19 @@ export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
 
   const defaultConfig: UserConfig = {
     base: config.base || './',
-    root: allConfig.renderDir || config.root || renderDir,
-    server: {
-      host: '0.0.0.0'
-    },
+    root: allConfig.renderDir || renderDir,
+    publicDir: resolve(store.root, allConfig.publicDir || publicDir),
+    server: { host: '0.0.0.0' },
+    plugins: [command === 'serve' ? vue() : undefined, ...(config.plugins ? config.plugins : [])],
+    ...config.viteOptions,
     build: {
-      outDir: resolve(store.root, allConfig.resourceDir || config.outDir || resourceDir),
+      outDir: resolve(store.root, allConfig.resourceDir || resourceDir),
       target: 'esnext',
       minify: 'esbuild',
       reportCompressedSize: false,
       emptyOutDir: false,
       chunkSizeWarningLimit: 2000
-    },
-    publicDir: resolve(store.root, allConfig.publicDir || config.publicDir || publicDir),
-    plugins: [command === 'serve' ? vue() : undefined, ...(config.plugins ? config.plugins : [])],
-    ...config.viteOptions
+    }
   }
 
   config.resolve && (defaultConfig.resolve = config.resolve)

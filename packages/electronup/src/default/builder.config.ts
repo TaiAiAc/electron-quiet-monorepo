@@ -32,38 +32,6 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
       directories: {
         output: allConfig.outDir || config.directories?.output || store.outDir
       },
-      publish: [
-        {
-          provider: 'generic',
-          url: 'http://127.0.0.1'
-        }
-      ],
-      dmg: {
-        contents: [
-          {
-            x: 410,
-            y: 150,
-            type: 'link',
-            path: '/Applications'
-          },
-          {
-            x: 130,
-            y: 150,
-            type: 'file'
-          }
-        ]
-      },
-      mac: { icon: 'icons/icon.icns', target: 'dmg' },
-      win: { icon: 'icons/icon.ico', target: 'nsis' },
-      linux: {
-        target: ['AppImage', 'rpm', 'deb'],
-        icon: 'icons',
-        desktop: {
-          StartupNotify: 'false',
-          Encoding: 'UTF-8',
-          MimeType: 'x-scheme-handler/deeplink'
-        }
-      },
       ...config
     }
   }

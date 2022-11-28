@@ -43,7 +43,6 @@ pnpm add @quiteer/electronup
     "@vitejs/plugin-vue": "^3.2.0",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
-    "electron": "^21.2.2",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
     "inquirer": "^9.1.4",
@@ -54,8 +53,7 @@ pnpm add @quiteer/electronup
     "tsconfig-paths": "^4.1.0",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
-    "vite": "^3.2.3",
-    "vue-tsc": "^1.0.9"
+    "vite": "^3.2.4"
   }
 }
 ```
@@ -69,20 +67,16 @@ import type { Options } from 'tsup'
 
 interface ViteConfig {
   base?: string
-  root?: string
-  outDir?: string
-  publicDir?: string
   resolve?: ResolveOptions & {
     alias?: AliasOptions
   }
   plugins?: PluginOption[]
-  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir' | 'outDir' | 'build' | 'server'>
+  viteOptions?: Omit<UserConfig, 'root' | 'plugins' | 'resolve' | 'publicDir'>
 }
 
 interface TsupConfig {
   entry?: string[] | Record<string, string>
   name?: string
-  outDir?: string
   target?: string | string[]
   minify?: boolean
   external?: (string | RegExp)[]
@@ -98,15 +92,42 @@ interface ElectronupConfig {
   tsupConfig?: TsupConfig
   preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
+
   /**
    * 输出平台
    */
   outPlatform?: Platform | Platform[]
+
   /**
-   * 渲染进程 主进程 输出目录
-   * @default 'dist'
+   * 渲染进程入口目录
+   * @default 'render'
    */
-  buildDir?: string
+  renderDir?: string
+
+  /**
+   * 主进程入口目录
+   * @default 'main'
+   */
+  mainDir?: string
+
+  /**
+  * 静态资源目录
+  * @default 'public'
+  */
+  publicDir?: string
+
+  /**
+  * 动态库目录
+  * @default 'lib'
+  */
+  libDir?: string
+
+  /**
+  * 资源构建输出目录
+  * @default 'dist'
+  */
+  resourceDir?: string
+
   /**
    * electron-builder 输出目录
    * @default 'out'
