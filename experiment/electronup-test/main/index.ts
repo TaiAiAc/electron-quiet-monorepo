@@ -2,15 +2,19 @@ import { BrowserWindow, app } from 'electron'
 
 app.whenReady().then(() => {
   const win = new BrowserWindow({
-    height: 700, width: 800
+    height: 700, width: 1000
   })
 
+  console.log('process.env: ', process.env)
+  console.log('port', process.env.NODE_ENV)
   console.log('port', process.env.RENDER_PORT)
   console.log('pro :>> ', process.env.VITE_TEST)
 
   win.loadURL(`http://localhost:${process.env.RENDER_PORT}`)
   win.webContents.openDevTools({ mode: 'right' })
+})
 
+function appApiLogs() {
   console.log('app.getVersion(): ', app.getVersion())
   console.log('app.getAppPath(): ', app.getAppPath())
   console.log('app.getName(): ', app.getName())
@@ -28,5 +32,4 @@ app.whenReady().then(() => {
   console.log('app.isPackaged: ', app.isPackaged)
   console.log('app.name: ', app.name)
   console.log('app.userAgentFallback: ', app.userAgentFallback)
-})
-
+}

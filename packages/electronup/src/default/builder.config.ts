@@ -4,13 +4,13 @@ import { readJSON } from 'fs-extra'
 import type { BuilderConfig, ElectronupConfig } from '../typings/electronup'
 import { store } from '../utils'
 
-export async function getBuilderConfig(config: BuilderConfig, outPlatform: ElectronupConfig['outPlatform']) {
+export async function getBuilderConfig(config: BuilderConfig, allConfig: ElectronupConfig) {
   const packages = await readJSON(resolve(store.root, 'package.json'))
 
   const defaultConfig: CliOptions = {
     config: {
-      asar: false,
-      appId: 'org.TaiAi.electron-vue3-quiet',
+      asar: true,
+      appId: 'org.quiter.electron-up',
       productName: packages.name,
       protocols: {
         name: packages.name,
@@ -27,10 +27,10 @@ export async function getBuilderConfig(config: BuilderConfig, outPlatform: Elect
         createStartMenuShortcut: true,
         artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
       },
-      files: ['dist/**/*'],
-      extraFiles: [store.libDir],
+      files: [`${allConfig.resourceDir || store.resourceDir}/**/*`],
+      extraFiles: [allConfig.libDir || store.libDir],
       directories: {
-        output: config.directories?.output || store.outDir
+        output: allConfig.outDir || config.directories?.output || store.outDir
       },
       publish: [
         {
@@ -68,14 +68,14 @@ export async function getBuilderConfig(config: BuilderConfig, outPlatform: Elect
     }
   }
 
-  if (outPlatform) {
-    if (Array.isArray(outPlatform)) {
-      outPlatform.forEach((platform) => {
+  if (allConfig.outPlatform) {
+    if (Array.isArray(allConfig.outPlatform)) {
+      allConfig.outPlatform.forEach((platform) => {
         defaultConfig[platform] = true
       })
     }
     else {
-      defaultConfig[outPlatform] = true
+      defaultConfig[allConfig.outPlatform] = true
     }
   }
 

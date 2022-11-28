@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
-import type { TsupConfig } from '../typings/electronup'
+import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
 import { store } from '../utils'
 import { startElectron } from './startElectron'
 
@@ -42,21 +42,22 @@ const injectEnv = () => {
   throw new Error('未匹配到 command 指令')
 }
 
-export function getTsupConfig(config: TsupConfig) {
+export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const { command, root, mainDir, resourceDir } = store
 
   const defaultConfig: Options = {
     minify: false,
     ...config,
     external: ['electron', ...(config.external ? config.external : [])],
-    entry: { electron: resolve(root, mainDir, 'index.ts') },
+    entry: { electron: resolve(root, allConfig.mainDir || mainDir, 'index.ts') },
+    outDir: allConfig.resourceDir || resourceDir,
     watch: command === 'serve',
     dts: false,
     clean: command === 'build',
     env: injectEnv(),
     async onSuccess() {
       if (command === 'serve')
-        return startElectron(resolve(root, resourceDir, 'electron.js'))
+        return startElectron(resolve(root, allConfig.resourceDir || resourceDir, 'electron.js'))
     }
   }
 

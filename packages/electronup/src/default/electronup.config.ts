@@ -7,32 +7,29 @@ import { getBuilderConfig } from './builder.config'
 import { getTsupConfig } from './tsup.config'
 import { getViteConfig } from './vite.config'
 
-interface InitConfig {
-  viteConfig: UserConfig
-  tsupConfig: Options
-  preloadTsup?: Options | Options[]
-  builderConfig?: CliOptions
+interface InitConfig extends Omit<ElectronupConfig, 'viteConfig' | 'tsupConfig' | 'preloadTsup' | 'builderConfig'> {
+  vite: UserConfig
+  tsup: Options
+  preload?: Options | Options[]
+  builder?: CliOptions
 }
 
 export async function getElectronupConfig(config: ElectronupConfig) {
   const { viteConfig, tsupConfig, preloadTsup } = config
 
-  const vite = getViteConfig(viteConfig || {})
-  const tsup = getTsupConfig(tsupConfig || {})
+  const vite = getViteConfig(viteConfig || {}, config)
+  const tsup = getTsupConfig(tsupConfig || {}, config)
 
-  const initConfig: InitConfig = {
-    viteConfig: vite,
-    tsupConfig: tsup
-  }
+  const initConfig: InitConfig = { vite, tsup }
 
   if (store.command === 'build') {
-    const { builderConfig, outPlatform } = config
+    const { builderConfig } = config
 
-    const builder = await getBuilderConfig(builderConfig, outPlatform)
-    initConfig.builderConfig = builder
+    const builder = await getBuilderConfig(builderConfig, config)
+    initConfig.builder = builder
   }
 
-  preloadTsup && (initConfig.preloadTsup = preloadTsup)
+  preloadTsup && (initConfig.preload = preloadTsup)
 
-  return initConfig
+  return { ...config, ...initConfig }
 }

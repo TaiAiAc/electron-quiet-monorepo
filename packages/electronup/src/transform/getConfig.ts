@@ -30,7 +30,6 @@ export const getConfig = async (filePath: string | undefined): Promise<Electronu
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const option: ElectronupConfig = require(path).default
-    console.info('transformOptions option: ', option)
     return option
   }
   catch (error) {
