@@ -1,8 +1,32 @@
-import { buildConfig } from '@quiteer/electronup'
-import type { ConfigEnv } from '@quiteer/electronup'
+import type { BuilderConfig } from '@quiteer/electronup'
+import packages from '../package.json'
 
-export const builderOptions = buildConfig((env: ConfigEnv) => {
-  console.log('env: ', env)
-  return { }
-})
+const defineConfig: BuilderConfig = {
+  asar: true,
+  appId: 'org.quiter.electron-up',
+  productName: packages.name,
+  protocols: {
+    name: packages.name,
+    schemes: ['deeplink']
+  },
+  nsis: {
+    oneClick: false,
+    language: '2052',
+    perMachine: true,
+    allowElevation: true,
+    allowToChangeInstallationDirectory: true,
+    runAfterFinish: true,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
+  },
+  files: ['dist/**/*'],
+  extraFiles: ['lib'],
+  directories: {
+    output: 'out'
+  }
+}
 
+export default {
+  ...defineConfig
+} as BuilderConfig

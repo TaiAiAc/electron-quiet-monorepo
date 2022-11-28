@@ -3,7 +3,8 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
-  "include": ["electronup.config.ts", "build", "main"]
+  "include": ["electronup.config.ts", "package.json", "build/*", "main"]
 }
