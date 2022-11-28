@@ -1,5 +1,5 @@
 import type { ElectronupConfig, ElectronupConfigFn, UserElectronupConfig } from '../typings/electronup'
-import { getElectronupConfig } from '../default/index'
+import { getElectronupConfig } from '../default/electronup.config'
 import { store } from '../utils'
 
 const exportElectronupConfig = (config: UserElectronupConfig): ElectronupConfig => {

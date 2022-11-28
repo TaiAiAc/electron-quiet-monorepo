@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import type { UserConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 import type { ElectronupConfig, ViteConfig } from '../typings/electronup'
 import { store } from '../utils'
 
@@ -21,7 +22,7 @@ export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
       chunkSizeWarningLimit: 2000
     },
     publicDir: resolve(store.root, allConfig.publicDir || config.publicDir || publicDir),
-    plugins: [...(config.plugins ? config.plugins : [])],
+    plugins: [vue(), ...(config.plugins ? config.plugins : [])],
     ...config.viteOptions
   }
 

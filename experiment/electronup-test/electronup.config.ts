@@ -8,7 +8,7 @@ export default defineConfig((env: ConfigEnv) => {
     },
     outPlatform: ['ia32', 'x64'],
     outDir: 'out',
-    resourceDir: 'resource',
+    resourceDir: 'dist',
     mainDir: 'main',
     renderDir: 'render',
     publicDir: 'public',

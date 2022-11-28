@@ -53,7 +53,7 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
     outDir: allConfig.resourceDir || resourceDir,
     watch: command === 'serve',
     dts: false,
-    clean: command === 'build',
+    clean: false,
     env: injectEnv(),
     async onSuccess() {
       if (command === 'serve')

@@ -13,10 +13,10 @@ export async function watch(options: UserElectronupConfig, port: number) {
 
   const initConfig = await electronupConfig(options)
 
-  const viteDevServer = await createServer({ configFile: false, ...initConfig.viteConfig })
+  const viteDevServer = await createServer({ configFile: false, ...initConfig.vite })
 
   viteDevServer.listen(p).then(viteDevServer.printUrls)
 
-  build(initConfig.tsupConfig)
+  build(initConfig.tsup)
 }
 
