@@ -10,8 +10,8 @@ import viteConfig from './vite.config'
  * 在此列出
  */
 const defaultConfig: Omit<ElectronupConfig, 'builderConfig'> = {
-  renderDir: 'render',
   mainDir: 'main',
+  renderDir: 'render',
   publicDir: 'public',
   libDir: 'lib',
   resourceDir: 'dist',

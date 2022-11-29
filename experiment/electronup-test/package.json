@@ -7,21 +7,21 @@
   "keywords": [],
   "main": "dist/electron.js",
   "scripts": {
-    "all": "npm run command && npm run dev && npm run dev:custom && npm run build && npm run build:custom",
     "command": "electronup -h && electronup -v",
-    "dev1": "electronup",
-    "dev2": "electronup dev",
+    "dev:1": "electronup",
+    "dev:2": "electronup dev",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
   },
+  "dependencies": {
+    "@quiteer/electron-preload": "workspace:*"
+  },
   "devDependencies": {
+    "@quiteer/electron-ipc": "workspace:*",
     "@quiteer/electronup": "workspace:*",
     "@quiteer/eslint-config": "^0.0.3",
     "@quiteer/ts-config": "^0.0.3",
-    "@vitejs/plugin-vue": "^3.2.0",
-    "electron": "^21.2.2",
-    "vite": "^3.2.4",
     "vue": "^3.2.43"
   }
 }
