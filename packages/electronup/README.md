@@ -144,7 +144,10 @@ type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
 
 declare const defineConfig: (config: UserElectronupConfig) => UserElectronupConfig
 
-export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig }
+declare const loadUrl: string
+
+export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig, loadUrl }
+
 ```
 
 #### 获取类型提示
@@ -152,3 +155,6 @@ export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, def
 引入导出的 api 即可获取类型提示
 
 
+## 示例
+
+> https://github.com/TaiAiAc/electron-quiet-monorepo/tree/main/experiment/electronup-test

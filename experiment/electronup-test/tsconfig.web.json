@@ -1,18 +1,8 @@
 {
+  "extends": "@quiteer/ts-config/tsconfig.web.json",
   "compilerOptions": {
-    "composite": true,
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "noEmit": true
+    "baseUrl": "./render",
+    "composite": true
   },
   "include": ["render/**/*.ts", "render/**/*.d.ts", "render/**/*.tsx", "render/**/*.vue"]
 }
