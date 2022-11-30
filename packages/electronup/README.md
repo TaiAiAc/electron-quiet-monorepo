@@ -2,7 +2,21 @@
 
 
 > 融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 
-> 开发中 ...
+
+
+
+## 插件前置
+
+```json
+{
+  "peerDependencies": {
+    "@types/node": ">= 16",
+    "electron": ">= 20"
+  }
+}
+```
+
+
 
 
 ## 安装
@@ -225,7 +239,103 @@ electronup -m test
 `electronup dev -m production` 
 
 
+
+#### 文件命名
+
+`.env` 
+
+`.env.development`
+
+`.env.production`
+
+`.env.test`
+
+`.env.staging`
+
+
+
+### 预置配置
+
+可自定义配置覆盖默认配置。
+
+vite
+
+```typescript
+ const defaultConfig: UserConfig = {
+    base: config.base || './',
+    mode,
+    root: allConfig.renderDir || DefaultDirs.renderDir,
+    publicDir: resolve(store.root, allConfig.publicDir || DefaultDirs.publicDir),
+    server: { host: '0.0.0.0' },
+    plugins: [command === 'serve' ? vue() : undefined, ...(config.plugins ? config.plugins : [])],
+    ...config.viteOptions,
+    build: {
+      outDir: resolve(store.root, allConfig.resourceDir || DefaultDirs.resourceDir),
+      target: 'esnext',
+      minify: 'esbuild',
+      reportCompressedSize: false,
+      emptyOutDir: false,
+      chunkSizeWarningLimit: 2000
+    }
+  }
+```
+
+tsup
+
+```typescript
+ const defaultConfig: Options = {
+    minify: false,
+    ...config,
+    external: ['electron', ...(config.external ? config.external : [])],
+    entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
+    outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
+    watch: command === 'serve',
+    dts: false,
+    clean: false,
+    env: injectEnv(),
+    async onSuccess() {
+      if (command === 'serve')
+        return startElectron(resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir, 'electron.js'))
+    }
+  }
+```
+
+electron-builder
+
+```typescript
+const defaultConfig: CliOptions = {
+    config: {
+      asar: true,
+      appId: 'org.quiter.electron-up',
+      productName: packages.name,
+      protocols: {
+        name: packages.name,
+        schemes: ['deeplink']
+      },
+      nsis: {
+        oneClick: false,
+        language: '2052',
+        perMachine: true,
+        allowElevation: true,
+        allowToChangeInstallationDirectory: true,
+        runAfterFinish: true,
+        createDesktopShortcut: true,
+        createStartMenuShortcut: true,
+        artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
+      },
+      files: [`${allConfig.resourceDir || DefaultDirs.resourceDir}/**/*`],
+      extraFiles: [allConfig.libDir || DefaultDirs.libDir],
+      directories: {
+        output: allConfig.outDir || config.directories?.output || DefaultDirs.outDir
+      },
+      ...config 
+    }
+  }
+```
+
+
+
+
 ## 示例
 
 > https://github.com/TaiAiAc/electron-quiet-monorepo/tree/main/experiment/electronup-test
-
