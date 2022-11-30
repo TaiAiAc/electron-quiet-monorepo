@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import type { CliOptions } from 'electron-builder'
 import { readJSON } from 'fs-extra'
 import type { BuilderConfig, ElectronupConfig } from '../typings/electronup'
-import { store } from '../utils'
+import { DefaultDirs, store } from '../utils'
 
 export async function getBuilderConfig(config: BuilderConfig, allConfig: ElectronupConfig) {
   const packages = await readJSON(resolve(store.root, 'package.json'))
@@ -27,10 +27,10 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
         createStartMenuShortcut: true,
         artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
       },
-      files: [`${allConfig.resourceDir || store.resourceDir}/**/*`],
-      extraFiles: [allConfig.libDir || store.libDir],
+      files: [`${allConfig.resourceDir || DefaultDirs.resourceDir}/**/*`],
+      extraFiles: [allConfig.libDir || DefaultDirs.libDir],
       directories: {
-        output: allConfig.outDir || config.directories?.output || store.outDir
+        output: allConfig.outDir || config.directories?.output || DefaultDirs.outDir
       },
       ...config
     }

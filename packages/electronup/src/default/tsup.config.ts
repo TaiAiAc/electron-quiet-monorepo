@@ -2,71 +2,58 @@ import { resolve } from 'path'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
 import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
-import { store } from '../utils'
+import { DefaultDirs, store } from '../utils'
 import { startElectron } from './startElectron'
 
 const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
 
-export const getDevelopment = () => {
-  const { parsed: env } = getEnv({ path: resolve(defaultEnvPath, '.development') })
+const getModeDev = () => {
+  const path = `${defaultEnvPath}.${store.mode}`
+  const { parsed, error } = getEnv({ path })
+  if (error)
+    throw new Error(`未能加载 .env.${store.mode} 下的环境变量,检查文件是否存在！`)
 
   return {
-    default: defaultEnv,
-    development: env
-  }
-}
-
-export const getProduction = () => {
-  const { parsed: env } = getEnv({ path: resolve(defaultEnvPath, '.production') })
-
-  return {
-    default: defaultEnv,
-    production: env
+    ...defaultEnv,
+    ...parsed
   }
 }
 
 const injectEnv = () => {
   const { command, port } = store
 
+  const env = getModeDev()
   if (command === 'serve') {
-    const env = getDevelopment()
     return {
-      ...env.default,
-      ...env.development,
+      ...env,
       NODE_ENV: 'development',
       RENDER_PORT: String(port)
     }
   }
 
-  if (command === 'build') {
-    const env = getProduction()
-    return {
-      ...env.default,
-      ...env.production,
-      NODE_ENV: 'production'
-    }
+  return {
+    ...env,
+    NODE_ENV: 'production'
   }
-
-  throw new Error('未匹配到 command 指令')
 }
 
 export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
-  const { command, root, mainDir, resourceDir } = store
+  const { command, root } = store
 
   const defaultConfig: Options = {
     minify: false,
     ...config,
     external: ['electron', ...(config.external ? config.external : [])],
-    entry: { electron: resolve(root, allConfig.mainDir || mainDir, 'index.ts') },
-    outDir: allConfig.resourceDir || resourceDir,
+    entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
+    outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
     watch: command === 'serve',
     dts: false,
     clean: false,
     env: injectEnv(),
     async onSuccess() {
       if (command === 'serve')
-        return startElectron(resolve(root, allConfig.resourceDir || resourceDir, 'electron.js'))
+        return startElectron(resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir, 'electron.js'))
     }
   }
 

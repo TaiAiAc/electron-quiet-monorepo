@@ -154,7 +154,78 @@ export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, def
 
 引入导出的 api 即可获取类型提示
 
+## 环境变量配置
+
+根目录下的 `.env` 文件在任何环境下都会注入到业务代码中
+
+### command
+
+目前 `command` 命令仅支持 `dev` 及 `build` 
+
+`dev` 指令下向 `process.env` 中注入 `NODE_ENV` 字段 为 `develpoment` 
+
+`build` 指令下向 `process.env` 中注入 `NODE_ENV` 字段 为 `production` 
+
+双进程下区分环境略有不同 ， 主进程代码中直接访问  `process.env` 上的  `NODE_ENV` 即可，渲染进程中访问 `vite` 提供的 `import.meta.env` 获取
+
+```typescript
+// main.ts 
+// dev
+console.log('NODE_ENV', process.env.NODE_ENV)  // NODE_ENV development
+
+// build
+console.log('NODE_ENV', process.env.NODE_ENV)  // NODE_ENV production 
+```
+
+```typescript
+// render.ts 
+// dev
+console.log('isDev', import.meta.env.DEV)  // isDev true
+
+// build
+console.log('isDev', import.meta.env.DEV)  // isDev true
+```
+
+
+
+### mode 
+
+通过添加命令行指令 `-m xxx | -mode xxx` 指定加载环境变量文件以满足不同环境下的不同环境变量。
+
+`mode` 指令传入的 `mode` 字符串需与根目录下的 `env` 文件一致。 规则如下
+
+```shell
+electronup -m test
+```
+
+命令行运行后根据 `mode` 参数加载根目录下的 `.env.test` 环境变量文件
+
+即 `electronup -m test`
+
+`.env`
+
+`.env.test`
+
+ 不传 mode 参数，默认根据环境区分加载环境变量。
+
+`electronup dev`
+
+`.env`
+
+`.env.devlepoment`
+
+`electronup build`
+
+`.env`
+
+`.env.production`
+
+当然也可通过传入 mode 参数使 dev 环境加载 production 的环境变量。
+
+`electronup dev -m production` 
+
 
 ## 示例
 
 > https://github.com/TaiAiAc/electron-quiet-monorepo/tree/main/experiment/electronup-test
+

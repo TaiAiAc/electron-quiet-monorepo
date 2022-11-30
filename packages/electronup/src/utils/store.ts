@@ -1,9 +1,11 @@
 type Command = 'build' | 'serve'
+type Mode = 'development' | 'production' | 'test' | 'staging' | string
 
 class Store {
   static instance: Store
 
   #command: Command
+  #mode: Mode
   #port: number | undefined
 
   static getInstance() {
@@ -20,42 +22,20 @@ class Store {
     return this.#command
   }
 
+  get mode() {
+    return this.#mode
+  }
+
   get port() {
     return this.#port
   }
 
-  /* 渲染进程入口目录 */
-  get renderDir() {
-    return 'render'
-  }
-
-  /* 主进程入口目录 */
-  get mainDir() {
-    return 'main'
-  }
-
-  /* 静态资源目录 */
-  get publicDir() {
-    return 'public'
-  }
-
-  /* 动态库目录 */
-  get libDir() {
-    return 'lib'
-  }
-
-  /* 资源构建输出目录 */
-  get resourceDir() {
-    return 'dist'
-  }
-
-  /* electron-builder 输出目录 */
-  get outDir() {
-    return 'out'
-  }
-
   setCommand(command: Command) {
     this.#command = command
+  }
+
+  setMode(mode: Mode) {
+    this.#mode = mode
   }
 
   setPort(port: number) {

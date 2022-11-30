@@ -8,9 +8,12 @@ import { store } from './utils'
 interface Options {
   c?: string
   config?: string
+  m?: string
+  mode?: string
 }
 
 interface DevOptions extends Options {
+  p?: number
   port?: number
 }
 
@@ -22,30 +25,32 @@ interface BuildOptions extends Options {
 const cli = cac('electronup')
 
 cli.option('-c , --config <file>', '[string] 构建配置 ')
+cli.option('-m , --mode <mode>', '[development | production | test | staging | ...] 环境模式 ')
 
 cli
   .command('[root]', 'start dev server') // default command
   .alias('dev')
-  .option('--port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
+  .option('-p , --port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
   .action(async (dir: undefined | string, options: DevOptions) => {
-    const { port = 8090, c, config } = options
+    const { c, config, m, mode, p, port } = options
 
     const option = await getConfig(c || config)
 
     store.setCommand('serve')
-    watch(option, port)
+    store.setMode(m || mode || 'development')
+    watch(option, p || port || 8090)
   })
 
 cli
   .command('build [root]', '构建')
   .option('-o , --option', '自定义 , 自定义构建选项 ')
-  .option('-rm', '清理 , 是否清理构建目录 ')
   .action(async (dir: undefined | string, options: BuildOptions) => {
-    const { c, config, o = false, option = false } = options
+    const { c, config, m, mode, o = false, option = false } = options
 
     const configOption = await getConfig(c || config)
 
     store.setCommand('build')
+    store.setMode(m || mode || 'production')
     build(configOption, o || option)
   })
 

@@ -8,11 +8,12 @@ app.whenReady().then(() => {
 
   console.log('loadUrl: ', loadUrl)
   console.log('NODE_ENV', process.env.NODE_ENV)
-  console.log('VITE_TEST :>> ', process.env.VITE_TEST)
+  console.log('VITE_HELLO :>> ', process.env.VITE_HELLO)
+  console.log('VITE_MODE_TEXT :>> ', process.env.VITE_MODE_TEXT)
 
   win.loadURL(loadUrl)
   win.webContents.openDevTools({ mode: 'right' })
-  appApiLogs()
+  // appApiLogs()
 })
 
 function appApiLogs() {

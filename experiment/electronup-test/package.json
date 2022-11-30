@@ -10,6 +10,10 @@
     "command": "electronup -h && electronup -v",
     "dev:1": "electronup",
     "dev:2": "electronup dev",
+    "dev:production": "electronup --mode production",
+    "dev:test": "electronup --mode test",
+    "dev:staging": "electronup --mode staging",
+    "dev:err": "electronup --mode err",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
     "build:custom": "electronup build -c build/electronup.config.ts"
