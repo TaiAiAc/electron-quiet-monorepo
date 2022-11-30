@@ -16,7 +16,8 @@
     "dev:err": "electronup --mode err",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
-    "build:custom": "electronup build -c build/electronup.config.ts"
+    "build:custom": "electronup build -c build/electronup.config.ts",
+    "build:option": "electronup build -c build/electronup.config.ts -o"
   },
   "dependencies": {
     "@quiteer/electron-preload": "workspace:*"

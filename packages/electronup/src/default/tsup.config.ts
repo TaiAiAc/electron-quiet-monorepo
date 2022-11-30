@@ -2,7 +2,7 @@ import { resolve } from 'path'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
 import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
-import { DefaultDirs, store } from '../utils'
+import { DefaultDirs, store, user } from '../utils'
 import { startElectron } from './startElectron'
 
 const defaultEnvPath = resolve(store.root, '.env')
@@ -40,19 +40,20 @@ const injectEnv = () => {
 
 export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const { command, root } = store
+  const isServe = command === 'serve'
 
   const defaultConfig: Options = {
-    minify: false,
+    minify: isServe ? false : user.minify,
     ...config,
     external: ['electron', ...(config.external ? config.external : [])],
     entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
     outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
-    watch: command === 'serve',
+    watch: isServe,
     dts: false,
     clean: false,
     env: injectEnv(),
     async onSuccess() {
-      if (command === 'serve')
+      if (isServe)
         return startElectron(resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir, 'electron.js'))
     }
   }

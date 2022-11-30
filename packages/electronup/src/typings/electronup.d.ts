@@ -23,7 +23,7 @@ export interface TsupConfig {
 
 export interface BuilderConfig extends Configuration { }
 
-type Platform = 'x64' | 'ia32' | 'armv7l' | 'arm64' | 'universal' | 'dir'
+export type Platform = 'x64' | 'ia32' | 'armv7l' | 'arm64' | 'universal' | 'dir'
 
 export interface ElectronupConfig {
   viteConfig?: ViteConfig
