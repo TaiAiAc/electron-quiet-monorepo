@@ -44,18 +44,15 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
           message: '请选择构建模式 , 默认为当前操作系统平台 ~',
           pageSize: 10,
           choices: [
-            { name: 'win64', value: 'x64', disabled: !(isWin64 || isMac) },
-            { name: 'win32', value: 'ia32', disabled: !(isWin64 || isWin32 || isMac) },
-            { name: 'mac', value: 'arm64', disabled: !isMac },
+            { name: 'win-x64', value: 'x64', disabled: !(isWin64 || isMac) },
+            { name: 'win-ia32', value: 'ia32', disabled: !(isWin64 || isWin32 || isMac) },
+            { name: 'mac-x64', value: 'x64', disabled: !isMac },
+            { name: 'mac-arm64', value: 'arm64', disabled: !isMac },
+            { name: 'mac-universal', value: 'universal', disabled: !isMac },
             {
-              name: 'linux',
+              name: 'linux-armv7l',
               value: 'armv7l',
               disabled: !(isLiunx || isMac)
-            },
-            {
-              name: 'all',
-              value: 'universal',
-              disabled: !isMac
             }
           ]
         }

@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import type { CliOptions } from 'electron-builder'
+import { Arch, Platform as Platforms } from 'electron-builder'
 import { readJSON } from 'fs-extra'
 import type { BuilderConfig, ElectronupConfig, Platform } from '../typings/electronup'
 import { DefaultDirs, store, user } from '../utils'
@@ -33,31 +34,11 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
         output: allConfig.outDir || config.directories?.output || DefaultDirs.outDir
       },
       ...config
-    }
+    },
+    targets: Platforms.WINDOWS.createTarget('nsis', Arch.ia32, Arch.x64)
   }
 
-  const joinPlatform = (platform: Platform | Platform[]) => {
-    if (!platform)
-      return
-    if (platform) {
-      if (Array.isArray(platform)) {
-        platform.forEach((platform) => {
-          defaultConfig[platform] = true
-        })
-      }
-      else {
-        defaultConfig[platform] = true
-      }
-    }
-  }
-
-  if (user.isCustom) {
-    joinPlatform(user.pattern)
-    user.dir && (defaultConfig.dir = user.dir)
-  }
-  else {
-    allConfig.outPlatform && joinPlatform(allConfig.outPlatform)
-  }
+  user.isCustom && user.dir && (defaultConfig.dir = user.dir)
 
   return defaultConfig
 }
