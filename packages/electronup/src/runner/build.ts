@@ -10,13 +10,11 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
   console.info('isOption: ', isOption)
 
   const initConfig = await electronupConfig(options)
-  console.warn('initConfig: ', initConfig)
 
   sync(initConfig.resourceDir || DefaultDirs.resourceDir)
   await viteBuild(initConfig.vite)
   await tsBuild(initConfig.tsup)
 
   sync(initConfig.outDir || DefaultDirs.outDir)
-  console.log('initConfig.builder: ', initConfig.builder)
   builder(initConfig.builder)
 }
