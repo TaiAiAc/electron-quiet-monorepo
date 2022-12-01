@@ -23,7 +23,6 @@ export default defineConfig((env: ConfigEnv) => {
   return {
     builderConfig,
     tsupConfig,
-    viteConfig,
-    outPlatform: ['x64', 'ia32']
+    viteConfig
   }
 })

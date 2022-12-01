@@ -1,4 +1,8 @@
-import type{ Platform } from '../typings/electronup'
+import type { Arch } from 'electron-builder'
+
+type Platform = 'win' | 'mac' | 'linux'
+type ArchType = Arch.x64 | Arch.ia32 | Arch.armv7l | Arch.arm64 | Arch.universal
+type Option = `${Platform}-${ArchType}`
 
 class User {
   static instance: User
@@ -12,7 +16,7 @@ class User {
   // 是否开启asar
   #asar = true
   // 请选择构建模式
-  #pattern: Platform[]
+  #pattern: Map<Platform, ArchType[]>
 
   static getInstance() {
     if (this.instance)
@@ -56,8 +60,13 @@ class User {
     this.#asar = asar
   }
 
-  setPattern(pattern: Platform[]) {
-    this.#pattern = pattern
+  setPattern(pattern: Option[]) {
+    const maps = pattern.reduce((pre, now) => {
+      const [key, value] = now.split('-') as [Platform, ArchType]
+      return pre.set(key, [...(pre.get(key) ?? []), value])
+    }, new Map<Platform, ArchType[]>())
+
+    this.#pattern = maps
   }
 }
 
