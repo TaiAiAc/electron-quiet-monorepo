@@ -90,7 +90,6 @@ interface ViteConfig {
 
 interface TsupConfig {
   entry?: string[] | Record<string, string>
-  name?: string
   target?: string | string[]
   minify?: boolean
   external?: (string | RegExp)[]
@@ -151,6 +150,7 @@ interface ElectronupConfig {
 
 interface ConfigEnv {
   command: 'build' | 'serve'
+  root: string
 }
 
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
@@ -258,79 +258,87 @@ electronup -m test
 
 可自定义配置覆盖默认配置。
 
-vite
+#### vite
+
+- `base` :  `./` 
+
+- `mode` :  `development` | `production`
+
+- `root` :  `render` 
+
+- `publicDir` :  `public` 
+
+- `server` :  `{ host: '0.0.0.0' }` 
+
+- `plugins` :  内置了 `@vitejs/plugin-vue`  插件。
+
+- `build` : 
+
+  - ```js
+    {
+          outDir: 'dist' ,
+          target: 'esnext',
+          minify: true,
+          reportCompressedSize: false,
+          emptyOutDir: true
+    }
+    ```
+
+所有选项皆可通过 `viteOptions` 覆盖
+
+#### tsup
+
+- `minify` :  `false` 
+- `external` :  `['electorn']` 
+- `entry` : 输出 `electorn.js` 
+- `outDir` :  `dist`
+
+不可覆盖的选项
+
+- `watch` :  `dev` 时 为 `true`
+- `dts` :  `false`
+- `clean` :  `false`
+- `env` :  自动读取 `.env` 配置注入环境变量
+- `onSuccess` ：主进程启动函数。
+
+
+##### 路径别名
+
+直接在项目中配置 `tsconfig.json` 的 `paths` 选项即可在主进程代码中使用路径别名。
+
+
+
+#### electron-builder
+
+可全部覆盖，默认配置如下：
 
 ```typescript
- const defaultConfig: UserConfig = {
-    base: config.base || './',
-    mode,
-    root: allConfig.renderDir || DefaultDirs.renderDir,
-    publicDir: resolve(store.root, allConfig.publicDir || DefaultDirs.publicDir),
-    server: { host: '0.0.0.0' },
-    plugins: [command === 'serve' ? vue() : undefined, ...(config.plugins ? config.plugins : [])],
-    ...config.viteOptions,
-    build: {
-      outDir: resolve(store.root, allConfig.resourceDir || DefaultDirs.resourceDir),
-      target: 'esnext',
-      minify: 'esbuild',
-      reportCompressedSize: false,
-      emptyOutDir: false,
-      chunkSizeWarningLimit: 2000
-    }
-  }
-```
-
-tsup
-
-```typescript
- const defaultConfig: Options = {
-    minify: false,
-    ...config,
-    external: ['electron', ...(config.external ? config.external : [])],
-    entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
-    outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
-    watch: command === 'serve',
-    dts: false,
-    clean: false,
-    env: injectEnv(),
-    async onSuccess() {
-      if (command === 'serve')
-        return startElectron(resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir, 'electron.js'))
-    }
-  }
-```
-
-electron-builder
-
-```typescript
-const defaultConfig: CliOptions = {
-    config: {
-      asar: true,
-      appId: 'org.quiter.electron-up',
-      productName: packages.name,
-      protocols: {
-        name: packages.name,
-        schemes: ['deeplink']
-      },
-      nsis: {
-        oneClick: false,
-        language: '2052',
-        perMachine: true,
-        allowElevation: true,
-        allowToChangeInstallationDirectory: true,
-        runAfterFinish: true,
-        createDesktopShortcut: true,
-        createStartMenuShortcut: true,
-        artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
-      },
-      files: [`${allConfig.resourceDir || DefaultDirs.resourceDir}/**/*`],
-      extraFiles: [allConfig.libDir || DefaultDirs.libDir],
-      directories: {
-        output: allConfig.outDir || config.directories?.output || DefaultDirs.outDir
-      },
-      ...config 
-    }
-  }
+{
+  asar: user.asar,
+  appId: 'org.quiteer.electronup',
+  productName: packages.name,
+  protocols: {
+    name: packages.name,
+    schemes: ['deeplink']
+  },
+  nsis: {
+    oneClick: false,
+    language: '2052',
+    perMachine: true,
+    allowElevation: true,
+    allowToChangeInstallationDirectory: true,
+    runAfterFinish: true,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    artifactName: `${packages.name} \${arch} Setup ${packages.version}.\${ext}`
+  },
+  files: [`${allConfig.resourceDir || DefaultDirs.resourceDir}/**/*`],
+  extraFiles: [allConfig.libDir || DefaultDirs.libDir],
+  directories: {
+    output: allConfig.outDir || config.directories?.output || DefaultDirs.outDir
+  },
+  // ...传入同名参数即可完成覆盖 
+}
 ```
 
 
