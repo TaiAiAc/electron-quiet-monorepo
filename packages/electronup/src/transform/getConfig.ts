@@ -33,6 +33,7 @@ export const getConfig = async (filePath: string | undefined): Promise<Electronu
     return option
   }
   catch (error) {
+    console.error('error :>> ', error)
     throw new Error(PARSING_FAILED)
   }
 }

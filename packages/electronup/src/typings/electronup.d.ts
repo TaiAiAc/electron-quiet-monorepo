@@ -14,7 +14,6 @@ export interface ViteConfig {
 
 export interface TsupConfig {
   entry?: string[] | Record<string, string>
-  name?: string
   target?: string | string[];
   minify?: boolean;
   external?: (string | RegExp)[];
@@ -75,6 +74,7 @@ export interface ElectronupConfig {
 
 export interface ConfigEnv {
   command: 'build' | 'serve'
+  root:string
 }
 
 export type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig

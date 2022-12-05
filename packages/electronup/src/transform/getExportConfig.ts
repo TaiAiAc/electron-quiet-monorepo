@@ -5,7 +5,7 @@ import { store } from '../utils'
 const exportElectronupConfig = (config: UserElectronupConfig): ElectronupConfig => {
   const typeStr = typeof config
   if (typeStr === 'function') {
-    const option = (<ElectronupConfigFn>config)({ command: store.command })
+    const option = (<ElectronupConfigFn>config)({ command: store.command, root: store.root })
     return option
   }
 

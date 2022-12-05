@@ -32,26 +32,26 @@ cli
   .alias('dev')
   .option('-p , --port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
   .action(async (dir: undefined | string, options: DevOptions) => {
-    const { c, config, m, mode, p, port } = options
+    const { config, mode, port } = options
 
-    const option = await getConfig(c || config)
+    const option = await getConfig(config)
 
     store.setCommand('serve')
-    store.setMode(m || mode || 'development')
-    watch(option, p || port || 8090)
+    store.setMode(mode || 'development')
+    watch(option, port || 8090)
   })
 
 cli
   .command('build [root]', '构建')
   .option('-o , --option', '自定义 , 自定义构建选项 ')
   .action(async (dir: undefined | string, options: BuildOptions) => {
-    const { c, config, m, mode, o = false, option = false } = options
+    const { config, mode, option = false } = options
 
-    const configOption = await getConfig(c || config)
+    const configOption = await getConfig(config)
 
     store.setCommand('build')
-    store.setMode(m || mode || 'production')
-    build(configOption, o || option)
+    store.setMode(mode || 'production')
+    build(configOption, option)
   })
 
 cli.help()
