@@ -5,11 +5,10 @@ import type { ElectronupConfig, ViteConfig } from '../typings/electronup'
 import { DefaultDirs, store, user } from '../utils'
 
 export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
-  const { mode, root } = store
+  const { root } = store
 
   const defaultConfig: UserConfig = {
-    base: config.base || './',
-    mode,
+    base: './',
     root: allConfig.renderDir || DefaultDirs.renderDir,
     publicDir: resolve(root, allConfig.publicDir || DefaultDirs.publicDir),
     server: { host: '0.0.0.0' },

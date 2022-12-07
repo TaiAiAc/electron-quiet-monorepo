@@ -4,7 +4,6 @@ import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vit
 import type { Options } from 'tsup'
 
 export interface ViteConfig {
-  base?: string
   resolve?: ResolveOptions & {
     alias?: AliasOptions;
   }

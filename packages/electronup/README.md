@@ -59,7 +59,6 @@ pnpm add @quiteer/electronup
     "dotenv": "^16.0.3",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
-    "inquirer": "^9.1.4",
     "neofetch": "^7.1.0",
     "pirates": "^4.0.5",
     "portfinder": "^1.0.32",
@@ -80,7 +79,6 @@ import type { AliasOptions, PluginOption, ResolveOptions, UserConfig } from 'vit
 import type { Options } from 'tsup'
 
 interface ViteConfig {
-  base?: string
   resolve?: ResolveOptions & {
     alias?: AliasOptions
   }
@@ -156,11 +154,9 @@ interface ConfigEnv {
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
 type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
 
-declare const defineConfig: (config: UserElectronupConfig) => UserElectronupConfig
+declare const getLoadUrl: (env: 'development' | 'production' | string, port: string) => string
 
-declare const loadUrl: string
-
-export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig, loadUrl }
+export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig, getLoadUrl }
 
 ```
 
