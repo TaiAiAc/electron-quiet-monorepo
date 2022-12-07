@@ -45,7 +45,7 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const defaultConfig: Options = {
     minify: isServe ? false : user.minify,
     ...config,
-    external: ['electron', ...(config.external ? config.external : [])],
+    external: ['electron', ...(config.external ?? [])],
     entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
     outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
     watch: isServe,
