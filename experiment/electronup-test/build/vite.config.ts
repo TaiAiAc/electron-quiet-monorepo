@@ -1,4 +1,5 @@
 import type { ViteConfig } from '@quiteer/electronup'
+import vue from '@vitejs/plugin-vue'
 
 /**
  * 框架内置的配置
@@ -11,8 +12,7 @@ import type { ViteConfig } from '@quiteer/electronup'
 //   publicDir: 'public',
 //   server: { host: '0.0.0.0' },
 //   plugins: [
-// vue()
-// 自行导入插件
+//      自行导入插件
 //   ],
 // ...config.viteOptions,
 //   build: {
@@ -27,4 +27,6 @@ import type { ViteConfig } from '@quiteer/electronup'
 //   viteOptions: {}
 // }
 
-export default {} as ViteConfig
+export default {
+  plugins: [vue()]
+} as ViteConfig

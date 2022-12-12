@@ -1,9 +1,11 @@
 import { resolve } from 'path'
+import type { ChildProcessWithoutNullStreams } from 'child_process'
+import { spawn } from 'child_process'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
+import electron from 'electron'
 import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
 import { DefaultDirs, store, user } from '../utils'
-import { startElectron } from './startElectron'
 
 const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
@@ -42,9 +44,12 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const { command, root } = store
   const isServe = command === 'serve'
 
-  const defaultConfig: Options = {
+  const userConfig = {
     minify: isServe ? false : user.minify,
-    ...config,
+    ...config
+  }
+
+  const defaultConfig: Options = {
     external: ['electron', ...(config.external ?? [])],
     entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
     outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
@@ -58,6 +63,49 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
     }
   }
 
-  return defaultConfig
+  return {
+    ...userConfig,
+    ...defaultConfig
+  }
 }
 
+let electronProcess: ChildProcessWithoutNullStreams | null
+let manualRestart = false
+
+function startElectron(mainPath: string) {
+  if (electronProcess) {
+    manualRestart = true
+    electronProcess.pid && process.kill(electronProcess.pid)
+    electronProcess = null
+
+    setTimeout(() => {
+      manualRestart = false
+    }, 5000)
+  }
+
+  electronProcess = spawn(electron as any, [mainPath, '--inspect=9528'])
+
+  electronProcess.stdout.on('data', removeJunk)
+
+  electronProcess.stderr.on('data', removeJunk)
+
+  electronProcess.on('close', () => {
+    manualRestart || process.exit()
+  })
+}
+
+function removeJunk(chunk: string) {
+  if (/\d+-\d+-\d+ \d+:\d+:\d+\.\d+ Electron(?: Helper)?\[\d+:\d+] /.test(chunk))
+    return false
+  if (/\[\d+:\d+\/|\d+\.\d+:ERROR:CONSOLE\(\d+\)\]/.test(chunk))
+    return false
+  if (/ALSA lib [a-z]+\.c:\d+:\([a-z_]+\)/.test(chunk))
+    return false
+
+  const data = chunk.toString().split(/\r?\n/)
+  let log = ''
+  data.forEach((line) => {
+    log += `  ${line}\n`
+  })
+  console.info(log)
+}
