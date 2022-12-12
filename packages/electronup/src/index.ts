@@ -5,6 +5,8 @@ export const defineConfig = (config: UserElectronupConfig): UserElectronupConfig
 
 export type { ElectronupConfig, ViteConfig, ConfigEnv, TsupConfig, BuilderConfig } from './typings/electronup'
 
-export const loadUrl = process.env.NODE_ENV === 'development'
-  ? `http://localhost:${process.env.RENDER_PORT}`
-  : `file://${resolve(__dirname, 'index.html')}`
+export const getLoadUrl = (env: 'development' | 'production' | string, port: string) => {
+  return env === 'development'
+    ? `http://localhost:${port}`
+    : `file://${resolve(__dirname, 'index.html')}`
+}

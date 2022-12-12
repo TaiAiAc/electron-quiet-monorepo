@@ -12,6 +12,7 @@ export async function watch(options: UserElectronupConfig, port: number) {
   store.setPort(p)
 
   const initConfig = await electronupConfig(options)
+  console.log('initConfig: ', initConfig)
 
   const viteDevServer = await createServer({ configFile: false, ...initConfig.vite })
 
