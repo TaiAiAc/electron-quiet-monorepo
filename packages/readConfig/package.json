@@ -1,0 +1,28 @@
+{
+  "name": "@quiteer/read-config",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "基于electron , ",
+  "author": "quiteer",
+  "license": "MIT",
+  "keywords": [
+    "electron"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./index.js"
+    }
+  },
+  "main": "./index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "start": "node dist/index.cjs"
+  }
+}
