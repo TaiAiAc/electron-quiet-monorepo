@@ -21,7 +21,8 @@
     "build:option": "electronup build -c build/electronup.config.ts -o"
   },
   "dependencies": {
-    "@quiteer/electron-preload": "workspace:*"
+    "@quiteer/electron-preload": "workspace:*",
+    "epic-spinners": "^2.0.0"
   },
   "devDependencies": {
     "@quiteer/electron-ipc": "workspace:*",

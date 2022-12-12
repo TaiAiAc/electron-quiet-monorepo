@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { AtomSpinner, FlowerSpinner } from 'epic-spinners'
 import HelloWorld from './components/HelloWorld.vue'
 </script>
 
@@ -14,6 +15,18 @@ import HelloWorld from './components/HelloWorld.vue'
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
+
+  <FlowerSpinner
+    :animation-duration="2500"
+    :size="70"
+    color="#ff1d5e"
+  />
+
+  <AtomSpinner
+    :animation-duration="1000"
+    :size="60"
+    color="#ff1d5e"
+  />
 </template>
 
 <style scoped>
