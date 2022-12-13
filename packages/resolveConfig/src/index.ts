@@ -1,18 +1,98 @@
-import { dirname, extname, join, resolve } from 'path'
+import { dirname, extname, isAbsolute, join, resolve } from 'path'
 import { pathToFileURL } from 'url'
+import { createRequire } from 'module'
 import { parse } from 'yaml'
-import { pathExists, readFile, readJson } from 'fs-extra'
+import { pathExists, readFile, readJson, realpathSync } from 'fs-extra'
+import { build } from 'esbuild'
 
 const dynamicImport = (file: string) => import(file)
 
 type FileType = '.js' | '.mjs' | '.cjs' | '.ts' | '.json' | '.yaml'
 
+async function transformConfig(input: string) {
+  const result = await build({
+    absWorkingDir: process.cwd(),
+    entryPoints: [input],
+    outfile: 'out.js',
+    write: false,
+    platform: 'node',
+    bundle: true,
+    format: 'cjs',
+    sourcemap: 'inline',
+    metafile: true,
+    plugins: [
+      // 对裸模块，进行 external 处理，即不打包到 bundle
+      {
+        name: 'externalize-deps',
+        setup(build) {
+          build.onResolve({ filter: /.*/ }, (args) => {
+            const id = args.path
+            if (id[0] !== '.' && !isAbsolute(id)) {
+              return {
+                external: true
+              }
+            }
+          })
+        }
+      }
+      // 省略其他插件
+    ]
+  })
+
+  const { text } = result.outputFiles[0]
+  return {
+    code: text,
+    dependencies: result.metafile ? Object.keys(result.metafile.inputs) : []
+  }
+}
+
+interface NodeModuleWithCompile extends NodeModule {
+  _compile(code: string, filename: string): any
+}
+const _require = createRequire(pathToFileURL(resolve()))
+async function requireConfig(filename: string, code: string) {
+  const extension = extname(filename)
+  const realFileName = realpathSync(filename)
+  const loaderExt = extension in _require.extensions ? extension : '.js'
+  // 保存老的 require 行为
+  const defaultLoader = _require.extensions[loaderExt]!
+  // 临时重写当前配置文件后缀的 require 行为
+  _require.extensions[loaderExt] = (module: NodeModule, filename: string) => {
+    // 只处理配置文件
+    if (filename === realFileName)
+    // 直接调用 compile，传入编译好的代码
+      (module as NodeModuleWithCompile)._compile(code, filename)
+    else
+      defaultLoader(module, filename)
+  }
+  // 清除缓存
+  delete require.cache[require.resolve(filename)]
+  const raw = _require(filename)
+  _require.extensions[loaderExt] = defaultLoader
+  return raw.__esModule ? raw.default : raw
+}
+
+function resultConfig(filePath: string) {
+  return new Promise((resolve) => {
+    transformConfig(filePath).then(({ code }) => {
+      return requireConfig(filePath, code)
+    }).then(resolve)
+  })
+}
+
 const fileType = new Map<FileType, (filePath: string) => Promise<any>>()
 
-fileType.set('.js', (filePath) => {
+fileType.set('.js', async (filePath) => {
+  const pkg = await readJson(resolve(process.cwd(), 'package.json'))
+  const { type = 'commonjs' } = pkg
   return new Promise((resolve) => {
-    console.log('process.cwd() :>> ', process.cwd())
-    resolve(filePath)
+    if (type === 'module') {
+      const fileUrl = pathToFileURL(filePath)
+      dynamicImport(fileUrl.href).then(config => config?.default).then(resolve)
+    }
+
+    // commonjs
+    resultConfig(filePath).then(resolve)
   })
 })
 
@@ -23,17 +103,9 @@ fileType.set('.mjs', (filePath) => {
   })
 })
 
-fileType.set('.cjs', (filePath) => {
-  return new Promise((resolve) => {
-    resolve(filePath)
-  })
-})
+fileType.set('.cjs', resultConfig)
 
-fileType.set('.ts', (filePath) => {
-  return new Promise((resolve) => {
-    resolve(filePath)
-  })
-})
+fileType.set('.ts', resultConfig)
 
 fileType.set('.json', (filePath) => {
   return new Promise((resolve) => {
@@ -51,7 +123,7 @@ fileType.set('.yaml', (filePath) => {
  * 描述
  * @date 2022-12-13
  * @param {any} configPath:string  需要读取配置的路径
- * @param {any} configName?:string  默认文件名
+ * @param {any} configName?:string  配置文件名
  * @returns {any}
  */
 export async function resolveConfig(configPath = process.cwd(), configName?: string) {

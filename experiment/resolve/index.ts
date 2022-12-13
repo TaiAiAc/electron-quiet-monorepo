@@ -31,5 +31,8 @@ const test = async () => {
 
   const rootConfig = await resolveConfig(undefined, 'config')
   console.log('rootConfig: ', rootConfig)
+
+  const elctornup = await resolveConfig(undefined, 'electronup.config')
+  console.log('elctornup: ', JSON.stringify(elctornup))
 }
 test()
