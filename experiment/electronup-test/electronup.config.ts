@@ -1,12 +1,19 @@
 import type { ConfigEnv } from '@quiteer/electronup'
 import { defineConfig } from '@quiteer/electronup'
-import vue from '@vitejs/plugin-vue'
+import VueMacros from 'unplugin-vue-macros/vite'
+import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig((env: ConfigEnv) => {
   console.log('defineConfig env: ', env)
   return {
     viteConfig: {
-      plugins: [vue()]
+      plugins: [VueMacros({
+        plugins: {
+          vue: Vue(),
+          vueJsx: VueJsx()
+        }
+      })]
     },
     builderConfig: { }
   }

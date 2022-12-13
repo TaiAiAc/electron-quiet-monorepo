@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electronup",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 ",
   "author": "quiteer",
   "license": "MIT",
@@ -36,17 +36,14 @@
     "electron": ">= 20"
   },
   "dependencies": {
-    "@swc-node/core": "^1.9.1",
-    "@swc/core": "^1.3.19",
+    "@quiteer/resolve-config": "workspace:*",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
     "neofetch": "^7.1.0",
-    "pirates": "^4.0.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",
-    "tsconfig-paths": "^4.1.0",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
     "vite": "^3.2.4"

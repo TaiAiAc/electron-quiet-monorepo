@@ -1,8 +1,10 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { AtomSpinner, FlowerSpinner } from 'epic-spinners'
 import HelloWorld from './components/HelloWorld.vue'
+
+const Btn = <button>这是tsx渲染的按钮</button>
 </script>
 
 <template>
@@ -27,6 +29,8 @@ import HelloWorld from './components/HelloWorld.vue'
     :size="60"
     color="#ff1d5e"
   />
+
+  <Btn />
 </template>
 
 <style scoped>
