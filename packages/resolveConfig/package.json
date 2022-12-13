@@ -1,5 +1,5 @@
 {
-  "name": "@quiteer/read-config",
+  "name": "@quiteer/resolve-config",
   "type": "module",
   "version": "0.0.1",
   "description": "基于electron , ",
