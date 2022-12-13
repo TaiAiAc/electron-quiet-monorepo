@@ -1,18 +1,16 @@
 {
   "name": "@quiteer/resolve-config",
-  "version": "0.0.1",
-  "description": "基于electron , ",
+  "version": "0.0.2",
+  "description": "用于读取项目下 'ts', 'mjs', 'js', 'cjs', 'json', 'yaml' 的用户配置",
   "author": "quiteer",
   "license": "MIT",
-  "keywords": [
-    "electron"
-  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "files": ["dist"],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup"

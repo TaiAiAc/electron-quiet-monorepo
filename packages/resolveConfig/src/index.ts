@@ -11,6 +11,7 @@ const fileType = new Map<FileType, (filePath: string) => Promise<any>>()
 
 fileType.set('.js', (filePath) => {
   return new Promise((resolve) => {
+    console.log('process.cwd() :>> ', process.cwd())
     resolve(filePath)
   })
 })
@@ -53,13 +54,13 @@ fileType.set('.yaml', (filePath) => {
  * @param {any} configName?:string  默认文件名
  * @returns {any}
  */
-export async function resolveConfig(configPath = process.cwd(), configName = 'config') {
-  !configPath || (configPath = process.cwd())
+export async function resolveConfig(configPath = process.cwd(), configName?: string) {
+  configPath || (configPath = process.cwd())
 
   let suffix = extname(configPath) as FileType
 
   if (!suffix && !configName)
-    throw new Error('检测不到可以解析的配置文件！')
+    throw new Error('请检查传入的参数，参数不规范！')
 
   if (configName) {
     suffix.includes('.') && (configPath = dirname(configPath))

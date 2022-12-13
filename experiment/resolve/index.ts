@@ -29,7 +29,7 @@ const test = async () => {
   const tsConfig = await resolveConfig(ts)
   console.log('tsConfig: ', tsConfig)
 
-  const rootConfig = await resolveConfig()
+  const rootConfig = await resolveConfig(undefined, 'config')
   console.log('rootConfig: ', rootConfig)
 }
 test()
