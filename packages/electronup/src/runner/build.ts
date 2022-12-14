@@ -17,10 +17,8 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
         process.exit(1)
       })
 
-    if (isMinify) {
-      initConfig.vite.build!.minify = 'esbuild'
-      initConfig.tsup.minify = isMinify
-    }
+    initConfig.tsup.minify = isMinify
+    initConfig.vite.build!.minify = isMinify ? 'esbuild' : false
 
     const { isPackage } = await inquirer
       .prompt([{ type: 'confirm', name: 'isPackage', message: '是否生成安装包?' }])
