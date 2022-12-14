@@ -52,21 +52,17 @@ pnpm add @quiteer/electronup
 ```json
 {
   "dependencies": {
-    "@swc-node/core": "^1.9.1",
-    "@swc/core": "^1.3.19",
-    "@vitejs/plugin-vue": "^3.2.0",
+    "@quiteer/resolve-config": "workspace:^*",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
-    "neofetch": "^7.1.0",
-    "pirates": "^4.0.5",
+    "inquirer": "8.2.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",
-    "tsconfig-paths": "^4.1.0",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
-    "vite": "^3.2.4"
+    "vite": "^4.0.1"
   }
 }
 ```

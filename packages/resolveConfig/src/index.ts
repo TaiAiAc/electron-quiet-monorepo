@@ -25,7 +25,8 @@ async function transformConfig(input: string) {
         setup(build) {
           build.onResolve({ filter: /.*/ }, (args) => {
             const id = args.path
-            if (id[0] !== '.' && !isAbsolute(id)) {
+            // 排除相对路径和绝对路径
+            if (!id.startsWith('.') && !isAbsolute(id)) {
               return {
                 external: true
               }
@@ -52,21 +53,24 @@ async function requireConfig(filename: string, code: string) {
   const extension = extname(filename)
   const realFileName = realpathSync(filename)
   const loaderExt = extension in _require.extensions ? extension : '.js'
+
   // 保存老的 require 行为
   const defaultLoader = _require.extensions[loaderExt]!
   // 临时重写当前配置文件后缀的 require 行为
   _require.extensions[loaderExt] = (module: NodeModule, filename: string) => {
     // 只处理配置文件
-    if (filename === realFileName)
-    // 直接调用 compile，传入编译好的代码
+    if (filename === realFileName) {
+      // 直接调用 compile，传入编译好的代码
       (module as NodeModuleWithCompile)._compile(code, filename)
-    else
-      defaultLoader(module, filename)
+    }
+    else { defaultLoader(module, filename) }
   }
   // 清除缓存
   delete require.cache[require.resolve(filename)]
   const raw = _require(filename)
+  // 恢复原生require行为
   _require.extensions[loaderExt] = defaultLoader
+  // 如果是esm编译过的__esModule为true
   return raw.__esModule ? raw.default : raw
 }
 
