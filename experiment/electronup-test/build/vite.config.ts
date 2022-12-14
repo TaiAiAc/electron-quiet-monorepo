@@ -1,5 +1,7 @@
 import type { ViteConfig } from '@quiteer/electronup'
-import vue from '@vitejs/plugin-vue'
+import VueMacros from 'unplugin-vue-macros/vite'
+import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 
 /**
  * 框架内置的配置
@@ -28,5 +30,10 @@ import vue from '@vitejs/plugin-vue'
 // }
 
 export default {
-  plugins: [vue()]
+  plugins: [VueMacros({
+    plugins: {
+      vue: Vue(),
+      vueJsx: VueJsx()
+    }
+  })]
 } as ViteConfig

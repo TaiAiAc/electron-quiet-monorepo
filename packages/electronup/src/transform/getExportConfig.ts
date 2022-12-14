@@ -12,7 +12,7 @@ const exportElectronupConfig = (config: UserElectronupConfig): ElectronupConfig 
   if (typeStr === 'object')
     return <ElectronupConfig>config
 
-  throw new Error('electronup 配置错误')
+  throw new Error('electronup 配置错误,解析失败！')
 }
 
 export const electronupConfig = (config: UserElectronupConfig) => getElectronupConfig(exportElectronupConfig(config))

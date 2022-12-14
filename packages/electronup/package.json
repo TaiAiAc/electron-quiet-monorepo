@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electronup",
-  "version": "0.2.13",
+  "version": "0.3.1",
   "description": "融合构建 electron 应用需要的构建工具,保留原有配置习惯的命令行工具 ",
   "author": "quiteer",
   "license": "MIT",
@@ -18,14 +18,14 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/client/index.js",
+  "module": "dist/client/index.mjs",
+  "types": "dist/client/index.d.ts",
   "bin": {
-    "electronup": "bin/electronup.js"
+    "electronup": "dist/bin/electronup.js"
   },
   "files": [
-    "dist",
-    "bin"
+    "dist"
   ],
   "scripts": {
     "dev": "tsup --watch",
@@ -33,25 +33,25 @@
   },
   "peerDependencies": {
     "@types/node": ">= 16",
-    "electron": ">= 20"
+    "electron": ">= 20",
+    "vue": ">= 3"
   },
   "dependencies": {
-    "@quiteer/resolve-config": "workspace:*",
+    "@quiteer/resolve-config": "workspace:^*",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
     "electron-builder": "^23.6.0",
     "fs-extra": "^10.1.0",
-    "neofetch": "^7.1.0",
+    "inquirer": "8.2.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
-    "vite": "^3.2.4"
+    "vite": "^4.0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^9.0.3",
-    "@types/rimraf": "^3.0.2",
-    "inquirer": "^9.1.4"
+    "@types/rimraf": "^3.0.2"
   }
 }
