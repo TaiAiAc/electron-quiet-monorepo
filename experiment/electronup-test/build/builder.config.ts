@@ -6,7 +6,6 @@ import type { BuilderConfig } from '@quiteer/electronup'
  * 在此列出
  */
 //  {
-//   asar: true,
 //   appId: 'org.quiter.electron-up',
 //   productName: packages.name,
 //   protocols: {
@@ -31,4 +30,6 @@ import type { BuilderConfig } from '@quiteer/electronup'
 //   }
 // }
 
-export default {} as BuilderConfig
+export default {
+  asar: false
+} as BuilderConfig

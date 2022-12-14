@@ -5,7 +5,7 @@ import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
 import electron from 'electron'
 import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
-import { DefaultDirs, store, user } from '../utils'
+import { DefaultDirs, store } from '../utils'
 
 const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
@@ -45,7 +45,7 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const isServe = command === 'serve'
 
   const userConfig = {
-    minify: isServe ? false : user.minify,
+    minify: isServe,
     ...config
   }
 

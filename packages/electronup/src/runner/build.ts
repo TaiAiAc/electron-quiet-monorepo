@@ -1,16 +1,13 @@
 import { Arch, Platform, build as builder } from 'electron-builder'
 import { build as viteBuild } from 'vite'
 import { build as tsBuild } from 'tsup'
-import { sync } from 'rimraf'
 
 import inquirer from 'inquirer'
 import type { ElectronupConfig } from '../typings/electronup'
 import { electronupConfig } from '../transform'
-import { DefaultDirs, user } from '../utils'
 
 export async function build(options: ElectronupConfig, isOption: boolean) {
   const initConfig = await electronupConfig(options)
-  console.info('initConfig: ', initConfig)
 
   if (isOption) {
     const { isMinify } = await inquirer
@@ -19,23 +16,18 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
         console.error('err: ', err)
         process.exit(1)
       })
-    user.setMinify(isMinify)
 
-    const { isAsar } = await inquirer
-      .prompt([{ type: 'confirm', name: 'isAsar', message: '是否开启asar?' }])
+    if (isMinify) {
+      initConfig.vite.build!.minify = 'esbuild'
+      initConfig.tsup.minify = isMinify
+    }
+
+    const { isPackage } = await inquirer
+      .prompt([{ type: 'confirm', name: 'isPackage', message: '是否生成安装包?' }])
       .catch((err) => {
         console.error('err: ', err)
         process.exit(1)
       })
-
-    const { isInstall } = await inquirer
-      .prompt([{ type: 'confirm', name: 'isInstall', message: '是否生成安装包?' }])
-      .catch((err) => {
-        console.error('err: ', err)
-        process.exit(1)
-      })
-
-    user.setAsar(isAsar)
 
     const platform = process.platform
     const arch = process.arch
@@ -73,7 +65,7 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
           })
         }
       }
-      initConfig.builder!.dir = !isInstall
+      initConfig.builder!.dir = !isPackage
     }
 
     if (isMac) {
@@ -97,8 +89,27 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
         })
 
       if (outPlatform === 'mac') {
-        initConfig.builder!.arm64 = true
-        initConfig.builder!.dir = !isInstall
+        const { pattern } = await inquirer
+          .prompt([
+            {
+              type: 'checkbox',
+              name: 'pattern',
+              message: '请选择构建模式 , 跳过选择为当前操作系统平台 ~',
+              pageSize: 10,
+              choices: [
+                { name: 'mac-x64', value: Arch.x64 },
+                { name: 'mac-arm64', value: Arch.arm64 }
+              ]
+            }
+          ])
+          .catch((err) => {
+            console.error('err: ', err)
+            process.exit(1)
+          })
+
+        const archList = []
+        pattern.length ? archList.push(...pattern) : archList.push(Arch[arch])
+        initConfig.builder!.targets = Platform.MAC.createTarget(!isPackage ? 'dir' : null, ...archList)
       }
 
       if (outPlatform === 'win') {
@@ -122,24 +133,21 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
 
         const archList = []
         pattern.length ? archList.push(...pattern) : archList.push(Arch.x64)
-        initConfig.builder!.targets = Platform.WINDOWS.createTarget(!isInstall ? 'dir' : null, ...archList)
+        initConfig.builder!.targets = Platform.WINDOWS.createTarget(!isPackage ? 'dir' : null, ...archList)
       }
 
       if (outPlatform === 'linux')
-        initConfig.builder!.targets = Platform.LINUX.createTarget(!isInstall ? 'dir' : null, Arch.armv7l)
+        initConfig.builder!.targets = Platform.LINUX.createTarget(!isPackage ? 'dir' : null, Arch.armv7l)
     }
 
     if (isLiunx) {
       //
     }
   }
+  console.info('initConfig: ', initConfig)
 
   await viteBuild(initConfig.vite)
   await tsBuild(initConfig.tsup)
-
-  sync(initConfig.outDir || DefaultDirs.outDir)
-
-  console.log('initConfig.builder :>> ', initConfig.builder)
 
   await builder(initConfig.builder)
 }

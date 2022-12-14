@@ -59,7 +59,6 @@ pnpm add @quiteer/electronup
     "fs-extra": "^10.1.0",
     "inquirer": "8.2.5",
     "portfinder": "^1.0.32",
-    "rimraf": "^3.0.2",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.1"

@@ -3,7 +3,7 @@ import type { CliOptions } from 'electron-builder'
 // import { Arch, Platform } from 'electron-builder'
 import { readJSON } from 'fs-extra'
 import type { BuilderConfig, ElectronupConfig } from '../typings/electronup'
-import { DefaultDirs, store, user } from '../utils'
+import { DefaultDirs, store } from '../utils'
 
 /**
  *  CliOptions 配置直接
@@ -25,7 +25,6 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
 
   const defaultConfig: CliOptions = {
     config: {
-      asar: user.asar,
       appId: 'org.quiteer.electronup',
       productName: packages.name,
       protocols: {

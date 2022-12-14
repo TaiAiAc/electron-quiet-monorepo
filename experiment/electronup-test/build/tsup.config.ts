@@ -6,7 +6,6 @@ import type { TsupConfig } from '@quiteer/electronup'
  * 在此列出
  */
 // {
-//   minify: false,
 //   external: [
 //     'electron'
 // ... 自行追加忽略文件

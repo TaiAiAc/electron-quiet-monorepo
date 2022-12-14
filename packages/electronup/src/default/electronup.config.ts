@@ -15,7 +15,7 @@ interface InitConfig extends Omit<ElectronupConfig, 'viteConfig' | 'tsupConfig' 
 }
 
 export async function getElectronupConfig(config: ElectronupConfig) {
-  const { viteConfig, tsupConfig, preloadTsup } = config
+  const { viteConfig, tsupConfig, preloadTsup, ...dirConfig } = config
 
   const vite = getViteConfig(viteConfig || {}, config)
   const tsup = getTsupConfig(tsupConfig || {}, config)
@@ -31,5 +31,5 @@ export async function getElectronupConfig(config: ElectronupConfig) {
 
   preloadTsup && (initConfig.preload = preloadTsup)
 
-  return { ...config, ...initConfig }
+  return { ...dirConfig, ...initConfig }
 }

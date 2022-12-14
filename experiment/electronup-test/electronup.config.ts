@@ -15,6 +15,8 @@ export default defineConfig((env: ConfigEnv) => {
         }
       })]
     },
-    builderConfig: { }
+    builderConfig: {
+      asar: false
+    }
   }
 })
