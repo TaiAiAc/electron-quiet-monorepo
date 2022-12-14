@@ -77,4 +77,4 @@ export { resolveConfig }
 
 ## 配置文件优先级
 
-'ts' > 'mjs' > 'js' > 'cjs' > 'json' > 'yaml'
+'ts' > 'mjs' > 'cjs' > 'js' > 'json' > 'yaml'

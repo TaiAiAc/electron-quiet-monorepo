@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/resolve-config",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "用于读取项目下 'ts', 'mjs', 'js', 'cjs', 'json', 'yaml' 的用户配置",
   "author": "quiteer",
   "license": "MIT",

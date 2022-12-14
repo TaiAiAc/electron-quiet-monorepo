@@ -7,8 +7,6 @@ import { build } from 'esbuild'
 
 const dynamicImport = (file: string) => import(file)
 
-type FileType = '.js' | '.mjs' | '.cjs' | '.ts' | '.json' | '.yaml'
-
 async function transformConfig(input: string) {
   const result = await build({
     absWorkingDir: process.cwd(),
@@ -80,6 +78,8 @@ function resultConfig(filePath: string) {
   })
 }
 
+type FileType = '.js' | '.mjs' | '.cjs' | '.ts' | '.json' | '.yaml'
+
 const fileType = new Map<FileType, (filePath: string) => Promise<any>>()
 
 fileType.set('.js', async (filePath) => {
@@ -137,7 +137,7 @@ export async function resolveConfig(configPath = process.cwd(), configName?: str
   if (configName) {
     suffix.includes('.') && (configPath = dirname(configPath))
 
-    const configList = ['ts', 'mjs', 'js', 'cjs', 'json', 'yaml'].map(suffix => `${join(configPath, configName)}.${suffix}`)
+    const configList = ['ts', 'mjs', 'cjs', 'js', 'json', 'yaml'].map(suffix => `${join(configPath, configName)}.${suffix}`)
 
     const index = (await Promise.all(configList.map(pathExists))).findIndex(flag => flag)
     if (index < 0)
