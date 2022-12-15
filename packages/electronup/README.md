@@ -46,6 +46,9 @@ pnpm add @quiteer/electronup -D
 - 构建打包
   - `electornup build`
   - `electornup build -o` 或 `electornup build --option` 开启选项式构建
+  - 输出选项默认当前平台架构
+  - 指定输出必须指定平台 `--win` ,`--mac` ,`--linux`
+  - 可不指定架构版本， 默认为本机架构版本
 
 ## 内置的依赖
 > 部分依赖已内置 无需重复安装 （开发此脚手架的目的也是给项目 package 瘦瘦身）
@@ -93,18 +96,11 @@ interface TsupConfig {
 
 interface BuilderConfig extends Configuration { }
 
-type Platform = 'x64' | 'ia32' | 'armv7l' | 'arm64' | 'universal' | 'dir'
-
 interface ElectronupConfig {
   viteConfig?: ViteConfig
   tsupConfig?: TsupConfig
   preloadTsup?: Options | Options[]
   builderConfig: BuilderConfig
-
-  /**
-   * 输出平台
-   */
-  outPlatform?: Platform | Platform[]
 
   /**
    * 渲染进程入口目录
@@ -132,13 +128,13 @@ interface ElectronupConfig {
 
   /**
   * 资源构建输出目录
-  * @default 'dist'
+  * @default 'dist/resource'
   */
   resourceDir?: string
 
   /**
    * electron-builder 输出目录
-   * @default 'out'
+   * @default 'dist/out'
    */
   outDir?: string
 }
@@ -276,27 +272,15 @@ electronup -m test
 
 所有选项皆可通过 `viteOptions` 覆盖
 
-#### tsup
+#### tsup配置选项
 
-- `minify` :  `false` 
 - `external` :  `['electorn']` 
-- `entry` : 输出 `electorn.js` 
-- `outDir` :  `dist`
-
-不可覆盖的选项
-
-- `watch` :  `dev` 时 为 `true`
-- `dts` :  `false`
-- `clean` :  `false`
-- `env` :  自动读取 `.env` 配置注入环境变量
-- `onSuccess` ：主进程启动函数。
-
+- `target` :  `node14` 
+- `noExternal` :  `[]` 
 
 ##### 路径别名
 
 直接在项目中配置 `tsconfig.json` 的 `paths` 选项即可在主进程代码中使用路径别名。
-
-
 
 #### electron-builder
 
@@ -330,9 +314,6 @@ electronup -m test
   // ...传入同名参数即可完成覆盖 
 }
 ```
-
-
-
 
 ## 示例
 

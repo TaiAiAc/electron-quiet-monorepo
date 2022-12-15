@@ -51,6 +51,7 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
 
   const defaultConfig: Options = {
     external: ['electron', ...(config.external ?? [])],
+    noExternal: config.noExternal,
     entry: { electron: resolve(root, allConfig.mainDir || DefaultDirs.mainDir, 'index.ts') },
     outDir: allConfig.resourceDir || DefaultDirs.resourceDir,
     watch: isServe,
@@ -62,6 +63,8 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
         return startElectron(resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir, 'electron.js'))
     }
   }
+
+  config.target && (defaultConfig.target = config.target)
 
   return { ...userConfig, ...defaultConfig }
 }

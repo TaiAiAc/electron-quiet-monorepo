@@ -5,7 +5,7 @@ importers:
   .:
     specifiers:
       '@quiteer/eslint-config': ^0.0.3
-      '@quiteer/ts-config': ^0.0.3
+      '@quiteer/ts-config': ^0.0.4
       '@swc/core': ^1.3.23
       '@types/node': ^18.11.9
       electron: ^21.2.2
@@ -14,7 +14,7 @@ importers:
       typescript: ^4.8.4
     devDependencies:
       '@quiteer/eslint-config': 0.0.3_wyqvi574yv7oiwfeinomdzmc3m
-      '@quiteer/ts-config': 0.0.3
+      '@quiteer/ts-config': 0.0.4
       '@swc/core': 1.3.23
       '@types/node': 18.11.9
       electron: 21.2.2
@@ -1022,6 +1022,10 @@ packages:
 
   /@quiteer/ts-config/0.0.3:
     resolution: {integrity: sha512-+QuqFtiiQlWs+O07EmZckt++R1WQo/4QBuwRwVWcZZlAc1pTdAxf5C2MDNlo3f/V6FHPEQSPoxI0xL5z44RBCQ==}
+    dev: true
+
+  /@quiteer/ts-config/0.0.4:
+    resolution: {integrity: sha512-QvsANJ1FQQIPE1RtXyA3vjCVxa7+8bYM1S3QyLcx8qKTanwdSn7J7vZzuCI+5mqO3rin0cab/5NgPEAalDQUdw==}
     dev: true
 
   /@rollup/pluginutils/4.2.1:
