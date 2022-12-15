@@ -4,8 +4,8 @@ import { spawn } from 'child_process'
 import type { Options } from 'tsup'
 import { config as getEnv } from 'dotenv'
 import electron from 'electron'
-import type { ElectronupConfig, TsupConfig } from '../typings/electronup'
-import { DefaultDirs, store } from '../utils'
+import type { ElectronupConfig, TsupConfig } from '@/typings/electronup'
+import { DefaultDirs, store } from '@/utils'
 
 const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
@@ -41,11 +41,11 @@ const injectEnv = () => {
 }
 
 export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
-  const { command, root } = store
+  const { command, root, minify } = store
   const isServe = command === 'serve'
 
   const userConfig = {
-    minify: isServe,
+    minify: minify === false ? false : isServe,
     ...config
   }
 
@@ -63,10 +63,7 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
     }
   }
 
-  return {
-    ...userConfig,
-    ...defaultConfig
-  }
+  return { ...userConfig, ...defaultConfig }
 }
 
 let electronProcess: ChildProcessWithoutNullStreams | null

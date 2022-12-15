@@ -11,24 +11,23 @@
 {
   "peerDependencies": {
     "@types/node": ">= 16",
-    "electron": ">= 20"
+    "electron": ">= 20",
+    "vue": ">= 3"
   }
 }
 ```
 
 
-
-
 ## 安装
 
 ```bash
-npm i @quiteer/electronup
+npm i @quiteer/electronup -D
 ```
 ```bash
-yarn add @quiteer/electronup
+yarn add @quiteer/electronup -D
 ```
 ```bash
-pnpm add @quiteer/electronup
+pnpm add @quiteer/electronup -D
 ```
 
 
@@ -36,6 +35,7 @@ pnpm add @quiteer/electronup
 
 - 查看命令行指令
   - `electornup -h`
+  - `electornup build -h`
 - 查看命令行版本
   - `electornup -v`
 - 开发环境
@@ -45,6 +45,7 @@ pnpm add @quiteer/electronup
   - `electornup --config [file]`
 - 构建打包
   - `electornup build`
+  - `electornup build -o` 或 `electornup build --option` 开启选项式构建
 
 ## 内置的依赖
 > 部分依赖已内置 无需重复安装 （开发此脚手架的目的也是给项目 package 瘦瘦身）
@@ -59,6 +60,7 @@ pnpm add @quiteer/electronup
     "fs-extra": "^10.1.0",
     "inquirer": "8.2.5",
     "portfinder": "^1.0.32",
+    "rimraf": "^3.0.2",
     "tsup": "^6.4.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.1"
@@ -66,7 +68,7 @@ pnpm add @quiteer/electronup
 }
 ```
 
-### 暴露的api
+### cli配置项
 
 ```ts
 import type { Configuration } from 'electron-builder'
@@ -78,7 +80,7 @@ interface ViteConfig {
     alias?: AliasOptions
   }
   plugins?: PluginOption[]
-  viteOptions?: Omit<UserConfig, 'root' | 'plugins' | 'resolve' | 'publicDir'>
+  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir'>
 }
 
 interface TsupConfig {
@@ -149,10 +151,9 @@ interface ConfigEnv {
 type ElectronupConfigFn = (env: ConfigEnv) => ElectronupConfig
 type UserElectronupConfig = ElectronupConfig | ElectronupConfigFn
 
-declare const getLoadUrl: (env: 'development' | 'production' | string, port: string) => string
+declare const defineConfig: (config: UserElectronupConfig) => UserElectronupConfig
 
-export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig, getLoadUrl }
-
+export { BuilderConfig, ConfigEnv, ElectronupConfig, TsupConfig, ViteConfig, defineConfig }
 ```
 
 #### 获取类型提示
@@ -261,19 +262,17 @@ electronup -m test
 
 - `server` :  `{ host: '0.0.0.0' }` 
 
-- `plugins` :  内置了 `@vitejs/plugin-vue`  插件。
-
 - `build` : 
 
-  - ```js
-    {
-          outDir: 'dist' ,
-          target: 'esnext',
-          minify: true,
-          reportCompressedSize: false,
-          emptyOutDir: true
-    }
-    ```
+```ts
+{
+  outDir: 'dist',
+  target: 'esnext',
+  minify: true,
+  reportCompressedSize: false,
+  emptyOutDir: true
+}
+ ```
 
 所有选项皆可通过 `viteOptions` 覆盖
 

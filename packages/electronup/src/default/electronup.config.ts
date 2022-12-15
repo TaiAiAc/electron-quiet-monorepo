@@ -1,11 +1,11 @@
 import type { UserConfig } from 'vite'
 import type { Options } from 'tsup'
 import type { CliOptions } from 'electron-builder'
-import type { ElectronupConfig } from '../typings/electronup'
-import { store } from '../utils'
 import { getBuilderConfig } from './builder.config'
 import { getTsupConfig } from './tsup.config'
 import { getViteConfig } from './vite.config'
+import { store } from '@/utils'
+import type { ElectronupConfig } from '@/typings/electronup'
 
 interface InitConfig extends Omit<ElectronupConfig, 'viteConfig' | 'tsupConfig' | 'preloadTsup' | 'builderConfig'> {
   vite: UserConfig

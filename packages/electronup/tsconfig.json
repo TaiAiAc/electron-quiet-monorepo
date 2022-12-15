@@ -1,7 +1,12 @@
 {
   "extends": "@quiteer/ts-config/tsconfig.node.json",
-  "include": ["src/*", "package.json"],
+  "include": ["src/*", "test/*", "package.json"],
   "compilerOptions": {
-    "isolatedModules": false
+    "baseUrl": ".",
+    "isolatedModules": false,
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }
+

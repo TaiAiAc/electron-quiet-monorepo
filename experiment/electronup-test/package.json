@@ -5,7 +5,7 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "dist/electron.js",
+  "main": "dist/resource/electron.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "command": "electronup -h && electronup -v",
@@ -17,6 +17,7 @@
     "dev:err": "electronup --mode err",
     "dev:custom": "electronup dev -c build/electronup.config.ts",
     "build": "electronup build",
+    "build:dir": "electronup build --dir",
     "build:custom": "electronup build -c build/electronup.config.ts",
     "build:option": "electronup build -c build/electronup.config.ts -o"
   },

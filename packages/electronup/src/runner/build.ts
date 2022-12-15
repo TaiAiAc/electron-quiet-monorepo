@@ -3,13 +3,12 @@ import { build as viteBuild } from 'vite'
 import { build as tsBuild } from 'tsup'
 
 import inquirer from 'inquirer'
-import type { ElectronupConfig } from '../typings/electronup'
-import { electronupConfig } from '../transform'
+import type { ElectronupConfig } from '@/typings/electronup'
+import { electronupConfig } from '@/transform'
+import { store } from '@/utils'
 
-export async function build(options: ElectronupConfig, isOption: boolean) {
-  const initConfig = await electronupConfig(options)
-
-  if (isOption) {
+export async function build(options: ElectronupConfig) {
+  if (store.option) {
     const { isMinify } = await inquirer
       .prompt([{ type: 'confirm', name: 'isMinify', message: '是否压缩代码?' }])
       .catch((err) => {
@@ -17,8 +16,7 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
         process.exit(1)
       })
 
-    initConfig.tsup.minify = isMinify
-    initConfig.vite.build!.minify = isMinify ? 'esbuild' : false
+    store.minify = isMinify
 
     const { isPackage } = await inquirer
       .prompt([{ type: 'confirm', name: 'isPackage', message: '是否生成安装包?' }])
@@ -27,18 +25,13 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
         process.exit(1)
       })
 
-    const platform = process.platform
-    const arch = process.arch
+    store.dir = !isPackage
 
-    const isWin = platform === 'win32'
-    const isMac = platform === 'darwin'
-    const isLiunx = platform === 'linux'
+    if (store.isWin) {
+      if (store.currentArch === 'ia32')
+        store.ia32 = true
 
-    if (isWin) {
-      if (arch === 'ia32')
-        initConfig.builder!.ia32 = true
-
-      if (arch === 'x64') {
+      if (store.currentArch === 'x64') {
         const { pattern } = await inquirer
           .prompt([
             {
@@ -59,14 +52,14 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
 
         if (pattern.length) {
           pattern.forEach((arch: 'x64' | 'ia32') => {
-            initConfig.builder![arch] = true
+            store[arch] = true
           })
         }
       }
-      initConfig.builder!.dir = !isPackage
+      store.dir = !isPackage
     }
 
-    if (isMac) {
+    if (store.isMac) {
       const { outPlatform } = await inquirer
         .prompt([
           {
@@ -106,8 +99,8 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
           })
 
         const archList = []
-        pattern.length ? archList.push(...pattern) : archList.push(Arch[arch])
-        initConfig.builder!.targets = Platform.MAC.createTarget(!isPackage ? 'dir' : null, ...archList)
+        pattern.length ? archList.push(...pattern) : archList.push(Arch[store.currentArch])
+        store.targets = Platform.MAC.createTarget(!isPackage ? 'dir' : null, ...archList)
       }
 
       if (outPlatform === 'win') {
@@ -131,17 +124,20 @@ export async function build(options: ElectronupConfig, isOption: boolean) {
 
         const archList = []
         pattern.length ? archList.push(...pattern) : archList.push(Arch.x64)
-        initConfig.builder!.targets = Platform.WINDOWS.createTarget(!isPackage ? 'dir' : null, ...archList)
+        store.targets = Platform.WINDOWS.createTarget(!isPackage ? 'dir' : null, ...archList)
       }
 
       if (outPlatform === 'linux')
-        initConfig.builder!.targets = Platform.LINUX.createTarget(!isPackage ? 'dir' : null, Arch.armv7l)
+        store.targets = Platform.LINUX.createTarget(!isPackage ? 'dir' : null, Arch.armv7l)
     }
 
-    if (isLiunx) {
+    if (store.isLinux) {
       //
     }
   }
+
+  const initConfig = await electronupConfig(options)
+
   console.info('initConfig: ', initConfig)
 
   await viteBuild(initConfig.vite)

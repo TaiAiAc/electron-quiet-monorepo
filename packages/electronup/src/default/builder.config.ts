@@ -2,8 +2,8 @@ import { resolve } from 'path'
 import type { CliOptions } from 'electron-builder'
 // import { Arch, Platform } from 'electron-builder'
 import { readJSON } from 'fs-extra'
-import type { BuilderConfig, ElectronupConfig } from '../typings/electronup'
-import { DefaultDirs, store } from '../utils'
+import type { BuilderConfig, ElectronupConfig } from '@/typings/electronup'
+import { DefaultDirs, store } from '@/utils'
 
 /**
  *  CliOptions 配置直接
@@ -23,8 +23,19 @@ import { DefaultDirs, store } from '../utils'
 export async function getBuilderConfig(config: BuilderConfig, allConfig: ElectronupConfig) {
   const packages = await readJSON(resolve(store.root, 'package.json'))
 
+  const outConfig = {
+    targets: store.targets,
+    x64: store.x64,
+    ia32: store.ia32,
+    armv7l: store.armv7l,
+    arm64: store.arm64,
+    universal: store.universal,
+    dir: store.dir
+  }
+
   const defaultConfig: CliOptions = {
     config: {
+      asar: store.asar,
       appId: 'org.quiteer.electronup',
       productName: packages.name,
       protocols: {
@@ -51,6 +62,9 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
     }
   }
 
-  return defaultConfig
+  if (store.option)
+    return defaultConfig
+
+  return { ...defaultConfig, ...outConfig }
 }
 

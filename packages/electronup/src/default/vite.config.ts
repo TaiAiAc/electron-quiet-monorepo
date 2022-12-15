@@ -1,10 +1,10 @@
 import { resolve } from 'path'
 import type { UserConfig } from 'vite'
-import type { ElectronupConfig, ViteConfig } from '../typings/electronup'
-import { DefaultDirs, store } from '../utils'
+import type { ElectronupConfig, ViteConfig } from '@/typings/electronup'
+import { DefaultDirs, store } from '@/utils'
 
 export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
-  const { root } = store
+  const { root, minify } = store
 
   const defaultConfig: UserConfig = {
     base: './',
@@ -13,7 +13,7 @@ export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
     build: {
       outDir: resolve(root, allConfig.resourceDir || DefaultDirs.resourceDir),
       target: 'esnext',
-      minify: 'esbuild',
+      minify: minify && 'esbuild',
       reportCompressedSize: false,
       emptyOutDir: true
     },

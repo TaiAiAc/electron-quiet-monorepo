@@ -5,11 +5,10 @@ import type { UserElectronupConfig } from '../typings/electronup'
 import { electronupConfig } from '../transform'
 import { store } from '../utils'
 
-export async function watch(options: UserElectronupConfig, port: number) {
+export async function watch(options: UserElectronupConfig) {
   const p = await getPortPromise({
-    port: Number(port)
+    port: Number(store.port)
   })
-  store.setPort(p)
 
   const initConfig = await electronupConfig(options)
   console.log('initConfig: ', initConfig)
