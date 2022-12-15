@@ -47,7 +47,7 @@ pnpm add @quiteer/electronup -D
   - `electornup build`
   - `electornup build -o` 或 `electornup build --option` 开启选项式构建
   - 输出选项默认当前平台架构
-  - 指定输出必须指定平台 `--win` ,`--mac` ,`--linux`
+  - 指定平台 `--win` ,`--mac` ,`--linux`
   - 可不指定架构版本， 默认为本机架构版本
 
 ## 内置的依赖

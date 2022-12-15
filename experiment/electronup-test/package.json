@@ -21,6 +21,7 @@
     "build:dir": "electronup build --dir",
     "build:win": "electronup build --win",
     "build:win32": "electronup build --win --ia32",
+    "build:ia32": "electronup build --ia32",
     "build:custom": "electronup build -c build/electronup.config.ts",
     "build:option": "electronup build -c build/electronup.config.ts -o"
   },
