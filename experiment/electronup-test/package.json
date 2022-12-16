@@ -16,14 +16,14 @@
     "dev:test": "electronup --mode test",
     "dev:staging": "electronup --mode staging",
     "dev:err": "electronup --mode err",
-    "dev:custom": "electronup dev -c build/electronup.config.ts",
+    "dev:custom": "electronup dev build/electronup.config.ts",
     "build": "electronup build",
     "build:dir": "electronup build --dir",
     "build:win": "electronup build --win",
     "build:win32": "electronup build --win --ia32",
     "build:ia32": "electronup build --ia32",
-    "build:custom": "electronup build -c build/electronup.config.ts",
-    "build:option": "electronup build -c build/electronup.config.ts -o"
+    "build:custom": "electronup build build/electronup.config.ts",
+    "build:option": "electronup build build/electronup.config.ts -o"
   },
   "dependencies": {
     "@quiteer/electron-preload": "workspace:*",

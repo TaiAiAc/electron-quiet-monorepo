@@ -10,7 +10,6 @@ class Store {
   config: string
   mode: Mode
   minify: boolean
-  clear: boolean
   port?: number
   option: boolean
   win?: boolean

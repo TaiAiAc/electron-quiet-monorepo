@@ -41,14 +41,16 @@ pnpm add @quiteer/electronup -D
 - 开发环境
   - `electornup`
   - `electornup dev`
-  - `electornup -c [file]`
-  - `electornup --config [file]`
+  - 指定配置文件 `electornup [config file]`
+  - 指定配置文件 `electornup dev [config file]`
 - 构建打包
   - `electornup build`
-  - `electornup build -o` 或 `electornup build --option` 开启选项式构建
+  - 指定配置文件 `electornup build [config file]`
+  - 开启选项式构建 `electornup build -o` 或 `electornup build --option` 
   - 输出选项默认当前平台架构
   - 指定平台 `--win` ,`--mac` ,`--linux`
-  - 可不指定架构版本， 默认为本机架构版本
+  - 指定架构 `--ia32` ,`--x64` ,`--arm64`
+  - 可不指定平台架构版本， 默认为本机当前平台架构版本
 
 ## 内置的依赖
 > 部分依赖已内置 无需重复安装 （开发此脚手架的目的也是给项目 package 瘦瘦身）
@@ -288,7 +290,7 @@ electronup -m test
 
 ```typescript
 {
-  asar: user.asar,
+  asar: true,
   appId: 'org.quiteer.electronup',
   productName: packages.name,
   protocols: {

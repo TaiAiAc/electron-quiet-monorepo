@@ -8,12 +8,9 @@ import { version } from './../package.json'
 import { DefaultDirs, store } from './utils'
 
 interface Options {
-  c?: string
-  config?: string
   m?: string
   mode?: string
   minify: boolean
-  clear?: boolean
 }
 
 interface DevOptions extends Options {
@@ -38,30 +35,25 @@ interface BuildOptions extends Options {
 
 const cli = cac('electronup')
 
-cli.option('-c , --config <file>', '[string] 构建配置 ')
 cli.option('-m , --mode <mode>', '[development | production | test | staging | ...] 环境模式 ')
 cli.option('--no-minify', '使主进程和渲染进程代码压缩 ')
-cli.option('--clear', '清除输出目录 ')
 
 cli
-  .command('[root]', 'start dev server') // default command
+  .command('[config-file]', 'start dev server') // default command
   .alias('dev')
   .option('-p , --port <port>', '[number] 渲染进程的端口号 ，如果占用会切换非占用的端口 ')
-  .action(async (root: undefined | string, options: DevOptions) => {
-    const { config, mode, port, minify, clear } = options
+  .action(async (configFile: undefined | string, options: DevOptions) => {
+    const { mode, port, minify } = options
 
-    const option = await getConfig(config)
+    const option = await getConfig(configFile)
+
+    sync(resolve(store.root, option.resourceDir || DefaultDirs.resourceDir))
+    sync(resolve(store.root, option.outDir || DefaultDirs.outDir))
 
     store.command = 'serve'
     store.mode = (mode || 'development')
     store.port = (port || 8090)
     store.minify = !!minify
-    store.clear = !!clear
-
-    if (clear) {
-      sync(resolve(store.root, option.resourceDir || DefaultDirs.resourceDir))
-      sync(resolve(store.root, option.outDir || DefaultDirs.outDir))
-    }
 
     watch(option)
   })
@@ -79,20 +71,22 @@ cli
   .option('--arm64', ' 构建 arm64 平台包')
   .option('--armv7l', ' 构建 armv7l 平台包')
   .option('--universal', ' 构建 universal 平台包')
-  .action(async (root: undefined | string, options: BuildOptions) => {
+  .action(async (configFile: undefined | string, options: BuildOptions) => {
     const {
-      config, mode, minify, clear, option,
+      mode, minify, option,
       win, mac, linux,
       ia32, x64, arm64, armv7l, universal,
       dir, asar
     } = options
 
-    const configOption = await getConfig(config)
+    const configOption = await getConfig(configFile)
+
+    sync(resolve(store.root, configOption.resourceDir || DefaultDirs.resourceDir))
+    sync(resolve(store.root, configOption.outDir || DefaultDirs.outDir))
 
     store.command = 'build'
     store.mode = (mode || 'production')
     store.minify = minify
-    store.clear = !!clear
     store.option = !!option
     store.dir = !!dir
     store.asar = asar
@@ -105,10 +99,6 @@ cli
     store.armv7l = !!armv7l
     store.universal = !!universal
 
-    if (clear) {
-      sync(resolve(store.root, configOption.resourceDir || DefaultDirs.resourceDir))
-      sync(resolve(store.root, configOption.outDir || DefaultDirs.outDir))
-    }
     build(configOption)
   })
 
