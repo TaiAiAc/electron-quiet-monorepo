@@ -11,7 +11,6 @@ export async function watch(options: UserElectronupConfig) {
   })
 
   const initConfig = await electronupConfig(options)
-  console.log('initConfig: ', initConfig)
 
   const viteDevServer = await createServer({ configFile: false, ...initConfig.vite })
 

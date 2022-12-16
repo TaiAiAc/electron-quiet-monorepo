@@ -62,9 +62,6 @@ export async function getBuilderConfig(config: BuilderConfig, allConfig: Electro
     }
   }
 
-  if (store.option)
-    return defaultConfig
-
   return { ...defaultConfig, ...outConfig }
 }
 

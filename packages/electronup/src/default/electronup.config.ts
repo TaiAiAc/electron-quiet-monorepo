@@ -1,6 +1,7 @@
 import type { UserConfig } from 'vite'
 import type { Options } from 'tsup'
 import type { CliOptions } from 'electron-builder'
+
 import { getBuilderConfig } from './builder.config'
 import { getTsupConfig } from './tsup.config'
 import { getViteConfig } from './vite.config'
@@ -15,7 +16,7 @@ interface InitConfig extends Omit<ElectronupConfig, 'viteConfig' | 'tsupConfig' 
 }
 
 export async function getElectronupConfig(config: ElectronupConfig) {
-  const { viteConfig, tsupConfig, preloadTsup, ...dirConfig } = config
+  const { viteConfig, tsupConfig, preloadTsup, builderConfig, ...dirConfig } = config
 
   const vite = getViteConfig(viteConfig || {}, config)
   const tsup = getTsupConfig(tsupConfig || {}, config)
@@ -23,8 +24,6 @@ export async function getElectronupConfig(config: ElectronupConfig) {
   const initConfig: InitConfig = { vite, tsup }
 
   if (store.command === 'build') {
-    const { builderConfig } = config
-
     const builder = await getBuilderConfig(builderConfig, config)
     initConfig.builder = builder
   }

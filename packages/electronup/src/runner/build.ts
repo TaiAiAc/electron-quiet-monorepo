@@ -1,11 +1,14 @@
+import path from 'path'
 import { Arch, Platform, build as builder } from 'electron-builder'
 import { build as viteBuild } from 'vite'
 import { build as tsBuild } from 'tsup'
 
 import inquirer from 'inquirer'
+import { stringify } from 'yaml'
+import { writeFile } from 'fs-extra'
 import type { ElectronupConfig } from '@/typings/electronup'
 import { electronupConfig } from '@/transform'
-import { store } from '@/utils'
+import { DefaultDirs, store } from '@/utils'
 
 export async function build(options: ElectronupConfig) {
   if (store.option) {
@@ -138,10 +141,13 @@ export async function build(options: ElectronupConfig) {
 
   const initConfig = await electronupConfig(options)
 
-  console.info('initConfig: ', initConfig)
-
   await viteBuild(initConfig.vite)
   await tsBuild(initConfig.tsup)
 
   await builder(initConfig.builder)
+
+  await writeFile(
+    path.resolve(store.root, options.outDir || DefaultDirs.outDir, 'electronup-effective-config.yaml'),
+    stringify(JSON.parse(JSON.stringify(initConfig)))
+  )
 }
