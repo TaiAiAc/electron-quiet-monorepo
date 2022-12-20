@@ -8,7 +8,8 @@ export interface ViteConfig {
     alias?: AliasOptions;
   }
   plugins?: PluginOption[]
-  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir'>
+  build?:UserConfig['build']
+  viteOptions?: Omit<UserConfig, 'plugins' | 'resolve' | 'publicDir'| 'build'>
 }
 
 export interface TsupConfig {

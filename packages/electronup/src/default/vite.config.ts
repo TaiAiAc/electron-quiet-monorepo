@@ -15,7 +15,8 @@ export function getViteConfig(config: ViteConfig, allConfig: ElectronupConfig) {
       target: 'esnext',
       minify: minify && 'esbuild',
       reportCompressedSize: false,
-      emptyOutDir: true
+      emptyOutDir: true,
+      ...config?.build
     },
     ...config.viteOptions
   }
