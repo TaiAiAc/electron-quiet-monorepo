@@ -7,7 +7,7 @@ export default defineConfig({
     }
   },
   test: {
-    include: ['test/**/*.{test,spec}.{js,mjs,cjs,ts}'],
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts}'],
     globals: true,
     coverage: {
       provider: 'istanbul' // or 'c8'

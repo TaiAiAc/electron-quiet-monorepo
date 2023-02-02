@@ -10,12 +10,16 @@ describe('测试配置文件解析', () => {
   })
 
   test('函数式', () => {
-    const configFn = () => {
-      return { viteConfig: {}, tsupConfig: {}, builderConfig: {} }
-    }
-    const config = defineConfig(configFn)
+    const config = { viteConfig: {}, tsupConfig: {}, builderConfig: {} }
 
-    expect(config).toBeTypeOf('function')
+    const configFn = () => {
+      return config
+    }
+
+    const out = defineConfig(configFn) as Function
+
+    expect(out).toBeTypeOf('function')
+    expect(out()).toBe(config)
   })
 })
 
