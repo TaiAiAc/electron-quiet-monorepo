@@ -187,7 +187,7 @@ console.log('NODE_ENV', process.env.NODE_ENV)  // NODE_ENV production
 console.log('isDev', import.meta.env.DEV)  // isDev true
 
 // build
-console.log('isDev', import.meta.env.DEV)  // isDev true
+console.log('isDev', import.meta.env.DEV)  // isDev fasle
 ```
 
 
