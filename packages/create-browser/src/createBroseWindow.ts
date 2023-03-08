@@ -1,6 +1,9 @@
 import { BrowserWindow } from 'electron'
+import type { WinStore } from './store'
 
-interface Options extends Electron.BrowserWindowConstructorOptions { }
+interface Options extends Electron.BrowserWindowConstructorOptions {
+  _name: string
+}
 type BackOptions = Options & { target: Electron.BrowserWindow }
 
 function createBrowserWindow(options: Options): BackOptions {
@@ -41,10 +44,7 @@ function createBrowserWindow(options: Options): BackOptions {
   })
 }
 
-const winObj = createBrowserWindow({ show: true, width: 1000, height: 700, icon: './icon.png' })
-
-winObj.width = 500
-winObj.height = 500
-winObj.center = true
-winObj.title = 'Hello World!'
-winObj.show = false
+export const create = (store: WinStore<string>) => {
+  console.log('store: ', store)
+  return (options: Options) => createBrowserWindow(options)
+}
