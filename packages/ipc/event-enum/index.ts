@@ -1,2 +1,2 @@
 export { EventKeys } from './eventKays'
-export { IpcWindowOptions } from './options'
+export { IpcWindowOptions, IpcFileOptions } from './options'

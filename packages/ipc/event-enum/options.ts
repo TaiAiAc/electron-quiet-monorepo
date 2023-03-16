@@ -52,3 +52,34 @@ export enum IpcWindowOptions {
    */
   FLASH_FRAME = 'flashFrame'
 }
+
+export enum IpcFileOptions {
+  /**
+   * path.basename
+   */
+  BASENAME = 'basename',
+  /**
+  * path.dirname
+  */
+  DIRNAME = 'dirname',
+  /**
+   * path.extname
+   */
+  EXTNAME = 'extname',
+  /**
+  * path.join
+  */
+  JOIN = 'join',
+  /**
+  * path.parse
+  */
+  PARSE = 'parse',
+  /**
+  * path.relative
+  */
+  RELATIVE = 'relative',
+  /**
+  * path.resolve
+  */
+  RESOLVE = 'resolve'
+}
