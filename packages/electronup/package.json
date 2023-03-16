@@ -32,7 +32,8 @@
     "build": "tsup",
     "test": "vitest watch",
     "test:ui": "vitest watch --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "update-version": "bumpp package.json"
   },
   "peerDependencies": {
     "@types/node": ">= 16",

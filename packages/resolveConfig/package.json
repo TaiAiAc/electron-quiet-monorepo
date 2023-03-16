@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "update-version": "bumpp package.json"
   },
   "dependencies": {
     "esbuild": "^0.16.4",

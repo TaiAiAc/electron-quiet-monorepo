@@ -25,11 +25,7 @@ import preload from '@quiteer/electron-preload'
 
 const win = new BrowserWindow({
   width: 800,
-  height: 600,
-  webPreferences: {
-    sandbox: false,
-    preload
-  }
+  height: 600
 })
 ```
 
@@ -85,20 +81,11 @@ const win = new BrowserWindow({
   -  routingId
   -  top
 
-- nodejs 的 path 模块部分 api
-  -  basename
-  -  dirname
-  -  extname
-  -  join
-  -  parse
-  -  relative
-  -  resolve
 
 ### 渲染进程中使用
 
 ```js
 console.log('window.$ipc :>> ', window.$ipc)
-console.log('window.$path :>> ', window.$path)
 console.log('window.$clipboard :>> ', window.$clipboard)
 console.log('window.$webFrame :>> ', window.$webFrame)
 ```
@@ -111,6 +98,5 @@ interface Window {
   $ipc: import('@quiteer/electron-preload').PreloadIpc
   $clipboard: import('@quiteer/electron-preload').PreLoadPath
   $webFrame: import('@quiteer/electron-preload').PreloadWebFrame
-  $path: import('@quiteer/electron-preload').PreLoadPath
 }
 ```

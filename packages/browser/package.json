@@ -21,6 +21,7 @@
   },
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "update-version": "bumpp package.json"
   }
 }
