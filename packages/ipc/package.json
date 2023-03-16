@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electron-ipc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "基于electron , 提供了一些 独立无副作用的 ipc 事件相关操作",
   "author": "quiteer",
   "license": "MIT",
@@ -26,7 +26,10 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "files": ["dist", "web"],
+  "files": [
+    "dist",
+    "web"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
