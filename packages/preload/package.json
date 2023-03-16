@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electron-preload",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": "基于electron , 提供预加载功能脚本",
   "author": "quiteer",
   "license": "MIT",
