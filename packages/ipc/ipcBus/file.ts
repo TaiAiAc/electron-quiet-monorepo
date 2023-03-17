@@ -1,5 +1,5 @@
 import { basename, dirname, extname, join, parse, relative, resolve } from 'node:path'
-import { IpcFileOptions } from '../event-enum'
+import { IpcFileOptions } from '../event-enum/options'
 
 export const ipcBus = new Map<IpcFileOptions, (event: Electron.IpcMainInvokeEvent, ...args: any[]) => void>()
 

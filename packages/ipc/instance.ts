@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
-import type { IpcFileOptions, IpcWindowOptions } from './event-enum'
-import { EventKeys } from './event-enum'
+import type { IpcFileOptions, IpcWindowOptions } from './event-enum/options'
+import { EventKeys } from './event-enum/eventKays'
 import { fileBus, windowBus } from './ipcBus'
 
 class IpcOpt {

@@ -31,18 +31,16 @@ app.whenReady().then(() => {
 ```
 
 ### 渲染进程中使用
-> 引用包内预定义的事件枚举  按需取用
+> ~~引用包内预定义的事件枚举  按需取用~~
+> 配合  '@quiteer/electron-preload' 使用获得代码提示
 
-```js
-import { EventKeys, IpcWindowOptions } from '@quiteer/electron-ipc/web'
-
-const test = () => {
-  // 窗口最大化
-  window.$ipc.send(EventKeys.WindowOptionsKey, IpcWindowOptions.MAXIMIZE)
-
-  setTimeout(() => {
-    // 取消最大化
-    window.$ipc.send(EventKeys.WindowOptionsKey, IpcWindowOptions.UNMAXIMIZE)
-  }, 1000)
+```ts
+// global.d.ts
+interface Window {
+  $ipc: import('@quiteer/electron-preload').PreloadIpc & import('@quiteer/electron-ipc').ExpandPreloadIpc
 }
+
+// other.ts
+window.$ipc.send('__window_options__', 'destroy')
+window.$ipc.invoke('__file_options__', 'join', '/', '/experiment')
 ```
