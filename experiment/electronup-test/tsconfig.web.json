@@ -1,8 +1,0 @@
-{
-  "extends": "@quiteer/ts-config/tsconfig.web.json",
-  "compilerOptions": {
-    "baseUrl": "./render",
-    "composite": true
-  },
-  "include": ["render/**/*.ts", "render/**/*.d.ts", "render/**/*.tsx", "render/**/*.vue"]
-}

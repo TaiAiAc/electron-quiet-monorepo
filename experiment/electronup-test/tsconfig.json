@@ -1,13 +1,10 @@
 {
+  "extends": "@quiteer/ts-config/tsconfig.web.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "isolatedModules": false,
-    "typeRoots": ["node_modules/@types"]
   },
-  "include": ["typings"],
-  "exclude": ["node_modules"],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.web.json" }
-  ]
+  "include": [
+    "typings/*.d.ts",
+    "render/**/*"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

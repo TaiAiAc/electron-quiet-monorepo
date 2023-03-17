@@ -1,3 +1,5 @@
+import { BrowserWindow } from 'electron'
+
 export class WinStore<T> {
   private wins: Map<T, number>
 
@@ -10,7 +12,7 @@ export class WinStore<T> {
   }
 
   getWin(id: number) {
-    return id
+    return BrowserWindow.fromId(id)
   }
 
   getWins() {

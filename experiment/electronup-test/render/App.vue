@@ -4,7 +4,7 @@
 import { AtomSpinner, FlowerSpinner } from 'epic-spinners'
 import HelloWorld from './components/HelloWorld.vue'
 
-const Btn = <button>这是tsx渲染的按钮</button>
+const Btn = () => <button>这是tsx渲染的按钮</button>
 </script>
 
 <template>

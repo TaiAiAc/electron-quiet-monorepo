@@ -20,6 +20,7 @@ class IpcOpt {
 
   destroy() {
     ipcMain.removeAllListeners(EventKeys.WindowOptionsKey)
+    ipcMain.removeHandler(EventKeys.FileOptionsKey)
   }
 
   #window() {
