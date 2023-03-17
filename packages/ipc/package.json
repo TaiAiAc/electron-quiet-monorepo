@@ -1,34 +1,17 @@
 {
   "name": "@quiteer/electron-ipc",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "基于electron , 提供了一些 独立无副作用的 ipc 事件相关操作",
   "author": "quiteer",
   "license": "MIT",
   "keywords": [
     "electron"
   ],
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      }
-    },
-    "./web": {
-      "require": "./web/index.js",
-      "import": {
-        "types": "./web/index.d.ts",
-        "default": "./web/index.mjs"
-      }
-    }
-  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "web"
+    "dist"
   ],
   "publishConfig": {
     "access": "public",
