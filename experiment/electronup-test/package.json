@@ -7,7 +7,6 @@
   "keywords": [],
   "main": "dist/resource/electron.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
     "command": "electronup -h && electronup -v",
     "dev:1": "electronup",
     "dev:2": "electronup dev",

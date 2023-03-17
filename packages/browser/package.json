@@ -23,5 +23,8 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "update-version": "bumpp package.json"
+  },
+  "devDependencies": {
+    "tsup": "^6.4.0"
   }
 }

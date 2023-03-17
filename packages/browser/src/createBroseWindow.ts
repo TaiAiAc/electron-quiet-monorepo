@@ -1,10 +1,10 @@
 import { BrowserWindow } from 'electron'
 import type { WinStore } from './store'
 
-interface Options extends Electron.BrowserWindowConstructorOptions {
+export interface Options extends Electron.BrowserWindowConstructorOptions {
   _name: string
 }
-type BackOptions = Options & { target: Electron.BrowserWindow }
+export type BackOptions = Options & { target: Electron.BrowserWindow }
 
 function createBrowserWindow(options: Options): BackOptions {
   const win = new BrowserWindow(options)

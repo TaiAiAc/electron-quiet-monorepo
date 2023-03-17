@@ -9,3 +9,5 @@ console.info(import.meta.env)
 
 window.$ipc.send('dasda')
 window.$ipc.send(EventKeys.WindowOptionsKey)
+
+window.$ipc.send('xxxx')
