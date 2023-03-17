@@ -93,4 +93,6 @@ interface ExpandPreloadIpc {
 }
 
 export type { ExpandPreloadIpc }
+export { EventKeys } from './event-enum/eventKays'
+export { IpcWindowOptions, IpcFileOptions } from './event-enum/options'
 export { Ipc } from './instance'

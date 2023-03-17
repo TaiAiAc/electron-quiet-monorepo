@@ -1,6 +1,6 @@
 {
   "name": "@quiteer/electron-ipc",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "基于electron , 提供了一些 独立无副作用的 ipc 事件相关操作",
   "author": "quiteer",
   "license": "MIT",
