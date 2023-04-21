@@ -4,6 +4,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "isolatedModules": false,
+    "ignoreDeprecations": "5.0",
     "paths": {
       "@/*": ["src/*"]
     }
