@@ -10,6 +10,10 @@ import { DefaultDirs, store } from '@/utils'
 const defaultEnvPath = resolve(store.root, '.env')
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
 
+/**
+ * Description 加载默认环境变量及mode下的环境变量
+ * @returns {any}
+ */
 const getModeDev = () => {
   const path = `${defaultEnvPath}.${store.mode}`
   const { parsed, error } = getEnv({ path })
@@ -22,6 +26,10 @@ const getModeDev = () => {
   }
 }
 
+/**
+ * Description 插入环境变量
+ * @returns {any}
+ */
 const injectEnv = () => {
   const { command, port } = store
 
