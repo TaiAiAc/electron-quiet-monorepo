@@ -73,7 +73,7 @@ importers:
 
   packages/electronup:
     specifiers:
-      '@quiteer/resolve-config': ^0.0.4
+      '@quiteer/resolve-config': workspace:^0.0.4
       '@types/fs-extra': ^9.0.13
       '@types/inquirer': ^9.0.3
       '@types/rimraf': ^3.0.2
@@ -87,7 +87,7 @@ importers:
       portfinder: ^1.0.32
       rimraf: ^3.0.2
       tsup: ^6.7.0
-      typescript: ^4.9.5
+      typescript: ^5.0.4
       vite: ^4.3.1
       vitest: ^0.25.8
       yaml: ^2.2.1
@@ -101,8 +101,8 @@ importers:
       inquirer: 8.2.5
       portfinder: 1.0.32
       rimraf: 3.0.2
-      tsup: 6.7.0_typescript@4.9.5
-      typescript: 4.9.5
+      tsup: 6.7.0_typescript@5.0.4
+      typescript: 5.0.4
       vite: 4.3.1
       yaml: 2.2.1
     devDependencies:
@@ -2666,7 +2666,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001481
-      electron-to-chromium: 1.4.368
+      electron-to-chromium: 1.4.369
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11_browserslist@4.21.5
     dev: true
@@ -3393,8 +3393,8 @@ packages:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
 
-  /electron-to-chromium/1.4.368:
-    resolution: {integrity: sha512-e2aeCAixCj9M7nJxdB/wDjO6mbYX+lJJxSJCXDzlr5YPGYVofuJwGN9nKg2o6wWInjX6XmxRinn3AeJMK81ltw==}
+  /electron-to-chromium/1.4.369:
+    resolution: {integrity: sha512-LfxbHXdA/S+qyoTEA4EbhxGjrxx7WK2h6yb5K2v0UCOufUKX+VZaHbl3svlzZfv9sGseym/g3Ne4DpsgRULmqg==}
     dev: true
 
   /electron/21.2.2:
@@ -7011,7 +7011,7 @@ packages:
       - ts-node
     dev: true
 
-  /tsup/6.7.0_typescript@4.9.5:
+  /tsup/6.7.0_typescript@5.0.4:
     resolution: {integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==}
     engines: {node: '>=14.18'}
     hasBin: true
@@ -7041,7 +7041,7 @@ packages:
       source-map: 0.8.0-beta.0
       sucrase: 3.32.0
       tree-kill: 1.2.2
-      typescript: 4.9.5
+      typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -7129,17 +7129,10 @@ packages:
       is-typed-array: 1.1.10
     dev: true
 
-  /typescript/4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: false
-
   /typescript/5.0.4:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-    dev: true
 
   /ufo/1.1.1:
     resolution: {integrity: sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==}
