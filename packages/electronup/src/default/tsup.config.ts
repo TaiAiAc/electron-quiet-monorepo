@@ -7,7 +7,18 @@ import electron from 'electron'
 import type { ElectronupConfig, TsupConfig } from '@/typings/electronup'
 import { DefaultDirs, store } from '@/utils'
 
+/**
+ * Description  全局的环境变量路径
+ * @param {any} store.root
+ * @param {any} '.env'
+ * @returns {any}
+ */
 const defaultEnvPath = resolve(store.root, '.env')
+/**
+ * Description  加载环境变量
+ * @param {any} {path:defaultEnvPath}
+ * @returns {any}
+ */
 const { parsed: defaultEnv } = getEnv({ path: defaultEnvPath })
 
 /**
@@ -48,6 +59,12 @@ const injectEnv = () => {
   }
 }
 
+/**
+ * Description  主进程代码编译配置
+ * @param {any} config:TsupConfig
+ * @param {any} allConfig:ElectronupConfig
+ * @returns {any}
+ */
 export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
   const { command, root, minify } = store
   const isServe = command === 'serve'
@@ -80,6 +97,11 @@ export function getTsupConfig(config: TsupConfig, allConfig: ElectronupConfig) {
 let electronProcess: ChildProcessWithoutNullStreams | null
 let manualRestart = false
 
+/**
+ * Description  启动electron
+ * @param {any} mainPath:string
+ * @returns {any}
+ */
 function startElectron(mainPath: string) {
   if (electronProcess) {
     manualRestart = true

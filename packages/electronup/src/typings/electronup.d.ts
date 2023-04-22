@@ -13,7 +13,7 @@ export interface ViteConfig {
 }
 
 export interface TsupConfig {
-  target?: string | string[];
+  target?: Options['target'];
   external?: (string | RegExp)[];
   noExternal?: (string | RegExp)[];
 }
