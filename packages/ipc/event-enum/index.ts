@@ -9,6 +9,10 @@ interface ExpandPreloadIpc {
    */
   send(channel: '__window_options__', type: 'destroy'): void
   /**
+   * 关闭窗口
+   */
+  send(channel: '__window_options__', type: 'close'): void
+  /**
    * 窗口显示
    */
   send(channel: '__window_options__', type: 'show'): void
@@ -47,7 +51,7 @@ interface ExpandPreloadIpc {
   /**
    * 窗口全屏
    */
-  send(channel: '__window_options__', type: 'setFullScreen', flag: boolean): void
+  send(channel: '__window_options__', type: 'setFullScreen'): void
   /**
    * 设置窗口
    */
@@ -56,6 +60,55 @@ interface ExpandPreloadIpc {
    * 任务栏闪烁
    */
   send(channel: '__window_options__', type: 'flashFrame', flag: boolean): void
+  /**
+   * 可以切换的事件
+   * 聚焦
+   * 失去焦点
+   */
+  send(channel: '__window_options__', type: 'switch-focus'): void
+  /**
+   * 可以切换的事件
+   * 最大化
+   * 取消最大化
+   */
+  send(channel: '__window_options__', type: 'switch-max'): void
+  /**
+   * 可以切换的事件
+   * 最小化
+   * 取消最小化
+   */
+  send(channel: '__window_options__', type: 'switch-min'): void
+  /**
+   * 可以切换的事件
+   * 全屏
+   * 取消全屏
+   */
+  send(channel: '__window_options__', type: 'switch-full'): void
+  /**
+   * 可以切换的事件
+   * 设置用户是否可以手动调整窗口大小。
+   */
+  send(channel: '__window_options__', type: 'switch-resizable'): void
+  /**
+   * 可以切换的事件
+   * 设置用户是否可以移动窗口。 在Linux上不起作用。
+   */
+  send(channel: '__window_options__', type: 'switch-movable'): void
+  /**
+   * 可以切换的事件
+   * 设置用户是否可以手动将窗口最小化。 在Linux上不起作用。
+   */
+  send(channel: '__window_options__', type: 'switch-minimizable'): void
+  /**
+   * 可以切换的事件
+   * 设置用户是否可以手动最大化窗口。 在Linux上不起作用。
+   */
+  send(channel: '__window_options__', type: 'switch-maximizable'): void
+  /**
+   * 可以切换的事件
+   * 设置窗口是否应始终显示在其他窗口的前面。
+   */
+  send(channel: '__window_options__', type: 'switch-always-on-top'): void
 }
 
 /**
