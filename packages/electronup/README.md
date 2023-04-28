@@ -23,9 +23,11 @@
 ```bash
 npm i @quiteer/electronup -D
 ```
+
 ```bash
 yarn add @quiteer/electronup -D
 ```
+
 ```bash
 pnpm add @quiteer/electronup -D
 ```
@@ -34,31 +36,52 @@ pnpm add @quiteer/electronup -D
 ## 使用
 
 - 查看命令行指令
+
   - `electornup -h`
+
   - `electornup build -h`
+
+
 - 查看命令行版本
+
   - `electornup -v`
+
+
 - 开发环境
+
   - `electornup`
+
   - `electornup dev`
+
   - 指定配置文件 `electornup [config file]`
+
   - 指定配置文件 `electornup dev [config file]`
+
+
 - 构建打包
+
   - `electornup build`
+
   - 指定配置文件 `electornup build [config file]`
+
   - 开启选项式构建 `electornup build -o` 或 `electornup build --option` 
+
   - 输出选项默认当前平台架构
+
   - 指定平台 `--win` ,`--mac` ,`--linux`
+
   - 指定架构 `--ia32` ,`--x64` ,`--arm64`
+
   - 可不指定平台架构版本， 默认为本机当前平台架构版本
 
 ## 内置的依赖
+
 > 部分依赖已内置 无需重复安装 （开发此脚手架的目的也是给项目 package 瘦瘦身）
 
 ```json
 {
   "dependencies": {
-    "@quiteer/resolve-config": "workspace:^*",
+    "@quiteer/resolve-config": "workspace:^0.0.4",
     "cac": "^6.7.14",
     "dotenv": "^16.0.3",
     "electron-builder": "^23.6.0",
@@ -66,9 +89,10 @@ pnpm add @quiteer/electronup -D
     "inquirer": "8.2.5",
     "portfinder": "^1.0.32",
     "rimraf": "^3.0.2",
-    "tsup": "^6.4.0",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.1"
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.1",
+    "yaml": "^2.2.1"
   }
 }
 ```
